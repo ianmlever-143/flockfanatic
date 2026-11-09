@@ -1,0 +1,1046 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Flock Fanatic — How well do you know your Ravens?</title>
+<meta name="description" content="A free weekly Ravens trivia game. See a jersey number and the years, name the player. Three new Ravens every Sunday.">
+<meta name="theme-color" content="#1F1260">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Blue Marble Games">
+<meta property="og:title" content="Flock Fanatic — How well do you know your Ravens?">
+<meta property="og:description" content="A jersey number and the years. Name the Raven. Are you a Purple Bleeder, or a Steelers fan in disguise?">
+<meta property="og:url" content="https://ianmlever-143.github.io/flockfanatic/">
+<meta property="og:image" content="https://ianmlever-143.github.io/flockfanatic/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Flock Fanatic — a weekly Ravens trivia game.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Flock Fanatic — How well do you know your Ravens?">
+<meta name="twitter:description" content="A jersey number and the years. Name the Raven.">
+<meta name="twitter:image" content="https://ianmlever-143.github.io/flockfanatic/og-image.png">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏈</text></svg>">
+
+<!-- Google Analytics 4 (Flock Fanatic's own Firebase project) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-E083X8P42X"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-E083X8P42X');
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Graduate&family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --page:#F5F3FA; --card:#FFFFFF; --ink:#1B1433; --ink-soft:#4A4363; --ink-faint:#7D7795;
+  --line:#E3DEEF; --purple:#2B1A7A; --stage:#1F1260; --stage-2:#160B47; --purple-tint:#ECE8F8;
+  --gold:#C49A2C; --gold-deep:#9A7514; --gold-tint:#F8EFD8; --miss:#B4233B; --miss-tint:#FBE7EA;
+  --shadow:0 1px 2px rgba(27,20,51,.06),0 8px 24px -12px rgba(27,20,51,.18);
+  --f-display:'Graduate',Georgia,serif; --f-body:'Barlow',system-ui,sans-serif; --f-cond:'Barlow Condensed','Barlow',sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{-webkit-text-size-adjust:100%;}
+body{font-family:var(--f-body);background:var(--page);color:var(--ink);min-height:100vh;-webkit-font-smoothing:antialiased;line-height:1.5;}
+button{font-family:inherit;}
+:focus-visible{outline:3px solid var(--gold);outline-offset:2px;border-radius:6px;}
+.ico{display:inline-flex;width:20px;height:20px;}
+.ico svg{width:100%;height:100%;}
+.wrap{max-width:600px;margin:0 auto;padding:0 16px;}
+
+/* Header */
+.header{background:var(--stage);color:#fff;}
+.header .wrap{display:flex;align-items:center;justify-content:space-between;gap:.75rem;padding-top:.9rem;padding-bottom:.9rem;}
+.brand{display:flex;align-items:center;gap:.6rem;min-width:0;}
+.brand .ico{width:30px;height:30px;color:var(--gold);flex-shrink:0;}
+.wordmark{font-family:var(--f-display);font-size:clamp(1.3rem,5.4vw,1.75rem);letter-spacing:.02em;line-height:1;white-space:nowrap;}
+.wordmark span{color:var(--gold);}
+.week-line{font-family:var(--f-cond);font-weight:600;font-size:.9rem;color:#C9C1EC;margin-top:.2rem;}
+.header-actions{display:flex;gap:.4rem;align-items:center;flex-shrink:0;}
+.hbtn{height:38px;min-width:38px;border-radius:50px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);color:#fff;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:.4rem;padding:0 .55rem;font-weight:600;font-size:.85rem;}
+.hbtn:hover{background:rgba(255,255,255,.16);}
+.hbtn .ico{width:18px;height:18px;}
+.acct-avatar{width:26px;height:26px;border-radius:50%;background:var(--gold);color:var(--stage);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.8rem;}
+.acct-label{max-width:9ch;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+
+/* Tabs */
+.tabs{display:flex;gap:.4rem;margin:1rem 0 .4rem;}
+.tab{flex:1;background:var(--card);border:1.5px solid var(--line);border-radius:14px;padding:.5rem .4rem;cursor:pointer;text-align:center;color:var(--ink-soft);transition:border-color .15s,background .15s;}
+.tab b{display:block;font-family:var(--f-cond);font-weight:700;font-size:1.05rem;color:var(--ink);line-height:1.15;}
+.tab small{display:block;font-size:.74rem;font-weight:600;line-height:1.25;}
+.tab .st{display:block;font-family:var(--f-cond);font-weight:700;font-size:.82rem;margin-top:.15rem;color:var(--ink-faint);}
+.tab.active{border-color:var(--purple);background:var(--purple-tint);}
+.tab.done .st{color:var(--purple);}
+.tab.score-tab b{color:var(--gold-deep);}
+.total-line{display:flex;justify-content:space-between;align-items:baseline;font-size:.88rem;color:var(--ink-soft);font-weight:600;margin:.55rem .15rem .9rem;}
+.total-line b{font-family:var(--f-cond);font-size:1.15rem;color:var(--ink);}
+
+/* Stage + jersey */
+.stage{background:radial-gradient(120% 90% at 50% 0%,#33208F 0%,var(--stage) 55%,var(--stage-2) 100%);border-radius:22px;color:#fff;padding:1.2rem 1rem 1.1rem;text-align:center;position:relative;overflow:hidden;}
+.stage-top{display:flex;justify-content:space-between;align-items:center;font-size:.85rem;font-weight:600;color:#CFC8F0;}
+.worth{font-family:var(--f-cond);font-weight:700;font-size:1rem;color:var(--stage);background:var(--gold);border-radius:50px;padding:.15rem .7rem;}
+.worth.zero{background:#5A4E8C;color:#fff;}
+.jersey{width:min(260px,70vw);height:auto;display:block;margin:.4rem auto .2rem;filter:drop-shadow(0 14px 18px rgba(0,0,0,.35));}
+.jersey .plate{font-family:var(--f-display);}
+.jersey .num{font-family:var(--f-display);}
+.years{font-family:var(--f-cond);font-weight:600;font-size:1.25rem;letter-spacing:.01em;}
+.years span{color:var(--gold);}
+.stitch-in{animation:stitch .6s ease-out both;}
+@keyframes stitch{from{opacity:0;letter-spacing:.6em}to{opacity:1;}}
+
+/* Scouting report */
+.panel{background:var(--card);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow);margin-top:.9rem;}
+.report{padding:.35rem 0;}
+.hint{display:grid;grid-template-columns:1fr auto;gap:.6rem;align-items:center;padding:.65rem 1rem;border-top:1px solid var(--line);}
+.hint:first-child{border-top:none;}
+.hint .k{font-size:.8rem;font-weight:600;color:var(--ink-faint);}
+.hint .v{font-weight:600;font-size:1rem;color:var(--ink);}
+.hint .v.locked{color:var(--ink-faint);font-weight:500;letter-spacing:.06em;}
+.hint.unused .v{color:var(--ink-soft);}
+.hint .tag{font-family:var(--f-cond);font-weight:700;font-size:.85rem;color:var(--ink-faint);}
+.hint .tag.used{color:var(--miss);}
+.reveal-btn{font-family:var(--f-cond);font-weight:700;font-size:.92rem;border:1.5px solid var(--purple);color:var(--purple);background:#fff;border-radius:50px;padding:.3rem .8rem;cursor:pointer;white-space:nowrap;}
+.reveal-btn:hover{background:var(--purple-tint);}
+.reveal-btn:disabled{border-color:var(--line);color:var(--ink-faint);cursor:not-allowed;background:#fff;}
+
+/* Guess */
+.guess{padding:1rem;}
+.guess-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:.55rem;}
+.guess-head label{font-weight:700;font-size:.95rem;}
+.tries{display:flex;gap:.3rem;align-items:center;font-size:.8rem;color:var(--ink-faint);font-weight:600;}
+.try-dot{width:11px;height:11px;border-radius:50%;background:var(--purple);}
+.try-dot.used{background:var(--miss);}
+.combo{position:relative;}
+.guess-row{display:flex;gap:.5rem;}
+.text-input{flex:1;min-width:0;padding:.75rem .9rem;border:1.5px solid var(--line);border-radius:12px;font-family:var(--f-body);font-size:1rem;font-weight:600;color:var(--ink);background:#fff;outline:none;}
+.text-input:focus{border-color:var(--purple);box-shadow:0 0 0 3px var(--purple-tint);}
+.suggest{position:absolute;left:0;right:0;top:calc(100% + 4px);background:#fff;border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow);list-style:none;z-index:50;max-height:290px;overflow-y:auto;display:none;}
+.suggest.open{display:block;}
+.suggest li{padding:.6rem .9rem;cursor:pointer;font-weight:600;border-top:1px solid #F1EEF7;}
+.suggest li:first-child{border-top:none;}
+.suggest li.on,.suggest li:hover{background:var(--purple-tint);}
+.suggest li.tried{color:var(--ink-faint);text-decoration:line-through;cursor:default;background:#fff;}
+.suggest li mark{background:none;color:var(--purple);}
+.misses{list-style:none;display:flex;flex-wrap:wrap;gap:.35rem;margin-top:.6rem;}
+.misses li{background:var(--miss-tint);color:var(--miss);font-weight:600;font-size:.85rem;border-radius:50px;padding:.2rem .7rem;}
+.field-msg{min-height:1.3em;font-size:.86rem;font-weight:600;color:var(--miss);margin-top:.45rem;}
+.btn{text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:.4rem;padding:.75rem 1.4rem;background:var(--purple);color:#fff;font-weight:700;font-size:.95rem;border:none;border-radius:12px;cursor:pointer;white-space:nowrap;}
+.btn:hover{background:#3A26A0;}
+.btn:disabled{opacity:.5;cursor:not-allowed;}
+.btn-gold{background:var(--gold);color:var(--stage);}
+.btn-gold:hover{background:#D3AA3E;}
+.btn-ghost{background:#fff;color:var(--ink);border:1.5px solid var(--line);}
+.btn-ghost:hover{background:var(--purple-tint);}
+.btn-sm{padding:.5rem .9rem;font-size:.85rem;border-radius:10px;}
+.give-up{background:none;border:none;color:var(--ink-faint);font-weight:600;font-size:.82rem;text-decoration:underline;cursor:pointer;margin-top:.2rem;}
+
+/* Result */
+.result{padding:1.3rem 1.1rem 1.1rem;text-align:center;}
+.stamp{display:inline-flex;align-items:center;gap:.6rem;border:2px solid var(--tier,var(--purple));background:var(--tier-tint,var(--purple-tint));border-radius:50px;padding:.4rem 1.1rem .4rem .45rem;animation:pop .4s cubic-bezier(.3,1.4,.5,1) both;}
+.stamp .badge{width:36px;height:36px;border-radius:50%;background:#fff;color:var(--tier);display:flex;align-items:center;justify-content:center;}
+.stamp .badge .ico{width:20px;height:20px;}
+.stamp b{font-family:var(--f-cond);font-weight:700;font-size:1.2rem;color:var(--tier);}
+@keyframes pop{from{transform:scale(.8);opacity:0}to{transform:none;opacity:1}}
+.result-pts{font-family:var(--f-cond);font-weight:700;font-size:2.6rem;line-height:1;margin-top:.8rem;}
+.result-pts small{font-size:1rem;color:var(--ink-faint);margin-left:.2rem;}
+.result-line{font-size:.92rem;color:var(--ink-soft);margin-top:.3rem;}
+.quip{font-size:1.08rem;font-weight:600;line-height:1.5;max-width:44ch;margin:.9rem auto 0;color:var(--ink);}
+.facts{padding:1rem 1.1rem 1.1rem;}
+.facts h3{font-family:var(--f-cond);font-weight:700;font-size:1.2rem;margin-bottom:.5rem;}
+.facts ul{list-style:none;display:flex;flex-direction:column;gap:.45rem;}
+.facts li{position:relative;padding-left:1.1rem;font-size:.94rem;color:var(--ink-soft);}
+.facts li::before{content:'';position:absolute;left:0;top:.6em;width:6px;height:6px;border-radius:50%;background:var(--gold);}
+.cites{margin-top:.8rem;padding-top:.7rem;border-top:1px solid var(--line);font-size:.84rem;}
+.cites a{color:var(--purple);font-weight:600;display:block;margin-top:.15rem;}
+.next-row{display:flex;justify-content:center;gap:.5rem;margin:1rem 0 .2rem;flex-wrap:wrap;}
+
+/* Final */
+.final{padding:1.5rem 1.1rem;text-align:center;}
+.final-week{font-weight:600;color:var(--ink-faint);font-size:.9rem;}
+.final-total{font-family:var(--f-display);font-size:clamp(3.4rem,15vw,4.6rem);line-height:1;margin-top:.4rem;color:var(--stage);}
+.final-of{font-weight:600;color:var(--ink-faint);font-size:.9rem;}
+.final-tier{font-family:var(--f-cond);font-weight:700;font-size:1.6rem;margin-top:.9rem;color:var(--tier);}
+.final-text{font-size:.95rem;color:var(--ink-soft);max-width:44ch;margin:.3rem auto 0;}
+.mini-row{display:flex;justify-content:center;gap:.6rem;margin-top:1.1rem;}
+.mini{width:92px;border:1.5px solid var(--tier);background:var(--tier-tint);border-radius:14px;padding:.5rem .3rem;cursor:pointer;}
+.mini .lvl{font-size:.76rem;font-weight:600;color:var(--ink-soft);}
+.mini .p{font-family:var(--f-cond);font-weight:700;font-size:1.35rem;color:var(--tier);line-height:1.2;}
+.mini .nm{font-size:.72rem;font-weight:600;color:var(--ink);line-height:1.2;}
+.final-actions{display:flex;justify-content:center;gap:.5rem;flex-wrap:wrap;margin-top:1rem;}
+.countdown{text-align:center;margin-top:1rem;font-weight:600;color:var(--ink-soft);font-size:.92rem;}
+.countdown b{font-family:var(--f-cond);font-size:1.15rem;color:var(--ink);}
+.early-note{display:flex;gap:.75rem;align-items:flex-start;background:var(--gold-tint);border:1px solid var(--gold);border-radius:16px;padding:.9rem 1rem;margin-top:.9rem;text-align:left;}
+.early-note .badge{width:38px;height:38px;border-radius:50%;background:#fff;color:var(--gold-deep);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.early-note b{font-family:var(--f-cond);font-weight:700;font-size:1.1rem;display:block;}
+.early-note span{font-size:.9rem;color:var(--ink-soft);}
+
+/* Leaderboard */
+.lb{padding:1rem 1.1rem;}
+.lb-head{display:flex;justify-content:space-between;align-items:flex-start;gap:.8rem;margin-bottom:.7rem;}
+.lb-head h3{font-family:var(--f-cond);font-weight:700;font-size:1.25rem;line-height:1.2;}
+.lb-head .sub{font-size:.8rem;color:var(--ink-faint);font-weight:600;text-align:right;}
+.lb-list{list-style:none;display:flex;flex-direction:column;gap:.3rem;}
+.lb-row{display:grid;grid-template-columns:2rem 1fr auto;align-items:center;gap:.5rem;padding:.45rem .7rem;border-radius:10px;background:var(--page);font-size:.92rem;}
+.lb-row.me{background:var(--purple-tint);box-shadow:inset 0 0 0 1.5px var(--purple);}
+.lb-rank{font-family:var(--f-cond);font-weight:700;color:var(--ink-faint);text-align:center;}
+.lb-name{font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.lb-pts{font-family:var(--f-cond);font-weight:700;color:var(--purple);}
+.lb-pts small{font-size:.75rem;color:var(--ink-faint);margin-left:.15rem;}
+.lb-empty{color:var(--ink-faint);font-size:.92rem;text-align:center;padding:.8rem 0;}
+.lb-dots{text-align:center;color:var(--ink-faint);line-height:1;margin:.2rem 0;}
+.lb-status{margin-top:.8rem;font-size:.9rem;color:var(--ink-soft);text-align:center;}
+.lb-status .btn{margin-top:.5rem;}
+
+/* Modals */
+.modal{position:fixed;inset:0;background:rgba(22,11,71,.6);display:none;align-items:center;justify-content:center;z-index:2000;padding:16px;}
+.modal.open{display:flex;}
+.modal-card{background:var(--page);border-radius:22px;max-width:460px;width:100%;max-height:88vh;overflow-y:auto;padding:1.6rem 1.3rem 1.3rem;position:relative;box-shadow:0 30px 60px -20px rgba(0,0,0,.4);}
+.modal-card h2{font-family:var(--f-cond);font-weight:700;font-size:1.6rem;line-height:1.1;margin-bottom:.25rem;}
+.modal-sub{color:var(--ink-soft);font-size:.92rem;margin-bottom:1rem;}
+.x{position:absolute;top:.8rem;right:.8rem;width:34px;height:34px;border-radius:50%;background:#fff;border:1px solid var(--line);cursor:pointer;font-size:1rem;color:var(--ink-soft);}
+.rules{list-style:none;display:flex;flex-direction:column;gap:.55rem;margin-bottom:1.1rem;counter-reset:r;}
+.rules li{display:flex;gap:.6rem;font-size:.94rem;color:var(--ink-soft);}
+.rules li::before{counter-increment:r;content:counter(r);flex-shrink:0;width:22px;height:22px;border-radius:50%;background:var(--purple-tint);color:var(--purple);font-weight:700;font-size:.78rem;display:flex;align-items:center;justify-content:center;margin-top:.1rem;}
+.ladder{background:#fff;border:1px solid var(--line);border-radius:14px;padding:.6rem .85rem;margin-bottom:1rem;font-size:.9rem;}
+.ladder div{display:flex;justify-content:space-between;padding:.2rem 0;color:var(--ink-soft);}
+.ladder b{font-family:var(--f-cond);color:var(--ink);font-size:1rem;}
+.tier-rows{display:flex;flex-direction:column;gap:.4rem;margin-bottom:1.2rem;}
+.tier-row{display:flex;align-items:center;gap:.6rem;background:#fff;border:1px solid var(--line);border-radius:12px;padding:.45rem .7rem;}
+.tier-row .badge{width:30px;height:30px;border-radius:50%;background:var(--tier-tint);color:var(--tier);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.tier-row .badge .ico{width:16px;height:16px;}
+.tier-row b{font-family:var(--f-cond);font-weight:700;font-size:1rem;color:var(--tier);}
+.tier-row span{display:block;font-size:.8rem;color:var(--ink-faint);font-weight:600;}
+.pg-row{display:flex;align-items:center;gap:.7rem;background:#fff;border:1px solid var(--line);border-radius:14px;padding:.75rem .85rem;margin-bottom:.5rem;}
+.pg-main{flex:1;min-width:0;}
+.pg-title{font-family:var(--f-cond);font-weight:700;font-size:1.1rem;}
+.pg-meta{font-size:.8rem;color:var(--ink-faint);font-weight:600;line-height:1.4;}
+.pg-score{text-align:right;}
+.link-btn{background:none;border:none;color:var(--purple);font-weight:600;font-size:.88rem;cursor:pointer;text-decoration:underline;}
+
+/* Footer */
+.site-footer{text-align:center;padding:2rem 16px 2.4rem;font-size:.84rem;color:var(--ink-faint);}
+.site-footer .made{color:var(--ink-soft);font-weight:600;}
+.site-footer .made b{font-family:var(--f-cond);font-size:1rem;color:var(--ink);}
+.tip{margin:1rem auto .9rem;max-width:34ch;color:var(--ink-soft);font-weight:600;font-size:.92rem;}
+.tip .btn{margin-top:.55rem;}
+.fine{max-width:46ch;margin:1rem auto 0;font-size:.76rem;line-height:1.5;}
+.toast{position:fixed;left:50%;bottom:1.2rem;transform:translate(-50%,20px);background:var(--stage);color:#fff;padding:.7rem 1.2rem;border-radius:50px;font-size:.9rem;font-weight:600;opacity:0;pointer-events:none;transition:all .25s;z-index:3000;max-width:calc(100% - 2rem);text-align:center;}
+.toast.show{opacity:1;transform:translate(-50%,0);}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;}
+@media (max-width:420px){ .acct-label{display:none;} .hbtn.signed-out .acct-label{display:inline;} .tab small{display:none;} .mini{width:84px;} }
+@media (prefers-reduced-motion:reduce){ *{animation:none !important;transition:none !important;} }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="wrap">
+    <div class="brand">
+      <span class="ico" id="logomark"></span>
+      <div>
+        <div class="wordmark">Flock <span>Fanatic</span></div>
+        <div class="week-line" id="week-line"></div>
+      </div>
+    </div>
+    <div class="header-actions">
+      <button class="hbtn signed-out" id="acct-btn" title="Sign in to save your progress"><span class="acct-label">Sign in</span></button>
+      <button class="hbtn" id="lb-btn" title="Leaderboard" aria-label="Leaderboard"></button>
+      <button class="hbtn" id="info-btn" title="How to play" aria-label="How to play"></button>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <nav class="tabs" id="tabs" aria-label="Rounds"></nav>
+  <div class="total-line"><span id="total-label">Your points this week</span><span><b id="total-val">0</b> / 300</span></div>
+
+  <!-- ROUND -->
+  <section id="screen-round">
+    <div class="stage">
+      <div class="stage-top"><span id="round-label"></span><span class="worth" id="worth"></span></div>
+      <svg class="jersey" id="jersey" viewBox="0 0 300 300" role="img" aria-labelledby="jersey-title">
+        <title id="jersey-title"></title>
+        <path d="M108 22 Q150 40 192 22 L246 44 Q262 50 268 66 L292 128 L248 148 L232 112 L232 284 Q150 294 68 284 L68 112 L52 148 L8 128 L32 66 Q38 50 54 44 Z" fill="#FFFFFF" stroke="#C49A2C" stroke-width="3"/>
+        <path d="M108 22 Q150 40 192 22 L186 30 Q150 46 114 30 Z" fill="#2B1A7A"/>
+        <path d="M20 104 L42 113 M31 82 L52 92" stroke="#2B1A7A" stroke-width="7"/>
+        <path d="M280 104 L258 113 M269 82 L248 92" stroke="#2B1A7A" stroke-width="7"/>
+        <rect x="88" y="70" width="124" height="30" rx="3" fill="#F3F0FA"/>
+        <text class="plate" id="plate" x="150" y="93" text-anchor="middle" font-size="21" fill="#2B1A7A" letter-spacing="3"></text>
+        <text class="num" id="num" x="150" y="226" text-anchor="middle" font-size="118" fill="#2B1A7A" stroke="#C49A2C" stroke-width="3" paint-order="stroke"></text>
+      </svg>
+      <div class="years" id="years"></div>
+    </div>
+
+    <div class="panel report" id="report" aria-live="polite"></div>
+
+    <div class="panel guess" id="guess-box">
+      <div class="guess-head">
+        <label for="guess-input">Who wore it?</label>
+        <div class="tries" id="tries" aria-label="Guesses left"></div>
+      </div>
+      <div class="combo">
+        <div class="guess-row">
+          <input class="text-input" id="guess-input" type="text" autocomplete="off" spellcheck="false" placeholder="Start typing a Raven's name"
+            role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="suggest">
+          <button class="btn" id="guess-btn">Guess</button>
+        </div>
+        <ul class="suggest" id="suggest" role="listbox"></ul>
+      </div>
+      <div class="field-msg" id="field-msg" aria-live="polite"></div>
+      <ul class="misses" id="misses"></ul>
+      <button class="give-up" id="give-up">Give up and see who it was</button>
+    </div>
+
+    <div id="result-box" style="display:none">
+      <div class="panel result" id="result"></div>
+      <div class="panel facts" id="facts"></div>
+      <div class="next-row" id="next-row"></div>
+    </div>
+  </section>
+
+  <!-- FINAL -->
+  <section id="screen-final" style="display:none">
+    <div class="panel final" id="final"></div>
+    <div class="early-note" id="early-note"></div>
+    <div class="final-actions">
+      <button class="btn btn-gold" id="share-btn">Share my score</button>
+    </div>
+    <div class="countdown" id="countdown"></div>
+    <div class="panel lb" id="lb-final"></div>
+  </section>
+</main>
+
+<!-- HOW TO PLAY -->
+<div class="modal" id="info-modal" role="dialog" aria-modal="true" aria-labelledby="info-title">
+  <div class="modal-card">
+    <button class="x" data-close aria-label="Close">✕</button>
+    <h2 id="info-title">How Flock Fanatic works</h2>
+    <div class="modal-sub">Three Ravens a week. One jersey number each. Name the player.</div>
+    <ul class="rules">
+      <li>Every Sunday there's an easy Raven (a Ring of Honor name), a medium one (a solid contributor) and a hard one (a deep cut).</li>
+      <li>You start with their jersey number and the years they played in Baltimore. Name them right there for the full 100.</li>
+      <li>Stuck? Reveal scouting hints in order. Each one costs 20 points.</li>
+      <li>You get three guesses per player, and each miss costs 10. A correct guess is always worth at least 5.</li>
+      <li>Sign in to post your score to the weekly leaderboard. Your first finished game counts.</li>
+    </ul>
+    <div class="ladder" id="ladder"></div>
+    <div class="tier-rows" id="tier-rows"></div>
+    <button class="btn" data-close style="width:100%">Let's play</button>
+  </div>
+</div>
+
+<!-- LEADERBOARD -->
+<div class="modal" id="lb-modal" role="dialog" aria-modal="true" aria-label="Leaderboard">
+  <div class="modal-card">
+    <button class="x" data-close aria-label="Close">✕</button>
+    <div id="lb-modal-body"></div>
+  </div>
+</div>
+
+<!-- NAME -->
+<div class="modal" id="name-modal" role="dialog" aria-modal="true" aria-labelledby="name-title">
+  <div class="modal-card">
+    <button class="x" data-close aria-label="Close">✕</button>
+    <h2 id="name-title">Your leaderboard name</h2>
+    <div class="modal-sub">Use a nickname or a first name plus last initial, like "Ian L." Full names aren't allowed, for everyone's privacy.</div>
+    <input class="text-input" id="name-input" maxlength="19" autocomplete="nickname" placeholder="e.g. Ian L. or PurpleBleeder" style="width:100%">
+    <div class="field-msg" id="name-error"></div>
+    <button class="btn" id="name-save" style="width:100%;margin-top:.4rem">Save name</button>
+  </div>
+</div>
+
+<!-- PROFILE -->
+<div class="modal" id="profile-modal" role="dialog" aria-modal="true" aria-labelledby="profile-title">
+  <div class="modal-card">
+    <button class="x" data-close aria-label="Close">✕</button>
+    <h2 id="profile-title">Your Flock Fanatic</h2>
+    <div class="modal-sub" id="profile-sub"></div>
+    <div id="profile-games"></div>
+    <div style="text-align:center;margin-top:.6rem"><button class="link-btn" id="signout-btn">Sign out</button></div>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status"></div>
+<div class="sr" id="sr-live" aria-live="assertive"></div>
+
+<footer class="site-footer">
+  <div class="made"><b>Blue Marble Games</b><br>created by Ian Lever</div>
+  <div class="tip">Like the game? Help a fan out — crab cakes aren't cheap, hon.
+    <br><a class="btn btn-gold btn-sm" href="https://account.venmo.com/u/Ian-Lever" target="_blank" rel="noopener noreferrer">Buy me a crab cake</a>
+  </div>
+  <div class="fine">A fan-made game. Not affiliated with or endorsed by the Baltimore Ravens or the NFL. Player stats from <a href="https://www.pro-football-reference.com/" target="_blank" rel="noopener noreferrer" style="color:inherit">Pro-Football-Reference.com</a>.</div>
+</footer>
+
+<script>
+// ════════════════════════════════════════════════════════════════════════
+// DATA — generated by build.py from weeks.json, players.json and quips.json.
+// Week answers are lightly scrambled so they don't show up in "view source";
+// weeks whose start time hasn't arrived are never unscrambled by the page.
+// ════════════════════════════════════════════════════════════════════════
+const WEEKS = [
+ {
+  "id": "w01",
+  "label": "Week 1",
+  "opens": "2026-11-08T00:00:00-05:00",
+  "data": "HU4dDB4IBR1DTjIYRAAKFQ4KQ1RDEQgQH05DQQoIEhkEBktZRDgABw9GKQsABEtPRAIODg4WDQ8VEUtZRCQqIjtETUwPAQQBAx5NWUleV0xNVhAGBx4cQVFEU15RRYvj9V5fUltETUwCGwUPAwsKQVFEIBwIDgYNB0w8FwoSBExNVhkMFQUbCgQIQ1RDIAAEDhhPBgUCQ0JDAAwCCwEOFw4VQ1Q6ViMCCw0DQycDFgcSVkVBLRUDBkskDgINERtBSk4rBhkUCA0KVCQCFQMBQTZKQx0VFR0QRFZNUlhVQQkAGQwQRq7YQ19QVk4CFR0ADgkcQ6nRQVtNQFBRRhUOEQ8VQazWVF1SRjgrQUdEBw8CABpBXDdNMBsDDxpBFQUPRl1fQwQAQQYIB0kxBxoKDRhGEgsABwYNFUwYBgoUCAAGVCcMSExXVUsHDwpBEgANDx8HBg9GFgcVHElXUFtPAAoSAgYEB0VDU0BbWllGGA8TEBpDBwILQ19XQRoOAQoLAgMYDRhGCABBBBwRFgAKTUlKQyMAEAxDBA0MCEYSDkMDFQoIRjwdDEskDhkNB0kKCExdU1tUQQ8PEElRVlxcT0sHDwpBAwgQRg1PEA4FDgAFWR0GBwFPIjtGIAINWTkRCUwGDUtUUV5SWktPRCQGEEsEBB0VVBoGBx8ADUsFAAMEVAANRl5fU15cQVlUVAoCEg8HBhhKQVZUQUkaBx4LEEsHDwpBQ0kXCRkMCw8JFgASWktPRDsKDR9GCAAVG0kXDglPMQoQBAASVDsKCAtPDA1GKQEPGxtDDwJPUVtXVUBDKUVBBQUbBhhEWzUaVgUCBAkDQVFEMRwOVC8MCRgNAgcKQTwEEgwRAwIMBkuE4fpBIAYHAkwnBgoWQ0JDARsPRFZNCx8SER1bW0YUERtBExkJTAgOGx0BBwADThkDBwsTEQcAA0IMDAZJEQIADQwRFUMnTCMDAB41G1lTSAQbDkkbTRVDGAgBAwBNWUkxCAUIBAwHDw1PgevyQTwAAgwNFUw9CgUBQQEHVCEMCAMdQUdEFBwNVlNBDhgbExhcTkEEGkcUDwcGEw4CCA9PGxsESRsGCAJJIw8NAAAOCR4KPDkHFwsPBzYxDwIIPAQAPiYOGgYRRBEyHkcdQwIEAgwPRFZNDg4CCBsMVkVBBwIcFA4UQ1RDIAYRFAkWQzgLCBoJVkVBCA0CBhsKABoEVlNBNSEmNyNETUwPAQQBAx5NWUleU0xNVhAGBx4cQVFEU15QRYvj9V5fUl9ETUwCGwUPAwsKQVFELA8TDQUCCAhNT0kWDh0IAAAMCE5VQTwPBQtBBgwAAwUZBhlETUwVEQgOCw0bBhhEWzVDPgYGRioDAggFDkxNVigNFxkODUskDgIFHQdBSk4lAggJAxdBPgYNAx9NPkdEEhoAABpBXE5ZV0sBAAMEB0mh0UxdUlhGAg8VFwEGFUyt1EtVTVtYRUkaBx4LEEuk1k5SREk3Ik5DQQ0HAhoSVlM4RC1PDwQFAAJBHwAHXEwbCw5GMw8XEQcQRggdAg0SBApBHAAORgMaF0sJB04sFRsaCg0BB0sPD04VHAxDVAILQxkJFAAFVEFWXhgHQwQQBBwAGAVKRgUBQ1lWUF9PVkVBMgMfEw4CQV9NRFlTRhUOEQ8VQQgOBkkXDglPDAUKGE4VHQQGRgUBQ1lWUF1NVB4KEgRPVV5GAg8VFwEGFUwJDBlGUEJQRlFDHw0dBxhIQ0JDNwgWAQQbQ1pXQRoOAQoLAgMYDRhGCABBRllSUkBPCwIVQQIABx1DFQkOEAQIQQcPVCsCChgGDgQUBEBDWEsiAggKB0tUUU4CFR0ADgkcT0tSUFpBDQgRAh9PAgUCQVpBAAYWBQQLDBwIEk4IGkkGDwsHF0sWDQ8YGw8FRgsODg4VQQgOBkkXDglPMQoQBAASWEkKCA8DFg8PDwlBAAEGRj8aEw4UQSwOAwVDPiA5KiJGExsPWks+Sk4MCh8DEkxbLxJBCg0NBgdEW0wxBgZDIAMAFwkHDQJBJgwFAx4KDQgDQYzh4Ek3CR4dBhJGMgMIAAFBSk4aEQdEW0wJAB0TFVZATBwRFkARBgZOAAMAFwkHDQJMBgwFAx4KDQgDTw0OGUYTCg0WBhkVTj1OJwQKEjgAU1lICRoMVhQ+G0AUQQcDFwsNVlNBDg0dB0lKQw8PBx4GFE5VQS4KFwcSVC4RBA0MQUdEDw8MERkPBxgKQVFEJjwjNSpBSk4BFgYEBBxDTktSXk5DQRIDABwSVlNBVFxfUklKQw0OGAUGAQlNWUkrCA0JHQ4CCE5DQRsJEgcVHQYNRFZNMh4HExoEBgsCBQdNT0kSBA8MGQgXAx9NWTBEMgYAGgcMCEw8CwoUEQtDWEsyBwgdGksvEgMAHQVBSk49AgUCAAINVCoWCAIGDQwOAANDKUVBFRgOFxhEW0xQQEkQEg0dFxhGo9lBTIvj9VpPEQ4FDhwFVKvURl9DU1hVQR4ABxpDHwgcQ6nRQV9UVD0nRq7YQ1peQScvIEtPRAoOAB8VQ1Q6VjoKAQIKB0sSDk4TERkPBw8KQz8UBAAVVC0KCgoKEUsHEk4VHAxDAgkJBgUCCAAGVAoLBwEfEExGEhoABh0GFEBPAgUCQQIABx0GAkwKGwoFFQIYVAYNA0wcBgoVDgBBHQdDJA0DFwILDhwEWktPRDsKDR9GWYzh519DBx9PAksVFQ8TAAwRSkwMDAYWDQsVHQcERl5ZVksJB05VQl5DFg0cEA4VQQgOBklQSlxcUEsfABwFB0VDV1lPFwQTAgYFGx4NFUwODQ9GUFZBHQcXAx4MBhsSCAEPB0dBSk44DAVGAE4WHQUHSw8OEQ9GBg8MEUlRVo7v8FhGABpBOQACCwVDQx8OBABBAAERAxtPFwMUBAtBBAAADR9PCgVGAE5TQ4vj9V1fQw8PFwcSHQYNBwBPDwQVEk4AAEkzDxgbEAkTEwkJWktPRD4KDw4HEgsFVAANRg1PAAoWQQMOAgxDEgQOF0sVERwIGg5PRgQKQxkDFQcTEQ1DDwIcFw4HBU4OEkkQDwsBCgUBQQsNBwwUDgkdBkVEPEJDFwAXAx9NWTAdQwIAFgwPRFZNMxkJQSgOGx0BBwADQzkDBwsTEQcAA0yN4/9GJAIXHRpDIR4NAghETUwUBgVBXE4HFx8WElROWx4UEUIfEQRLBwEOAAsCCgBCEQ4ABBwEGgoGSA8ADkQWDQ8YERsQSStAJBkEACsNRFlNDhgCQRZKGkwNFQsGCk5VQTwPCgcREQ0KB0yN4/9GJAIXHRpDIR4NAghETUwUBgVBXE4HFx8WElROWwwNSBsGCAIWBAoIFUcMFAtAFAINCEEkGB8KFTMoEQkHAkwcKRQ+Gw=="
+ }
+];
+const PLAYERS = ["A.J. Arcuri", "A.J. Ofodile", "A.Q. Shipley", "Aaron Adeoye", "Aaron Crawford", "Aaron Elling", "Aaron Mellette", "Aaron Pierce", "Adalius Thomas", "Adam Hernandez", "Adam Randall", "Adam Redmond", "Adam Terry", "Adedayo Odeleye", "Adisa Isaac", "Adrian Hamilton", "Aeneas Peebles", "Al-Hajj Shabazz", "Alan Ricard", "Albert Horsey", "Albert McClellan", "Alejandro Villanueva", "Alex Bannister", "Alex Bernstein", "Alex Collins", "Alex Lewis", "Alex Thompson", "Allen Reisner", "Alohi Gilman", "Alvin Jones", "Alvin Porter", "Amani Oruwariye", "Amon Gordon", "Andre Gurode", "Andre James", "Andre Smith", "Andrew Adams", "Andrew Donnal", "Andrew Vorhees", "Andy Isabella", "Anquan Boldin", "Anthony Allen", "Anthony Averett", "Anthony Brown", "Anthony Davis", "Anthony Kendall", "Anthony Levine", "Anthony Miller", "Anthony Mitchell", "Anthony Pleasant", "Anthony Poindexter", "Anthony Weaver", "Anthony Wright", "Antoine Cason", "Antoine Wesley", "Antonio Langham", "Antwan Barnes", "Anwar Phillips", "Ar'Darius Washington", "Arthur Brown", "Arthur Jones", "Arthur Maulet", "Asa Jackson", "Atiyyah Ellison", "Aubrayo Franklin", "Austin Howard", "Austin Reed", "B.J. Sams", "B.J. Ward", "Bailey Gaither", "Bam Bradley", "Bam Morris", "Bart Scott", "Basil Okoye", "Baylor Cupp", "Beau Brade", "Ben Bredeson", "Ben Cavil", "Ben Cleveland", "Ben Coates", "Ben Grubbs", "Ben Mason", "Ben Powers", "Benard Thomas", "Benjamin Watson", "Bennett Jackson", "Bennie Anderson", "Bennie Thompson", "Bernard Dafney", "Bernard Pierce", "Bernard Pollard", "Bernard Scott", "Bernardo Harris", "Bilhal Kone", "Billy Bajema", "Billy Cundiff", "Billy Davis", "Binjimen Victor", "Bobbie Williams", "Bobby Rainey", "Brad Jackson", "Bradley Bozeman", "Brandon Boykin", "Brandon Carr", "Brandon Copeland", "Brandon Knight", "Brandon Kublanow", "Brandon McKinney", "Brandon Stephens", "Brandon Stokley", "Brandon Williams", "Bravvion Roy", "Braxton Hoyett", "Brendon Ayanbadejo", "Brennen Beyer", "Brent Urban", "Breshad Perriman", "Brett Hundley", "Brian Kinchen", "Brian Rimpf", "Brian St. Pierre", "Broderick Washington", "Bronson Kaufusi", "Bryan Hall", "Bryan Mattison", "Bryan McCann", "Bryant McKinnie", "Bryn Renner", "Brynden Trawick", "Byron Marshall", "C.J. Mosley", "C.J. Ravenell", "Calais Campbell", "Calvin Wilkinson", "Calvin Williams", "Cam Jurgens", "Cameron Lee", "Cameron Nizialek", "Carl Davis", "Carl Jones", "Carl Lawson", "Carl Powell", "Carnell Lake", "Carrington Byndom", "Carson Vinson", "Carwell Gardner", "Cary Williams", "Casey Rabach", "Casey Walker", "Cassius Vaughn", "Cavellis Luckett", "Chad Slaughter", "Chad Williams", "Chandler Martin", "Chandler Rivers", "Charles Ali", "Charles Scarff", "Charlie Kolar", "Chase Ford", "Chauncey Rivers", "Chavis Williams", "Chester Taylor", "Chidobe Awuzie", "Chris Board", "Chris Canty", "Chris Carr", "Chris Carter", "Chris Chester", "Chris Givens", "Chris Greenwood", "Chris Harrison", "Chris Johnson", "Chris Lewis-Harris", "Chris Matthews", "Chris McAlister", "Chris Moore", "Chris Redman", "Chris Streveler", "Chris Ward", "Chris Westry", "Chris Wormley", "Christian LaCouture", "Christian Matthew", "Christian Ringo", "Christian Thompson", "Christo Bilukidi", "Christopher Ezeala", "Chuck Clark", "Chuck Evans", "Chuck Jacobs", "Chuma Edoga", "Chykie Brown", "Clarence Love", "Clarence Moore", "Cooper Rush", "Corey Bullock", "Corey Dowden", "Corey Fuller", "Corey Graham", "Corey Harris", "Corey Ivy", "Corey Mayfield", "Corey Sears", "Cornelius Johnson", "Cornell Brown", "Cortez Braham", "Cory Redding", "Cory Ross", "Courtney Upshaw", "Craig Powell", "Crockett Gillmore", "Cullen Finnerty", "Curtis Brown", "Cyrus Jones", "D.J. Fluker", "D.J. Jones", "Daelin Hayes", "Dale Carter", "Dale Hellestrae", "Dallas Clark", "Dalvin Cook", "Damarion Williams", "Dameon Hunter", "Damion Cook", "Dan Chisena", "Dan Cody", "Dan Footman", "Daniel Brown", "Daniel Faalele", "Daniel Wilcox", "Dannell Ellerbe", "Danny Gorrer", "Danny Kight", "Danny Pinter", "Danny Woodhead", "Daren Stone", "Darian Stewart", "Darius White", "Darnell Dinkins", "Darnell Sankey", "Darrell Simpson", "Darrell Williams", "Darren Perry", "Darren Waller", "Darrian Dalcourt", "Daryl Smith", "Daryl Worley", "Dave Zastudil", "David Hale", "David Nugent", "David Ojabo", "David Olajiga", "David Pittman", "David Reed", "David Sharpe", "David Tyree", "Davon Drew", "Davontae Harris", "Dawan Landry", "Daylon Mack", "Dayton Wade", "De'Anthony Thomas", "De'Lance Turner", "De'Ondre Wesley", "Deadrin Senat", "DeAndre Hopkins", "DeAndrew White", "DeAngelo Tyson", "Dedric Ward", "Deion Jennings", "Deion Sanders", "Del'Shawn Phillips", "Delvin Hughley", "Demarcus Robinson", "Demetrius Williams", "Dennis Haley", "Dennis Pitta", "Denzel Rice", "Denzel Williams", "Deonte Harty", "Deonte Thompson", "Derek Anderson", "Derek Wolfe", "DeRon Jenkins", "Derrick Alexander", "Derrick Henry", "Derrick Martin", "Derrick Mason", "Derrick Nelson", "DeSean Jackson", "DeShon Elliott", "Desmond Igbinosun", "Desmond King", "Devard Darling", "DeVier Posey", "Devin Duvernay", "Devin Gray", "Devin Leary", "Devon Kennard", "Devon Williams", "Devonta Freeman", "Devontez Walker", "Dexter Daniels", "Dez Bryant", "Diego Fagot", "Dion Wilson", "Dobson Collins", "Domata Peko Sr.", "Dominic DeLuca", "Dominique Franks", "Domonique Foxworth", "Donny Brady", "Dontay Demus", "Donte' Stallworth", "Dorian Brew", "Dre'Mont Jones", "Duane Starks", "Durham Smythe", "Dustin Vaughan", "Dwan Edwards", "Dwayne Missouri", "E.J. Ejiya", "Earl Thomas", "Earnest Byner", "Earnest Hunter", "Ed Dickson", "Ed Reed", "Eddie Britton", "Eddie Sutter", "Edgar Jones", "Edgerton Hartwell", "Edwin Mulitalo", "Eli Wolf", "Elijah Sarratt", "Elijah Tau-Tolliver", "Elliott Fortune", "Elliott Fry", "Elvis Dumervil", "Elvis Grbac", "Emanuel Cook", "Emery Jones Jr.", "Eric Green", "Eric Tomlinson", "Eric Turner", "Eric Weddle", "Eric Zeier", "Erik Williams", "Ernie Wheelwright", "Errict Rhett", "Ethan Brooks", "Ethan Burke", "Ethan Pocic", "Eugene Daniel", "Eugene Monroe", "Evan Oglesby", "Everett Lindsay", "Fabian Washington", "Fernando Smith", "Fish Smithson", "Fitzgerald Toussaint", "Floyd Turner", "Frank Hartley", "Frank Sanders", "Frank Wainright", "Frank Walker", "Gage Larvadain", "Gary Baxter", "Gary Stills", "Gavin Escobar", "Geno Stone", "Gerad Lichtenhan", "Germany Thompson", "Gerome Sapp", "Gino Gradkowski", "Greg DeLong", "Greg Mancz", "Greg Montgomery", "Greg Senat", "Griff Whalen", "Gus Edwards", "Hakeem Adeniji", "Haloti Ngata", "Harold Bishop", "Harold Morrow", "Harper LeBel", "Harry Swayne", "Haruki Nakamura", "Hayden Hurst", "Herman Arvie", "Howard Green", "Hroniss Grasu", "Ikechuku Ndukwe", "Iman Marshall", "Isaiah Likely", "Isaiah Mack", "Isaiah Washington", "Isaiah Williams", "Issac Booth", "J'Vonne Parker", "J.K. Dobbins", "J.R. Jenkins", "J.R. Johnson", "Ja'Kobi Lane", "Ja'Wuan James", "Jackson Porter", "Jacob Breeland", "Jacob Hummel", "Jacoby Jones", "Jacques Patrick", "Jadeveon Clowney", "Jaelon Acklin", "Jah Reid", "Jahmal Banks", "Jahquez Robinson", "Jake Guidone", "Jake Moody", "Jake Nordin", "Jake Rodgers", "Jake Verity", "Jaleel Scott", "Jalen Parmele", "Jalyn Armour-Davis", "Jamaine Winborne", "Jamal Lewis", "Jameel McClain", "Jamel White", "James Atkins", "James Crawford", "James Hurst", "James Ihedigbo", "James Jones", "James Murray", "James Proche", "James Roe", "James Trapp", "Jamie Sharper", "Jamon Johnson", "Janarion Grant", "Jared Gaither", "Jared Penning", "Jarell Broxton", "Jarret Johnson", "Jarrod Pughsley", "Jaryd Jones-Smith", "Jason Babin", "Jason Brookins", "Jason Brown", "Jason McKie", "Jason Phillips", "Jason Pierre-Paul", "Jason Thomas", "Javin Hunter", "Javorius Allen", "Jay Graham", "Jay Higgins", "Jaylen Hill", "Jaylinn Hawkins", "Jaylon Ferguson", "Jaylon Moore", "Jayron Kearse", "Jed DeVries", "Jeff Blackshear", "Jeff Blake", "Jeff Kopp", "Jeff Mitchell", "Jeff Ogden", "Jeremiah Moon", "Jeremy Butler", "Jeremy Lucien", "Jeremy Maclin", "Jeremy Ross", "Jeremy Zuttah", "Jermaine Eluemunor", "Jermaine Lewis", "Jermaine Whitehead", "Jeromy Miles", "Jerraud Powers", "Jerrol Williams", "Jerry Olsavsky", "Jihad Ward", "Jim Harbaugh", "Jim Leonhard", "Jim Nelson", "Jimmy Clausen", "Jimmy Smith", "Joe Evans", "Joe Fagnano", "Joe Flacco", "Joe Horn", "Joe Maese", "Joe Morgan", "Joe Nedney", "Joe Noteboom", "Joe Salave'a", "Joe Thomas", "John Beck", "John Brown", "John Crockett", "John Daka", "John Elmore", "John Hudson", "John Jenkins", "John Jones", "John Simon", "John Simpson", "John Urschel", "John Williams", "Johnny Townsend", "Jon Stark", "Jonathan Burrough", "Jonathan Ogden", "Jonathan Ward", "Jordan Lasley", "Jordan Mills", "Jordan Richards", "Jordan Stout", "Jordan Toles", "Josh Bynes", "Josh Cuevas", "Josh Johnson", "Josh Jones", "Josh Oliver", "Josh Ross", "Josh Tupou", "Josh Wells", "Josh Wilson", "Josh Woodrum", "Jovan Swann", "Jovaughn Gwyn", "Jumal Rolle", "Justice Hill", "Justin Armour", "Justin Bannan", "Justin Boren", "Justin Ellis", "Justin Forsett", "Justin Green", "Justin Harper", "Justin Houston", "Justin Madubuike", "Justin Tucker", "K'Von Wallace", "K.J. Gerard", "Kaare Vedvik", "Kaelin Clay", "Kai Caesar", "Kaimon Rucker", "Kaleb Johnson", "Kamalei Correa", "Kamar Aiken", "Kapron Lewis-Moore", "Kareem Robinson", "Kavell Conner", "Keaton Mitchell", "Kedon Slovis", "Keenan Reynolds", "Keith Fitzhugh", "Keith Goganious", "Keith Kirkwood", "Keith Washington", "Kelechi Osemele", "Kelle Sanders", "Kelley Washington", "Kelly Gregg", "Kelly Talavou", "Ken Hamlin", "Kendall Lamm", "Kendrick Lewis", "Kenji Bahar", "Kenneth Dixon", "Kenny Allen", "Kenny Bell", "Kenny Young", "Kenyan Drake", "Kenyon Cotton", "Kenyon Green", "Kenyon Hambrick", "Keondre Jackson", "Kevin Houser", "Kevin Johnson", "Kevin McDermott", "Kevin Toliver", "Kevin Zeitler", "Kevon Seymour", "Keydrick Vincent", "Keyon Martin", "Khalil Dorsey", "Kim Herring", "Kipp Vickers", "Kofi Amichia", "Konrad Reuland", "Kordell Stewart", "Kris Wilson", "Kristian Welch", "Kyle Arrington", "Kyle Boller", "Kyle Fuller (C)", "Kyle Fuller (CB)", "Kyle Hamilton", "Kyle Hergel", "Kyle Juszczyk", "Kyle Richardson", "Kyle Van Noy", "Kyler Fackrell", "L.J. Fort", "L.J. Smith", "Ladarius Webb Jr.", "LaJohntay Wester", "Laken Tomlinson", "Lamar Divens", "Lamar Jackson", "Lamar Louis", "Lamar Lyons", "Lamont Brightful", "LaQuan Williams", "Laquon Treadwell", "Lardarius Webb", "Larry Donnell", "Larry Fitzpatrick", "Larry Webster", "Latavius Murray", "Lawrence Guy", "Lawrence Smith", "Le'Ron McClain", "Lee Evans", "Lee Vickers", "Leland Taylor", "Leo Goeas", "Leon Searcy", "Leroy Hoard", "Lional Dalton", "Lorenzo Neal", "Lorenzo Taliaferro", "Lovett Purnell", "Lucas Scott", "Luke Bowanko", "Ma'ake Kemoeatu", "Malaesala Aumavae-Laulu", "Malaki Starks", "Malik Cunningham", "Malik Hamm", "Malik Harrison", "Marc Bulger", "Marcus Applefield", "Marcus Gilchrist", "Marcus Maxwell", "Marcus Nash", "Marcus Paschal", "Marcus Peters", "Marcus Robinson", "Marcus Smith", "Marcus Spears", "Marcus Williams", "Mario Ojemudia", "Mark Andrews", "Mark Clayton", "Mark Ingram", "Mark LeVoir", "Mark Thompson", "Marlon Brown", "Marlon Humphrey", "Marques Douglas", "Marqueston Huff", "Marquise Brown", "Marquise Robinson", "Marshal Yanda", "Martin Chase", "Matt Birk", "Matt Elam", "Matt Judon", "Matt Katula", "Matt Lawrence", "Matt Schaub", "Matt Skura", "Matt Stover", "Matt Willis", "Matthew Hibner", "Maurice Canady", "Maurquice Shakir", "Maxx Williams", "Mazzi Wilkins", "Melvin Gordon", "Michael Barrett", "Michael Campanaro", "Michael Crabtree", "Michael Dereus", "Michael Floyd", "Michael Huff", "Michael Jackson", "Michael McCrary", "Michael Oher", "Michael Onuoha", "Michael Pierce", "Mike Anderson", "Mike Caldwell", "Mike Collins", "Mike Croel", "Mike Davis", "Mike Flynn", "Mike Frederick", "Mike Green", "Mike Jordan", "Mike Kracalik", "Mike McAdoo", "Mike Rigerman", "Mike Smith", "Mike Solwold", "Mike Thomas", "Mike Wallace", "Miles Boykin", "Milton Wynn", "Moe Williams", "Morgan Cox", "Morgan Moses", "Musa Smith", "Nate Brooks", "Nate McCrary", "Nate Singleton", "Nate Wiggins", "Nelson Agholor", "Nicholas Grigsby", "Nick Boyle", "Nick Greisen", "Nick Keizer", "Nick Moore", "Nick Murphy", "Nick Samac", "Nick Vannett", "Nico Siragusa", "Nicolas Luchey", "Nigel Warrior", "O.J. Brigance", "Obafemi Ayanbadejo", "Octavian Smith", "Odafe Oweh", "Odell Beckham Jr.", "Olaivavega Ioane", "Omar Brown", "Oniel Cousins", "Orlando Bobo", "Orlando Brown Jr.", "Orlando Brown Sr.", "Otaro Alaka", "Otha Foster", "Ovie Mughelli", "Owen Daniels", "Owen Wright", "P.J. Daniels", "Parker Ehinger", "Pat Johnson", "Patrick Mekari", "Patrick Onwuasor", "Patrick Queen", "Patrick Ricard", "Patrick Scales", "Patrick Vahe", "Paul Frase", "Paul Kruger", "Paul Perkins", "Pedro Edison", "Pernell McPhee", "Peter Boulware", "Phil Savoy", "Phillip Supernaw", "Pierre Desir", "Prescott Burgess", "Priest Holmes", "Prince Miller", "Qadir Ismail", "Qadry Ismail", "Quentin Neujahr", "Quincy Adeboyejo", "Quinn Sypniewski", "R.J. Prince", "Raheem Mostert", "Ralph Staten", "Ramon Harewood", "Randall Cunningham", "Randin Crecelius", "Randy Allen", "Randy Baldwin", "Randy Hymes", "Rashaan Melvin", "Rasheen Ali", "Rashod Bateman", "Ray Ethridge", "Ray Lewis", "Ray Lucas", "Ray Rice", "Raymond Perryman", "Raymond Walls", "Rayshad Nichols", "Rayshaun Benny", "Rayshawn Jenkins", "Reggie Waddell", "Reginald McKenzie", "Rhys Lloyd", "Richard Gordon", "Rick Lyle", "Ricky Ortiz", "Ricky Person", "Ricky Wagner", "Ricky Williams", "Riddick Parker", "Riley Sharp", "Rob Burnett", "Rob Robertson", "Robb Butler", "Robert Bailey", "Robert Griffin III", "Robert Jackson", "Robert James", "Robert Longerbeam", "Robert McCune", "Robert Nelson", "Robert Tate", "Robertson Daniel", "Rock Ya-Sin", "Rod Woodson", "Roderick Green", "Roger Rosengarten", "Ron Johnson", "Ronald Darby", "Rondell Jones", "Ronnie Prude", "Ronnie Stanley", "Roosevelt Potts", "Roquan Smith", "Roubbens Joseph", "Ryan Collins", "Ryan Eckley", "Ryan Jensen", "Ryan Mallett", "Ryan Taylor", "Ryan Yarborough", "Sale Isaia", "Sam Adams", "Sam Brown", "Sam Gash", "Sam Koch", "Sam Mustipher", "Samari Rolle", "Sammy Watkins", "Sammy Williams", "Sanoussi Kane", "Scott Kooistra", "Scott Mitchell", "Scott Otis", "Scotty Washington", "Sean Considine", "Sean Modster", "Sean Pollard", "Sean Ryan", "Sedric Clark", "Sergio Kindle", "Seth Roberts", "Shane Ray", "Shannon Sharpe", "Shannon Taylor", "Shareece Wright", "Shaun Draughn", "Shawn Byrdsong", "Shayne Graham", "Sheldon Price", "Shemar Bridges", "Siaosi Mariner", "Silas Stewart", "Skylar Thompson", "Slade Bolden", "Spencer Folau", "Stanley Jean-Baptiste", "Stephane Nembot", "Stephen Houston", "Steve Everitt", "Steve McNair", "Steve Smith", "Steven Hauschka", "Steven Johnson", "Steven Means", "Steven Moore", "Steven Sims", "Stevon Moore", "Stoney Case", "T.J. Houshmandzadeh", "T.J. Slaughter", "T.J. Tampa", "Tandon Doss", "Tarik Black", "Tashawn Manning", "Tavares Gooden", "Taven Bryan", "Tavius Robinson", "Tavon Young", "Teddye Buchanan", "Tellis Redmon", "Terrance Copper", "Terrance West", "Terrell Bonds", "Terrell Suggs", "Terrence Brooks", "Terrence Cody", "Terrence Magee", "Terry Allen", "Terry Jones", "Thad Lewis", "Thakarius Keyes", "Thatcher Szalay", "Thomas Graham Jr.", "Tim Goad", "Tim Johnson", "Tim White", "Tim Williams", "Timmy Jernigan", "Todd Bouman", "Todd Heap", "Tom Zbikowski", "Tommy Bohanon", "Tommy Knight", "Tommy Polley", "Tony Banks", "Tony Curtis", "Tony Jefferson", "Tony Jones", "Tony Moll", "Tony Pashos", "Tony Poljan", "Tony Siragusa", "Tony Vinson", "Torrey Smith", "Trace McSorley", "Tramain Jacobs", "Tramel Walthour", "Travis Jones", "Travis Taylor", "Tray Walker", "Trayvon Mullen", "Tre Swilling", "Tre'Davious White", "Trent Dilfer", "Trenton Simpson", "Trevin Wade", "Trevon Clark", "Trevon Coley", "Trevor Pryce", "Trey Botts", "Trey Hendrickson", "Troy Smith", "Trystan Colon-Castillo", "Ty Montgomery", "Ty Pezza", "Ty'Son Williams", "Tykeem Doss", "Tylan Wallace", "Tyler Ervin", "Tyler Huntley", "Tyler Linderbaum", "Tyler Loop", "Tyler Ott", "Tyre Phillips", "Tyrell Peters", "Tyrod Taylor", "Tyrus McCloud", "Tyus Bowser", "Ufomba Kamalu", "Vashone Adams", "Vince Biegel", "Vince Mayle", "Vinny Testaverde", "Vladimir Ducasse", "Vonta Leach", "Wade Richey", "Wally Richardson", "Wally Williams", "Will Davis", "Will Demps", "Will Hill", "Will Holden", "William Kwenkeu", "Willie Anderson", "Willie Gaston", "Willie Henry", "Willie Snead", "Willis McGahee", "Xavier Grimble", "Xavier Guillory", "Xavier Kelly", "Yamon Figurs", "Yannick Ngakoue", "Za'Darius Smith", "Zac Woodfin", "Zach Norton", "Zach Orr", "Zach Sieler", "Zaire Mitchell-Paden", "Zakoby McClain", "Zarnell Fitch", "Zay Flowers", "Zion Young"];
+const QUIPS = {
+ "bleeder": [
+  "You make me smile like an Ed Reed pick-six.",
+  "Nice job! That must have felt as sweet as Kyle Hamilton falling to us at No. 14.",
+  "Clutch. That was Jacoby Jones behind the Denver secondary in the Mile High Miracle.",
+  "Ice cold. That's Justin Tucker's 66-yarder clanking off the crossbar and in at Detroit.",
+  "Elite. Joe Flacco 2012-playoffs elite: 11 touchdowns, zero picks.",
+  "That was Ray Lewis squirrel-dancing out of the tunnel. Goosebumps.",
+  "Unstoppable, like Lamar's spin move to the house against the Bengals.",
+  "You were the 2000 defense out there: 165 points allowed, a 16-game record.",
+  "Like Jamal Lewis going for 295 on the Browns. Just bowling people over.",
+  "That's Ed Reed taking one back 107 yards in Philly. Untouchable.",
+  "Ozzie's 1996 draft energy: two Hall of Famers in one first round.",
+  "Not bad for a running back, huh?"
+ ],
+ "tailgate": [
+  "Solid. Like a Sam Koch punt that dies at the 2-yard line.",
+  "Not bad! As reliable as Dennis Pitta on a third-down option route.",
+  "Dependable as a Marshal Yanda block. Nobody's getting by you.",
+  "Like Anquan Boldin in New Orleans: contested, but you came down with it.",
+  "That's a Haloti Ngata batted pass: not pretty, but it worked.",
+  "Like the Harbaugh Bowl: a little sketchy at the end, but we'll take it.",
+  "Nice! Mark Andrews up the seam. You knew exactly where you were going.",
+  "Like Justin Forsett in 2014: out of nowhere and straight to the Pro Bowl.",
+  "Good stuff. That was Gus Edwards running through a safety for the first down.",
+  "Respectable. Devin Duvernay on a kickoff: good return, great field position."
+ ],
+ "bandwagon": [
+  "That was a Kyle Boller throw from his knees: cool party trick, not much else.",
+  "Shaky. Like the Superdome blackout: the lights went out for a while there.",
+  "That had the energy of the 2007 Boller-to-Troy Smith quarterback carousel.",
+  "Chaotic, like the Snow Bowl against Minnesota: five touchdowns in the last 2:05.",
+  "That was a Breshad Perriman rookie camp: lots of promise, then the knee.",
+  "So-so. Like sitting through 2015: 5-11 and half the roster on IR.",
+  "So close, like Isaiah Likely's toe on the end line in Kansas City.",
+  "Halfway there, like the 2023 AFC title game: great season, then a dud at home.",
+  "Feels like the 2002 cap purge: some real talent left on the table.",
+  "That was a Cam Cameron run up the middle on 3rd-and-short. We all saw it coming."
+ ],
+ "steelers": [
+  "Not so good. That was as bad as another Alejandro Villanueva false start.",
+  "Way off! That was like a Billy Cundiff playoff field goal attempt.",
+  "Ouch. That was Lee Evans in the end zone in Foxborough.",
+  "Brutal. That was the 2019 Titans playoff game all over again.",
+  "Yikes. That was Zay Flowers at the goal line in the AFC title game.",
+  "Rough. That was Mark Andrews' two-point try in Buffalo.",
+  "4th-and-12 against Cincinnati, Week 17, 2017. Tyler Boyd says hi.",
+  "That had the energy of the Mayflower trucks leaving town in 1984.",
+  "Rough day. That was a Stoney Case start.",
+  "Way off, like a 'Ryan Mallett, QB1' Sunday."
+ ]
+};
+const GAME_URL = 'https://ianmlever-143.github.io/flockfanatic/';
+const KEY = 'flockfanatic';
+
+function unscramble(b64){
+  const bin = atob(b64), out = new Uint8Array(bin.length);
+  for (let i = 0; i < bin.length; i++) out[i] = bin.charCodeAt(i) ^ KEY.charCodeAt(i % KEY.length);
+  return JSON.parse(new TextDecoder().decode(out));
+}
+
+// ── WHICH WEEK IS LIVE ─────────────────────────────────────────────────────
+const NOW = new Date();
+const OPEN = WEEKS.filter(w => new Date(w.opens) <= NOW);
+const LIVE_META = OPEN.length ? OPEN[OPEN.length - 1] : WEEKS[0];
+const WEEK = Object.assign({ id: LIVE_META.id, label: LIVE_META.label, opens: LIVE_META.opens }, unscramble(LIVE_META.data));
+const NEXT = WEEKS.find(w => new Date(w.opens) > NOW) || null;
+const GAME_ID = 'ff-' + WEEK.id;
+
+// ── SCORING ────────────────────────────────────────────────────────────────
+const LADDER = [100, 80, 60, 40, 20];      // points by number of hints revealed
+const MISS_COST = 10, MAX_TRIES = 3, FLOOR = 5;
+const HINTS = [
+  { key: 'college',   label: 'College' },
+  { key: 'position',  label: 'Position' },
+  { key: 'teammates', label: 'Played alongside' },
+  { key: 'stats',     label: 'Ravens stat line' }
+];
+const LEVELS = {
+  easy:   { name: 'Easy',   sub: 'Ring of Honor' },
+  medium: { name: 'Medium', sub: 'Solid contributor' },
+  hard:   { name: 'Hard',   sub: 'Deep cut' }
+};
+
+// ── ICONS ──────────────────────────────────────────────────────────────────
+const I = (p, w = 1.7) => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="${w}" stroke-linecap="round" stroke-linejoin="round">${p}</svg>`;
+const ICONS = {
+  feather: I('<path d="M20 4C12 4 6 9 5 17l-1.5 3.5"/><path d="M20 4c0 7-4 12-11 13"/><path d="M9.5 11.5 14 8M7.5 15l5-2.5"/>'),
+  trophy: I('<path d="M8 4h8v5a4 4 0 0 1-8 0Z"/><path d="M8 5.5H5.3a2.6 2.6 0 0 0 3 3.6M16 5.5h2.7a2.6 2.6 0 0 1-3 3.6"/><path d="M12 13v3.5M9 20.5h6M10 16.5h4"/>'),
+  info: I('<circle cx="12" cy="12" r="9"/><path d="M12 11v6"/><circle cx="12" cy="7.8" r=".6" fill="currentColor"/>'),
+  drop: I('<path d="M12 3.5c3.2 4 6 7.3 6 10.5a6 6 0 0 1-12 0c0-3.2 2.8-6.5 6-10.5Z"/>'),
+  grill: I('<path d="M4 10h16a8 8 0 0 1-16 0Z"/><path d="M8 18l-2 3M16 18l2 3M9 6.5c0-1 1-1.2 1-2.2M13 6.5c0-1 1-1.2 1-2.2"/>'),
+  wagon: I('<path d="M3 7h14l-1.5 7H4.5Z"/><circle cx="7" cy="18" r="2"/><circle cx="14" cy="18" r="2"/><path d="M17 9h3"/>'),
+  disguise: I('<circle cx="7.5" cy="10" r="3"/><circle cx="16.5" cy="10" r="3"/><path d="M10.5 10h3M4.5 10H3M21 10h-1.5M8 16c2.5-1.5 5.5-1.5 8 0"/>'),
+  share: I('<path d="M12 15V4M8 8l4-4 4 4"/><path d="M5 13v6h14v-6"/>')
+};
+
+// ── TIERS (points per round; overall uses the 3-round average) ──────────────
+const TIERS = [
+  { key: 'bleeder',   min: 90, name: 'Purple Bleeder',            icon: 'drop',     color: '#4B2CB8', tint: '#ECE7FA',
+    text: "Old Bay in your veins and purple in your blood. Somewhere in Owings Mills, a scout just wrote your name down." },
+  { key: 'tailgate',  min: 60, name: 'Tailgate Lifer',            icon: 'grill',    color: '#9A7514', tint: '#F8EFD8',
+    text: "You've been grilling pit beef in the lot since the Memorial Stadium days. Pretty damn solid." },
+  { key: 'bandwagon', min: 30, name: 'Bandwagon Bird',            icon: 'wagon',    color: '#56607A', tint: '#EDEFF4',
+    text: "You know the big names, but be honest: you bought your first jersey during a playoff run." },
+  { key: 'steelers',  min: -1, name: 'Steelers Fan in Disguise',  icon: 'disguise', color: '#1C1C1C', tint: '#E9E7E2',
+    text: "Nice purple jersey. Shame about the black-and-gold socks. Head on back up I-70, pal." }
+];
+const TIER_EMOJI = { bleeder: '🟪', tailgate: '🟨', bandwagon: '⬜', steelers: '⬛' };
+function getTier(pts){ for (const t of TIERS) if (pts >= t.min) return t; return TIERS[TIERS.length - 1]; }
+
+// Quips: never one that names a player from this week's answers.
+const ANSWER_WORDS = WEEK.rounds.flatMap(r => [r.answer.toLowerCase(), r.nameplate.toLowerCase()]);
+function quipFor(roundIdx, tierKey){
+  const pool = (QUIPS[tierKey] || []).filter(q => !ANSWER_WORDS.some(w => q.toLowerCase().includes(w)));
+  if (!pool.length) return '';
+  let h = 0; const seed = WEEK.id + ':' + roundIdx;
+  for (const c of seed) h = (h * 31 + c.charCodeAt(0)) >>> 0;
+  return pool[h % pool.length];
+}
+
+// ── STATE (saved in this browser; synced to Firebase when signed in) ─────────
+const freshRound = () => ({ hints: 0, guesses: [], solved: false, done: false });
+let STATE = { rounds: [freshRound(), freshRound(), freshRound()] };
+let view = 0;   // 0-2 = rounds, 3 = final
+const LS_KEY = 'flockfanatic-' + WEEK.id;
+try { const s = JSON.parse(localStorage.getItem(LS_KEY)); if (s && Array.isArray(s.rounds) && s.rounds.length === 3) STATE = s; } catch(e){}
+function persist(){ try { localStorage.setItem(LS_KEY, JSON.stringify(STATE)); } catch(e){} hook('saveProgress'); }
+
+const misses = r => r.guesses.length - (r.solved ? 1 : 0);
+const potential = r => Math.max(FLOOR, LADDER[r.hints] - MISS_COST * misses(r));
+const points = r => r.solved ? potential(r) : 0;
+const allDone = () => STATE.rounds.every(r => r.done);
+const total = () => STATE.rounds.reduce((s, r) => s + points(r), 0);
+
+// ── HELPERS ────────────────────────────────────────────────────────────────
+const $ = id => document.getElementById(id);
+function esc(t){ return String(t).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+function toast(msg){ const t = $('toast'); t.textContent = msg; t.classList.add('show'); clearTimeout(toast._t); toast._t = setTimeout(() => t.classList.remove('show'), 3800); }
+const norm = s => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/[^a-z0-9 ]/g, '').replace(/\s+/g, ' ').trim();
+function fmtDate(d){ return d ? d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : ''; }
+function hook(name, ...args){ try { if (window.FFB && typeof window.FFB[name] === 'function') return window.FFB[name](...args); } catch(e){ console.warn('hook', name, e); } }
+function track(ev, p){ if (typeof gtag === 'function') gtag('event', ev, Object.assign({ game_id: GAME_ID }, p || {})); }
+
+// ── RENDER: header & tabs ──────────────────────────────────────────────────
+$('logomark').innerHTML = ICONS.feather;
+$('lb-btn').innerHTML = `<span class="ico">${ICONS.trophy}</span>`;
+$('info-btn').innerHTML = `<span class="ico">${ICONS.info}</span>`;
+$('week-line').textContent = `${WEEK.label} · ${new Date(WEEK.opens).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}`;
+
+function renderTabs(){
+  const nav = $('tabs');
+  let h = WEEK.rounds.map((r, i) => {
+    const st = STATE.rounds[i], L = LEVELS[r.level];
+    const status = st.done ? `${points(st)} pts` : (st.hints || st.guesses.length ? 'In progress' : 'Play');
+    return `<button class="tab${view === i ? ' active' : ''}${st.done ? ' done' : ''}" data-v="${i}" aria-current="${view === i}"><b>${L.name}</b><small>${L.sub}</small><span class="st">${status}</span></button>`;
+  }).join('');
+  if (allDone()) h += `<button class="tab score-tab${view === 3 ? ' active' : ''}" data-v="3"><b>Score</b><small>Your week</small><span class="st">${total()} pts</span></button>`;
+  nav.innerHTML = h;
+  nav.querySelectorAll('.tab').forEach(b => b.onclick = () => show(+b.dataset.v));
+  $('total-val').textContent = total();
+}
+
+// ── RENDER: a round ────────────────────────────────────────────────────────
+function hintValue(r, key){
+  if (key === 'teammates') return r.teammates.join(', ');
+  return r[key];
+}
+function renderRound(i){
+  const R = WEEK.rounds[i], st = STATE.rounds[i], L = LEVELS[R.level];
+  $('round-label').textContent = `${L.name} · ${L.sub}`;
+  const w = $('worth');
+  if (st.done){ w.textContent = `${points(st)} pts`; w.classList.toggle('zero', !st.solved); }
+  else { w.textContent = `Worth ${potential(st)}`; w.classList.remove('zero'); }
+  $('num').textContent = R.number;
+  const plate = $('plate');
+  plate.textContent = st.done ? R.nameplate : '? ? ? ? ?';
+  plate.setAttribute('font-size', st.done && R.nameplate.length > 7 ? 16 : 21);
+  $('jersey-title').textContent = st.done ? `${R.answer}, number ${R.number}` : `Mystery Raven, number ${R.number}`;
+  $('years').innerHTML = `Ravens <span>${esc(R.years)}</span>`;
+
+  // Scouting report
+  $('report').innerHTML = HINTS.map((h, k) => {
+    const shown = k < st.hints, isNext = k === st.hints && !st.done;
+    let right;
+    if (shown) right = `<span class="tag used">−20</span>`;
+    else if (st.done) right = `<span class="tag">Not used</span>`;
+    else right = `<button class="reveal-btn" data-k="${k}" ${isNext ? '' : 'disabled'} aria-label="Reveal ${h.label}, costs 20 points">Reveal −20</button>`;
+    const val = (shown || st.done) ? esc(hintValue(R, h.key)) : 'Locked';
+    return `<div class="hint${st.done && !shown ? ' unused' : ''}"><div><div class="k">${h.label}</div><div class="v${shown || st.done ? '' : ' locked'}">${val}</div></div>${right}</div>`;
+  }).join('');
+  $('report').querySelectorAll('.reveal-btn').forEach(b => b.onclick = () => revealHint(i));
+
+  // Guess box vs result
+  $('guess-box').style.display = st.done ? 'none' : 'block';
+  $('result-box').style.display = st.done ? 'block' : 'none';
+  if (!st.done){
+    $('tries').innerHTML = Array.from({ length: MAX_TRIES }, (_, k) => `<span class="try-dot${k < misses(st) ? ' used' : ''}"></span>`).join('') + `<span>${MAX_TRIES - misses(st)} left</span>`;
+    $('misses').innerHTML = st.guesses.map(g => `<li>Not ${esc(g)}</li>`).join('');
+    $('field-msg').textContent = '';
+  } else renderResult(i);
+}
+
+function renderResult(i){
+  const R = WEEK.rounds[i], st = STATE.rounds[i];
+  const pts = points(st), t = getTier(pts);
+  const hintsTxt = st.hints === 0 ? 'no hints' : `${st.hints} hint${st.hints > 1 ? 's' : ''}`;
+  const missTxt = misses(st) ? `, ${misses(st)} miss${misses(st) > 1 ? 'es' : ''}` : '';
+  const line = st.solved ? `${esc(R.answer)} — with ${hintsTxt}${missTxt}.` : `It was ${esc(R.answer)}.`;
+  $('result').innerHTML =
+    `<div class="stamp" style="--tier:${t.color};--tier-tint:${t.tint}"><span class="badge"><span class="ico">${ICONS[t.icon]}</span></span><b>${t.name}</b></div>` +
+    `<div class="result-pts">${pts}<small>/ 100</small></div>` +
+    `<div class="result-line">${line}</div>` +
+    `<p class="quip">${esc(quipFor(i, t.key))}</p>`;
+  $('facts').innerHTML = `<h3>${esc(R.answer)}, No. ${esc(R.number)}</h3><ul>${R.facts.map(f => `<li>${esc(f)}</li>`).join('')}</ul>` +
+    `<div class="cites">Learn more${R.cites.map(c => `<a href="${esc(c.url)}" target="_blank" rel="noopener noreferrer">${esc(c.label)}</a>`).join('')}</div>`;
+  const nextUndone = STATE.rounds.findIndex(r => !r.done);
+  $('next-row').innerHTML = nextUndone >= 0
+    ? `<button class="btn" id="go-next">Next: ${LEVELS[WEEK.rounds[nextUndone].level].name} Raven</button>`
+    : `<button class="btn btn-gold" id="go-next">See my score</button>`;
+  $('go-next').onclick = () => show(nextUndone >= 0 ? nextUndone : 3);
+  $('plate').classList.remove('stitch-in'); void $('plate').getBBox; $('plate').classList.add('stitch-in');
+}
+
+// ── ACTIONS ────────────────────────────────────────────────────────────────
+function revealHint(i){
+  const st = STATE.rounds[i];
+  if (st.done || st.hints >= HINTS.length) return;
+  st.hints++; persist(); renderRound(i); renderTabs();
+  track('reveal_hint', { round: WEEK.rounds[i].level, hint: HINTS[st.hints - 1].key });
+}
+function finishRound(i){
+  const st = STATE.rounds[i];
+  st.done = true; persist();
+  track('round_complete', { round: WEEK.rounds[i].level, points: points(st), hints: st.hints, solved: st.solved });
+  renderTabs(); renderRound(i);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  if (allDone()){ track('game_complete', { total_points: total() }); hook('onFinal'); }
+}
+function submitGuess(name){
+  const i = view, st = STATE.rounds[i], R = WEEK.rounds[i];
+  if (st.done) return;
+  const msg = $('field-msg');
+  const pick = PLAYERS.find(p => norm(p) === norm(name));
+  if (!pick){ msg.textContent = name.trim() ? "Pick a player from the list — every Raven since 1996 is in there." : 'Type a name first.'; return; }
+  if (st.guesses.includes(pick)){ msg.textContent = `You already tried ${pick}.`; return; }
+  st.guesses.push(pick);
+  $('guess-input').value = ''; closeSuggest();
+  if (norm(pick) === norm(R.answer)){ st.solved = true; finishRound(i); return; }
+  if (misses(st) >= MAX_TRIES){ finishRound(i); return; }
+  persist(); renderRound(i); renderTabs();
+  $('field-msg').textContent = '';
+  $('sr-live').textContent = `Not ${pick}. ${MAX_TRIES - misses(st)} guess${MAX_TRIES - misses(st) > 1 ? 'es' : ''} left.`;
+  $('guess-input').focus();
+}
+$('give-up').onclick = () => {
+  if (confirm("Give up on this Raven? You'll get 0 points for this round.")) finishRound(view);
+};
+
+// ── TYPE-AHEAD ─────────────────────────────────────────────────────────────
+const P_NORM = PLAYERS.map(p => ({ p, n: norm(p) }));
+let sugg = [], sIdx = -1;
+function matches(q){
+  q = norm(q); if (q.length < 2) return [];
+  const starts = [], words = [];
+  for (const x of P_NORM){
+    if (x.n.startsWith(q)) starts.push(x.p);
+    else if (x.n.split(' ').some(w => w.startsWith(q)) || (q.includes(' ') && x.n.includes(q))) words.push(x.p);
+  }
+  return starts.concat(words).slice(0, 8);
+}
+function hl(p, q){
+  const n = p.toLowerCase(), k = n.indexOf(q.toLowerCase().trim());
+  if (k < 0 || !q.trim()) return esc(p);
+  return esc(p.slice(0, k)) + '<mark>' + esc(p.slice(k, k + q.trim().length)) + '</mark>' + esc(p.slice(k + q.trim().length));
+}
+function openSuggest(){
+  const q = $('guess-input').value, list = $('suggest'), tried = STATE.rounds[view].guesses;
+  sugg = matches(q); sIdx = sugg.length ? 0 : -1;
+  if (!sugg.length){ closeSuggest(); return; }
+  list.innerHTML = sugg.map((p, k) => `<li role="option" id="opt-${k}" data-k="${k}" class="${k === sIdx ? 'on' : ''}${tried.includes(p) ? ' tried' : ''}">${hl(p, q)}</li>`).join('');
+  list.classList.add('open'); $('guess-input').setAttribute('aria-expanded', 'true');
+  $('guess-input').setAttribute('aria-activedescendant', 'opt-' + sIdx);
+  list.querySelectorAll('li').forEach(li => li.onmousedown = e => { e.preventDefault(); const p = sugg[+li.dataset.k]; if (!tried.includes(p)) submitGuess(p); });
+}
+function closeSuggest(){ $('suggest').classList.remove('open'); $('guess-input').setAttribute('aria-expanded', 'false'); sugg = []; sIdx = -1; }
+function moveSel(d){
+  if (!sugg.length) return;
+  sIdx = (sIdx + d + sugg.length) % sugg.length;
+  $('suggest').querySelectorAll('li').forEach((li, k) => li.classList.toggle('on', k === sIdx));
+  $('guess-input').setAttribute('aria-activedescendant', 'opt-' + sIdx);
+  const on = $('suggest').querySelector('li.on'); if (on) on.scrollIntoView({ block: 'nearest' });
+}
+$('guess-input').addEventListener('input', () => { $('field-msg').textContent = ''; openSuggest(); });
+$('guess-input').addEventListener('keydown', e => {
+  if (e.key === 'ArrowDown'){ e.preventDefault(); moveSel(1); }
+  else if (e.key === 'ArrowUp'){ e.preventDefault(); moveSel(-1); }
+  else if (e.key === 'Escape') closeSuggest();
+  else if (e.key === 'Enter'){ e.preventDefault(); submitGuess(sIdx >= 0 ? sugg[sIdx] : $('guess-input').value); }
+});
+$('guess-input').addEventListener('blur', () => setTimeout(closeSuggest, 120));
+$('guess-btn').onclick = () => submitGuess(sIdx >= 0 && sugg.length ? sugg[sIdx] : $('guess-input').value);
+
+// ── FINAL SCREEN ───────────────────────────────────────────────────────────
+function renderFinal(){
+  const tot = total(), t = getTier(tot / 3);
+  $('final').innerHTML =
+    `<div class="final-week">${esc(WEEK.label)} results</div>` +
+    `<div class="final-total">${tot}</div><div class="final-of">out of 300</div>` +
+    `<div class="final-tier" style="--tier:${t.color}">${t.name}</div><p class="final-text">${esc(t.text)}</p>` +
+    `<div class="mini-row">${WEEK.rounds.map((r, i) => { const st = STATE.rounds[i], rt = getTier(points(st));
+      return `<button class="mini" data-v="${i}" style="--tier:${rt.color};--tier-tint:${rt.tint}"><div class="lvl">${LEVELS[r.level].name}</div><div class="p">${points(st)}</div><div class="nm">${esc(r.answer)}</div></button>`; }).join('')}</div>`;
+  $('final').querySelectorAll('.mini').forEach(b => b.onclick = () => show(+b.dataset.v));
+  renderEarlyNote(); renderBoards(); tickCountdown();
+}
+function nextDrop(){
+  if (NEXT) return new Date(NEXT.opens);
+  const guess = new Date(new Date(WEEK.opens).getTime() + 7 * 864e5);
+  return guess > NOW ? guess : null;
+}
+function tickCountdown(){
+  const el = $('countdown'), d = nextDrop();
+  if (!d){ el.innerHTML = 'Three new Ravens are coming soon.'; return; }
+  const ms = d - new Date();
+  if (ms <= 0){ el.innerHTML = 'New Ravens are live. <a href="" style="color:var(--purple)">Reload to play</a>'; return; }
+  const dd = Math.floor(ms / 864e5), hh = Math.floor(ms / 36e5) % 24, mm = Math.floor(ms / 6e4) % 60;
+  el.innerHTML = `Next three Ravens drop ${d.toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric' })} · <b>${dd ? dd + 'd ' : ''}${hh}h ${mm}m</b>`;
+}
+setInterval(() => { if (view === 3) tickCountdown(); }, 30000);
+
+function show(v){
+  view = v;
+  $('screen-round').style.display = v < 3 ? 'block' : 'none';
+  $('screen-final').style.display = v === 3 ? 'block' : 'none';
+  renderTabs();
+  if (v < 3) renderRound(v); else renderFinal();
+}
+
+// ── MODALS ─────────────────────────────────────────────────────────────────
+function openModal(id){ $(id).classList.add('open'); const f = $(id).querySelector('button, input'); if (f) setTimeout(() => f.focus(), 30); }
+function closeModal(el){ el.classList.remove('open'); }
+document.querySelectorAll('.modal').forEach(m => {
+  m.addEventListener('click', e => { if (e.target === m || e.target.closest('[data-close]')) closeModal(m); });
+});
+document.addEventListener('keydown', e => { if (e.key === 'Escape') document.querySelectorAll('.modal.open').forEach(closeModal); });
+$('ladder').innerHTML = `<div><span>Number and years only</span><b>100</b></div><div><span>+ College</span><b>80</b></div><div><span>+ Position</span><b>60</b></div><div><span>+ Teammates</span><b>40</b></div><div><span>+ Stat line</span><b>20</b></div><div><span>Each wrong guess</span><b>−10</b></div>`;
+$('tier-rows').innerHTML = TIERS.map((t, k) => `<div class="tier-row" style="--tier:${t.color};--tier-tint:${t.tint}"><span class="badge"><span class="ico">${ICONS[t.icon]}</span></span><div><b>${t.name}</b><span>${k === TIERS.length - 1 ? 'Under 30 points' : (k === 0 ? '90 points or more' : `${t.min}–${TIERS[k - 1].min - 1} points`)}</span></div></div>`).join('');
+$('info-btn').onclick = () => openModal('info-modal');
+try { if (!localStorage.getItem('ff-seen-rules')){ localStorage.setItem('ff-seen-rules', '1'); openModal('info-modal'); } } catch(e){}
+
+// ── ACCOUNT, LEADERBOARD & SHARE ───────────────────────────────────────────
+const NAME_RE = /^[A-Za-z0-9_'-]{2,16}( [A-Za-z]\.?)?$/;
+let ACCOUNT = null, BOARD = { loading: true, rows: [], entry: null, rank: null }, PROFILE = { loading: true, games: [] };
+function suggestName(full){
+  if (!full) return '';
+  const parts = full.normalize('NFD').replace(/[̀-ͯ]/g, '').trim().split(/\s+/);
+  const first = (parts[0] || '').replace(/[^A-Za-z0-9_'-]/g, '').slice(0, 16);
+  const last = parts.length > 1 ? parts[parts.length - 1].replace(/[^A-Za-z]/g, '') : '';
+  const out = last ? `${first} ${last[0].toUpperCase()}.` : first;
+  return NAME_RE.test(out) ? out : '';
+}
+function renderAccountBtn(){
+  const b = $('acct-btn');
+  if (!ACCOUNT){ b.className = 'hbtn signed-out'; b.innerHTML = `<span class="acct-label">Sign in</span>`; b.title = 'Sign in to save your progress'; }
+  else { b.className = 'hbtn'; b.title = 'Your account';
+    b.innerHTML = `<span class="acct-avatar">${esc((ACCOUNT.name || ACCOUNT.suggested || '?')[0].toUpperCase())}</span><span class="acct-label">${esc(ACCOUNT.name || 'Set name')}</span>`; }
+}
+$('acct-btn').onclick = () => {
+  if (!ACCOUNT){ if (window.FFB) hook('signIn'); else toast('Sign-in is still loading — try again in a moment.'); }
+  else openProfile();
+};
+$('lb-btn').onclick = () => { renderBoards(); hook('refreshBoard'); openModal('lb-modal'); };
+
+let nameCb = null;
+function openNameModal(cb){
+  nameCb = cb; $('name-input').value = (ACCOUNT && (ACCOUNT.name || ACCOUNT.suggested)) || ''; $('name-error').textContent = '';
+  openModal('name-modal');
+}
+async function submitName(){
+  const v = $('name-input').value.trim().replace(/\s+/g, ' '), err = $('name-error');
+  if (!NAME_RE.test(v)){ err.textContent = v.includes(' ') ? 'Use a first name plus one last initial (like "Ian L."), or a one-word nickname.' : 'Use 2–16 letters or numbers, no spaces.'; return; }
+  const ok = await hook('saveName', v);
+  if (ok === false){ err.textContent = "That name didn't save. Check your connection and try again."; return; }
+  closeModal($('name-modal'));
+  const cb = nameCb; nameCb = null;
+  if (cb) cb(v); else { toast('Name saved.'); if ($('profile-modal').classList.contains('open')) renderProfile(); }
+}
+$('name-save').onclick = submitName;
+$('name-input').addEventListener('keydown', e => { if (e.key === 'Enter') submitName(); });
+$('signout-btn').onclick = () => { closeModal($('profile-modal')); hook('signOut'); toast('Signed out.'); };
+
+function boardHtml(){
+  let list;
+  if (BOARD.loading) list = `<div class="lb-empty">Loading scores…</div>`;
+  else if (BOARD.error) list = `<div class="lb-empty">The leaderboard didn't load. Check your connection and try again.</div>`;
+  else if (!BOARD.rows.length) list = `<div class="lb-empty">No scores yet. Finish all three Ravens to claim the top spot.</div>`;
+  else {
+    list = `<ol class="lb-list">` + BOARD.rows.map((r, k) => `<li class="lb-row${r.me ? ' me' : ''}"><span class="lb-rank">${k + 1}</span><span class="lb-name">${esc(r.name)}${r.me ? ' (you)' : ''}</span><span class="lb-pts">${r.totalPoints}<small>pts</small></span></li>`).join('') + `</ol>`;
+    if (BOARD.entry && BOARD.rank && BOARD.rank > 10)
+      list += `<div class="lb-dots">···</div><ol class="lb-list"><li class="lb-row me"><span class="lb-rank">${BOARD.rank}</span><span class="lb-name">${esc(BOARD.entry.name)} (you)</span><span class="lb-pts">${BOARD.entry.totalPoints}<small>pts</small></span></li></ol>`;
+  }
+  let status;
+  if (!ACCOUNT) status = `Sign in with Google to post your score and keep your progress on every device.<br><button class="btn btn-sm" data-act="signin">Sign in with Google</button>`;
+  else if (BOARD.entry) status = `You're <b>#${BOARD.rank || '—'}</b> this week with ${BOARD.entry.totalPoints} points` + (BOARD.playerNo ? `, and you were player <b>#${BOARD.playerNo}</b> to finish` : '') + `. Your first finished game is the one that counts.`;
+  else if (!allDone()) status = `Finish all three Ravens to post your score.`;
+  else if (!ACCOUNT.name) status = `Pick a leaderboard name to post your score.<br><button class="btn btn-sm" data-act="name">Choose a name</button>`;
+  else status = `Posting your score…`;
+  return `<div class="lb-head"><div><h3>${esc(WEEK.label)} leaderboard</h3></div><div class="sub">Top 10 · most points wins<br>Resets every Sunday</div></div>${list}<div class="lb-status">${status}</div>`;
+}
+function renderEarlyNote(){
+  const el = $('early-note'), mine = BOARD.entry && BOARD.playerNo;
+  const lead = mine ? `You're player #${BOARD.playerNo} to finish ${esc(WEEK.label)} of Flock Fanatic.` : `You're one of Flock Fanatic's very first players.`;
+  el.innerHTML = `<span class="badge"><span class="ico">${ICONS.feather}</span></span><div><b>Early bird!</b><span>${lead} Send it to the friend who still won't shut up about the 2000 defense, and come back Sunday for three new Ravens.</span></div>`;
+}
+function renderBoards(){
+  if (view === 3) renderEarlyNote();
+  [['lb-final'], ['lb-modal-body']].forEach(([id]) => {
+    const el = $(id); el.innerHTML = boardHtml();
+    el.querySelectorAll('[data-act="signin"]').forEach(b => b.onclick = () => hook('signIn'));
+    el.querySelectorAll('[data-act="name"]').forEach(b => b.onclick = () => openNameModal(() => hook('onFinal')));
+  });
+}
+
+// Share: a PNG score card plus a text message
+function shareInfo(){
+  return { weekId: WEEK.id, label: WEEK.label, totalPoints: total(), rounds: STATE.rounds.map(points), hints: STATE.rounds.map(r => r.hints),
+    playedAt: BOARD.entry && BOARD.playedAt ? BOARD.playedAt : new Date(), playerNo: BOARD.entry ? BOARD.playerNo : null, rank: BOARD.entry ? BOARD.rank : null, current: true };
+}
+function shareText(info){
+  const t = getTier(info.totalPoints / 3);
+  const row = ['Easy', 'Med', 'Hard'].map((l, k) => `${TIER_EMOJI[getTier(info.rounds[k]).key]} ${l} ${info.rounds[k]}`).join('  ');
+  const brag = info.playerNo ? `Player #${info.playerNo} to finish${info.rank ? ` · ranked #${info.rank}` : ''}\n` : '';
+  return `Flock Fanatic · ${info.label}\n${info.totalPoints}/300 · ${t.name}\n${row}\n${brag}${info.current ? 'Can you beat me?' : 'Play this week’s Ravens:'} ${GAME_URL}`;
+}
+function svgImg(svg, color, size){
+  const src = svg.replace(/currentColor/g, color).replace('<svg ', `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" `);
+  return new Promise((res, rej) => { const im = new Image(); im.onload = () => res(im); im.onerror = rej; im.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(src); });
+}
+function rr(x, X, Y, w, h, r){ x.beginPath(); x.moveTo(X + r, Y); x.arcTo(X + w, Y, X + w, Y + h, r); x.arcTo(X + w, Y + h, X, Y + h, r); x.arcTo(X, Y + h, X, Y, r); x.arcTo(X, Y, X + w, Y, r); x.closePath(); }
+async function makeCard(info){
+  const W = 1080, H = 1080, t = getTier(info.totalPoints / 3);
+  try { await Promise.all(['100px Graduate', '700 40px "Barlow Condensed"', '600 30px Barlow'].map(f => document.fonts.load(f))); } catch(e){}
+  const c = document.createElement('canvas'); c.width = W; c.height = H; const x = c.getContext('2d');
+  const g = x.createRadialGradient(W / 2, 0, 50, W / 2, 300, 1000); g.addColorStop(0, '#33208F'); g.addColorStop(.55, '#1F1260'); g.addColorStop(1, '#160B47');
+  x.fillStyle = g; x.fillRect(0, 0, W, H);
+  x.textAlign = 'center';
+  x.font = '86px Graduate, Georgia, serif'; const w1 = x.measureText('Flock ').width, w2 = x.measureText('Fanatic').width;
+  x.textAlign = 'left'; x.fillStyle = '#FFFFFF'; x.fillText('Flock ', W / 2 - (w1 + w2) / 2, 170); x.fillStyle = '#C49A2C'; x.fillText('Fanatic', W / 2 - (w1 + w2) / 2 + w1, 170);
+  x.textAlign = 'center'; x.font = '600 34px Barlow, Arial, sans-serif'; x.fillStyle = '#CFC8F0'; x.fillText(info.label, W / 2, 228);
+  x.font = '230px Graduate, Georgia, serif'; x.lineWidth = 8; x.strokeStyle = '#C49A2C'; x.strokeText(String(info.totalPoints), W / 2, 485); x.fillStyle = '#FFFFFF'; x.fillText(String(info.totalPoints), W / 2, 485);
+  x.font = '600 34px Barlow, Arial, sans-serif'; x.fillStyle = '#CFC8F0'; x.fillText('out of 300 points', W / 2, 545);
+  x.font = '700 70px "Barlow Condensed", Arial, sans-serif'; x.fillStyle = '#C49A2C'; x.fillText(t.name, W / 2, 640);
+  const labels = ['Easy', 'Medium', 'Hard'], bw = 250, gap = 30, sx = W / 2 - (3 * bw + 2 * gap) / 2;
+  for (let k = 0; k < 3; k++){
+    const rt = getTier(info.rounds[k]), bx = sx + k * (bw + gap), by = 690;
+    rr(x, bx, by, bw, 150, 26); x.fillStyle = rt.tint; x.fill();
+    const im = await svgImg(ICONS[rt.icon], rt.color, 44).catch(() => null); if (im) x.drawImage(im, bx + 22, by + 22, 44, 44);
+    x.textAlign = 'right'; x.font = '600 28px Barlow, Arial, sans-serif'; x.fillStyle = '#4A4363'; x.fillText(labels[k], bx + bw - 24, by + 54);
+    x.textAlign = 'center'; x.font = '700 64px "Barlow Condensed", Arial, sans-serif'; x.fillStyle = rt.color; x.fillText(String(info.rounds[k]), bx + bw / 2, by + 128);
+  }
+  const brag = [info.playerNo ? `Player #${info.playerNo} to finish` : '', info.rank ? `Ranked #${info.rank}` : '', fmtDate(info.playedAt)].filter(Boolean).join('   ·   ');
+  x.font = '600 30px Barlow, Arial, sans-serif'; x.fillStyle = '#E8DFB8'; x.fillText(brag, W / 2, 905);
+  x.font = '700 40px "Barlow Condensed", Arial, sans-serif'; x.fillStyle = '#FFFFFF'; x.fillText(info.current ? 'Can you beat me?' : 'Play this week’s Ravens', W / 2, 975);
+  x.font = '500 26px Barlow, Arial, sans-serif'; x.fillStyle = '#A99FD6'; x.fillText('Blue Marble Games · ianmlever-143.github.io/flockfanatic', W / 2, 1022);
+  return new Promise(r => c.toBlob(r, 'image/png'));
+}
+async function shareScore(info, btn){
+  if (btn) btn.disabled = true;
+  try {
+    const text = shareText(info), blob = await makeCard(info);
+    const file = new File([blob], 'flock-fanatic-score.png', { type: 'image/png' });
+    if (navigator.canShare && navigator.canShare({ files: [file] })){
+      try { await navigator.share({ files: [file], text }); track('share', { method: 'native' }); return; }
+      catch(e){ if (e.name === 'AbortError') return; }
+    }
+    const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'flock-fanatic-score.png'; a.click();
+    setTimeout(() => URL.revokeObjectURL(a.href), 4000);
+    try { await navigator.clipboard.writeText(text); toast('Score card downloaded and message copied. Paste it into a text.'); }
+    catch(e){ toast('Score card downloaded.'); }
+    track('share', { method: 'download' });
+  } finally { if (btn) btn.disabled = false; }
+}
+$('share-btn').innerHTML = `<span class="ico">${ICONS.share}</span>Share my score`;
+$('share-btn').onclick = e => shareScore(shareInfo(), e.currentTarget);
+
+function openProfile(){ renderProfile(); openModal('profile-modal'); hook('loadProfile'); }
+function renderProfile(){
+  $('profile-sub').innerHTML = ACCOUNT ? `Leaderboard name: <b>${esc(ACCOUNT.name || 'not set yet')}</b> · <button class="link-btn" id="change-name">Change</button>` : '';
+  const cb = $('change-name'); if (cb) cb.onclick = () => openNameModal(null);
+  const box = $('profile-games');
+  if (PROFILE.loading){ box.innerHTML = `<div class="lb-empty">Loading your weeks…</div>`; return; }
+  if (!PROFILE.games.length){ box.innerHTML = `<div class="lb-empty">No finished weeks yet. Finish all three Ravens while signed in and your score shows up here.</div>`; return; }
+  box.innerHTML = PROFILE.games.map((g, k) => {
+    const t = getTier(g.totalPoints / 3);
+    const meta = [`Finished ${fmtDate(g.playedAt)}`, g.playerNo ? `Player #${g.playerNo} to finish` : '', g.rank ? `Ranked #${g.rank} of ${g.players}` : ''].filter(Boolean).join(' · ');
+    return `<div class="pg-row"><div class="pg-main"><div class="pg-title">${esc(g.label)}${g.current ? ' <span style="color:var(--gold-deep);font-size:.85rem">· this week</span>' : ''}</div><div class="pg-meta">${meta}<br><span style="color:${t.color}">${t.name}</span></div></div>` +
+      `<div class="pg-score"><div class="lb-pts">${g.totalPoints}<small>pts</small></div><button class="btn btn-sm" data-k="${k}" style="margin-top:.3rem">Share</button></div></div>`;
+  }).join('');
+  box.querySelectorAll('[data-k]').forEach(b => b.onclick = () => shareScore(PROFILE.games[+b.dataset.k], b));
+}
+
+// Bridge for the Firebase module below
+window.FF_GAME = {
+  GAME_ID, WEEK_ID: WEEK.id,
+  OPEN_WEEKS: OPEN.map(w => ({ id: w.id, label: w.label })),
+  getState: () => JSON.parse(JSON.stringify(STATE)),
+  applyState(s){ if (s && Array.isArray(s.rounds) && s.rounds.length === 3){ STATE = s; try { localStorage.setItem(LS_KEY, JSON.stringify(STATE)); } catch(e){} show(allDone() && view === 3 ? 3 : view); } },
+  activity: s => (s && s.rounds ? s.rounds.reduce((a, r) => a + (r.done ? 100 : 0) + r.hints + r.guesses.length, 0) : 0),
+  isDone: allDone,
+  result: () => ({ totalPoints: total(), rounds: STATE.rounds.map(points) }),
+  setAccount(a){ ACCOUNT = a; renderAccountBtn(); renderBoards(); },
+  setBoard(b){ BOARD = b; renderBoards(); },
+  setProfile(p){ PROFILE = p; renderProfile(); },
+  askName: cb => openNameModal(cb),
+  suggestName, toast
+};
+
+// ── START ──────────────────────────────────────────────────────────────────
+renderAccountBtn();
+const firstOpen = STATE.rounds.findIndex(r => !r.done);
+show(firstOpen >= 0 ? firstOpen : 3);
+renderBoards();
+setTimeout(() => { if (!window.FFB && BOARD.loading){ BOARD = { loading: false, error: true, rows: [], entry: null }; renderBoards(); } }, 9000);
+</script>
+
+<!-- ===================================================================== -->
+<!-- FIREBASE: Google sign-in, saved progress, weekly leaderboard          -->
+<!-- Flock Fanatic's own Firebase project. This config is meant to be     -->
+<!-- public; the Firestore security rules are what protect the data.     -->
+<!-- ===================================================================== -->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
+import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithRedirect, onAuthStateChanged, signOut }
+  from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
+import { getFirestore, doc, getDoc, setDoc, collection, query, orderBy, limit, where, getDocs, getCountFromServer, serverTimestamp }
+  from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
+
+const firebaseConfig = {
+  "apiKey": "AIzaSyDYGKTzmCdlYdyCT7sVzaQNNKxVRfGhjIQ",
+  "authDomain": "flockfanatic-2fc99.firebaseapp.com",
+  "projectId": "flockfanatic-2fc99",
+  "storageBucket": "flockfanatic-2fc99.firebasestorage.app",
+  "messagingSenderId": "964947005011",
+  "appId": "1:964947005011:web:50f0aafee64f470fcb40a6",
+  "measurementId": "G-E083X8P42X"
+};
+
+const G = window.FF_GAME;
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+let user = null, profile = {}, myEntry;    // myEntry: undefined = not loaded, null = none
+let submitting = false;
+const scoresCol = (weekId = G.WEEK_ID) => collection(db, 'flockfanatic', weekId, 'scores');
+const toDate = t => (t && typeof t.toDate === 'function') ? t.toDate() : null;
+
+async function standing(weekId, entry){
+  const col = scoresCol(weekId);
+  const [better, earlier, all] = await Promise.all([
+    getCountFromServer(query(col, where('totalPoints', '>', entry.totalPoints))),
+    entry.createdAt ? getCountFromServer(query(col, where('createdAt', '<', entry.createdAt))) : null,
+    getCountFromServer(col)
+  ]);
+  return { rank: better.data().count + 1, playerNo: earlier ? earlier.data().count + 1 : null, players: all.data().count };
+}
+
+async function signIn(){
+  const p = new GoogleAuthProvider(); p.setCustomParameters({ prompt: 'select_account' });
+  try { await signInWithPopup(auth, p); }
+  catch(e){
+    if (e.code === 'auth/popup-blocked' || e.code === 'auth/operation-not-supported-in-this-environment') await signInWithRedirect(auth, p);
+    else if (e.code !== 'auth/popup-closed-by-user' && e.code !== 'auth/cancelled-popup-request'){ console.error(e); G.toast("Sign-in didn't go through. Try again."); }
+  }
+}
+
+async function saveProgress(){
+  if (!user) return;
+  try { await setDoc(doc(db, 'users', user.uid, 'progress', G.GAME_ID), { state: G.getState(), updatedAt: serverTimestamp() }); }
+  catch(e){ console.warn('save progress', e); }
+}
+async function syncProgress(){
+  try {
+    const snap = await getDoc(doc(db, 'users', user.uid, 'progress', G.GAME_ID));
+    const remote = snap.exists() ? snap.data().state : null, local = G.getState();
+    if (remote && G.activity(remote) > G.activity(local)) G.applyState(remote);
+    else if (G.activity(local) > 0) await saveProgress();
+  } catch(e){ console.warn('sync progress', e); }
+}
+async function loadMyEntry(){
+  try { const snap = await getDoc(doc(scoresCol(), user.uid)); myEntry = snap.exists() ? snap.data() : null; }
+  catch(e){ myEntry = undefined; console.warn('load entry', e); }
+}
+async function refreshBoard(){
+  try {
+    const snap = await getDocs(query(scoresCol(), orderBy('totalPoints', 'desc'), limit(10)));
+    const rows = snap.docs.map(d => ({ name: d.data().name, totalPoints: d.data().totalPoints, at: toDate(d.data().createdAt), me: !!user && d.id === user.uid }))
+      .sort((a, b) => b.totalPoints - a.totalPoints || ((a.at || 0) - (b.at || 0)));
+    let rank = null, playerNo = null, playedAt = null;
+    if (myEntry){
+      const st = await standing(G.WEEK_ID, myEntry);
+      rank = st.rank; playerNo = st.playerNo; playedAt = toDate(myEntry.createdAt);
+    }
+    G.setBoard({ loading: false, rows, entry: myEntry || null, rank, playerNo, playedAt });
+  } catch(e){
+    console.warn('leaderboard', e);
+    G.setBoard({ loading: false, error: true, rows: [], entry: myEntry || null, rank: null });
+  }
+}
+async function saveName(name){
+  if (!user) return false;
+  try { await setDoc(doc(db, 'users', user.uid), { name }, { merge: true }); }
+  catch(e){ console.warn('save name', e); return false; }
+  profile.name = name; G.setAccount({ name, suggested: G.suggestName(user.displayName) });
+  return true;
+}
+async function maybeSubmit(){
+  if (!user || submitting || myEntry !== null || !G.isDone()) return;
+  if (!profile.name){ G.askName(() => maybeSubmit()); return; }
+  submitting = true;
+  const r = G.result();
+  try {
+    await setDoc(doc(scoresCol(), user.uid), { name: profile.name, totalPoints: r.totalPoints, rounds: r.rounds, createdAt: serverTimestamp() });
+    await loadMyEntry();
+    G.toast("You're on the leaderboard!");
+    if (typeof gtag === 'function') gtag('event', 'post_score', { game_id: G.GAME_ID, total_points: r.totalPoints });
+  } catch(e){ console.warn('submit score', e); await loadMyEntry(); }
+  finally { submitting = false; }
+  refreshBoard();
+}
+onAuthStateChanged(auth, async u => {
+  user = u; profile = {}; myEntry = undefined;
+  if (u){
+    try { const s = await getDoc(doc(db, 'users', u.uid)); profile = s.exists() ? s.data() : {}; } catch(e){ console.warn('profile', e); }
+    G.setAccount({ name: profile.name || null, suggested: G.suggestName(u.displayName) });
+    await syncProgress(); await loadMyEntry();
+  } else G.setAccount(null);
+  await refreshBoard();
+  if (u) maybeSubmit();
+});
+async function loadProfile(){
+  if (!user) return;
+  G.setProfile({ loading: true, games: [] });
+  try {
+    const games = await Promise.all(G.OPEN_WEEKS.map(async (w, k) => {
+      const snap = await getDoc(doc(scoresCol(w.id), user.uid));
+      if (!snap.exists()) return null;
+      const e = snap.data(), st = await standing(w.id, e);
+      return { weekId: w.id, label: w.label, totalPoints: e.totalPoints, rounds: e.rounds, playedAt: toDate(e.createdAt), current: k === G.OPEN_WEEKS.length - 1, ...st };
+    }));
+    G.setProfile({ loading: false, games: games.filter(Boolean).reverse() });
+  } catch(e){ console.warn('profile', e); G.setProfile({ loading: false, games: [] }); }
+}
+window.FFB = { signIn, signOut: () => signOut(auth), saveProgress, saveName, refreshBoard, loadProfile, onFinal: () => { refreshBoard(); maybeSubmit(); } };
+</script>
+</body>
+</html>
