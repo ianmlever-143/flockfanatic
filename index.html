@@ -4,12 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Flock Fanatic — How well do you know your Ravens?</title>
-<meta name="description" content="A free weekly Ravens trivia game. See a jersey number and the years, name the player. Three new Ravens every Sunday.">
+<meta name="description" content="A free weekly Ravens trivia game. See a jersey number and the years, name the player. Four new Ravens every Monday, plus a college bonus.">
 <meta name="theme-color" content="#1F1260">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Blue Marble Games">
 <meta property="og:title" content="Flock Fanatic — How well do you know your Ravens?">
-<meta property="og:description" content="A jersey number and the years. Name the Raven. Are you a Purple Bleeder, or a Steelers fan in disguise?">
+<meta property="og:description" content="A jersey number and the years. Name the Raven. Are you a True Flock Fanatic, or a Steelers fan in disguise?">
 <meta property="og:url" content="https://ianmlever-143.github.io/flockfanatic/">
 <meta property="og:image" content="https://ianmlever-143.github.io/flockfanatic/og-image.png">
 <meta property="og:image:width" content="1200">
@@ -135,6 +135,16 @@ button{font-family:inherit;}
 .btn-sm{padding:.5rem .9rem;font-size:.85rem;border-radius:10px;}
 .give-up{background:none;border:none;color:var(--ink-faint);font-weight:600;font-size:.82rem;text-decoration:underline;cursor:pointer;margin-top:.2rem;}
 
+/* College bonus */
+.bonus{padding:1rem;border:1.5px solid var(--gold);background:linear-gradient(var(--gold-tint),#fff 75%);}
+.bonus-head{display:flex;align-items:center;gap:.6rem;flex-wrap:wrap;margin-bottom:.25rem;}
+.bonus-badge{font-family:var(--f-cond);font-weight:700;font-size:.92rem;background:var(--gold);color:var(--stage);border-radius:50px;padding:.1rem .7rem;}
+.bonus-head b{font-family:var(--f-cond);font-weight:700;font-size:1.3rem;}
+.bonus p{font-size:.95rem;color:var(--ink-soft);margin-bottom:.6rem;}
+.bonus-line{display:flex;align-items:center;justify-content:center;gap:.4rem;font-size:.9rem;font-weight:600;color:var(--ink-soft);margin-top:.45rem;}
+.bonus-line.hit{color:var(--gold-deep);}
+.bonus-line .ico{width:18px;height:18px;flex-shrink:0;}
+
 /* Result */
 .result{padding:1.3rem 1.1rem 1.1rem;text-align:center;}
 .stamp{display:inline-flex;align-items:center;gap:.6rem;border:2px solid var(--tier,var(--purple));background:var(--tier-tint,var(--purple-tint));border-radius:50px;padding:.4rem 1.1rem .4rem .45rem;animation:pop .4s cubic-bezier(.3,1.4,.5,1) both;}
@@ -162,8 +172,8 @@ button{font-family:inherit;}
 .final-of{font-weight:600;color:var(--ink-faint);font-size:.9rem;}
 .final-tier{font-family:var(--f-cond);font-weight:700;font-size:1.6rem;margin-top:.9rem;color:var(--tier);}
 .final-text{font-size:.95rem;color:var(--ink-soft);max-width:44ch;margin:.3rem auto 0;}
-.mini-row{display:flex;justify-content:center;gap:.6rem;margin-top:1.1rem;}
-.mini{width:92px;border:1.5px solid var(--tier);background:var(--tier-tint);border-radius:14px;padding:.5rem .3rem;cursor:pointer;}
+.mini-row{display:grid;grid-template-columns:repeat(4,minmax(0,92px));justify-content:center;gap:.5rem;margin-top:1.1rem;}
+.mini{width:100%;border:1.5px solid var(--tier);background:var(--tier-tint);border-radius:14px;padding:.5rem .3rem;cursor:pointer;}
 .mini .lvl{font-size:.76rem;font-weight:600;color:var(--ink-soft);}
 .mini .p{font-family:var(--f-cond);font-weight:700;font-size:1.35rem;color:var(--tier);line-height:1.2;}
 .mini .nm{font-size:.72rem;font-weight:600;color:var(--ink);line-height:1.2;}
@@ -228,7 +238,7 @@ button{font-family:inherit;}
 .toast{position:fixed;left:50%;bottom:1.2rem;transform:translate(-50%,20px);background:var(--stage);color:#fff;padding:.7rem 1.2rem;border-radius:50px;font-size:.9rem;font-weight:600;opacity:0;pointer-events:none;transition:all .25s;z-index:3000;max-width:calc(100% - 2rem);text-align:center;}
 .toast.show{opacity:1;transform:translate(-50%,0);}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;}
-@media (max-width:420px){ .acct-label{display:none;} .hbtn.signed-out .acct-label{display:inline;} .tab small{display:none;} .mini{width:84px;} }
+@media (max-width:420px){ .acct-label{display:none;} .hbtn.signed-out .acct-label{display:inline;} .tab small{display:none;} .mini .nm{font-size:.68rem;} }
 @media (prefers-reduced-motion:reduce){ *{animation:none !important;transition:none !important;} }
 </style>
 </head>
@@ -253,7 +263,7 @@ button{font-family:inherit;}
 
 <main class="wrap">
   <nav class="tabs" id="tabs" aria-label="Rounds"></nav>
-  <div class="total-line"><span id="total-label">Your points this week</span><span><b id="total-val">0</b> / 300</span></div>
+  <div class="total-line"><span id="total-label">Your points this week</span><span><b id="total-val">0</b> / <span id="total-max">500</span></span></div>
 
   <!-- ROUND -->
   <section id="screen-round">
@@ -292,6 +302,21 @@ button{font-family:inherit;}
       <button class="give-up" id="give-up">Give up and see who it was</button>
     </div>
 
+    <div class="panel bonus" id="bonus-box" style="display:none">
+      <div class="bonus-head"><span class="bonus-badge">Bonus +25</span><b id="bonus-title"></b></div>
+      <p>Name his college for 25 extra points. One try.</p>
+      <div class="combo">
+        <div class="guess-row">
+          <input class="text-input" id="bonus-input" type="text" autocomplete="off" spellcheck="false" placeholder="Start typing a school"
+            role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="bonus-suggest" aria-label="His college">
+          <button class="btn btn-gold" id="bonus-btn">Answer</button>
+        </div>
+        <ul class="suggest" id="bonus-suggest" role="listbox"></ul>
+      </div>
+      <div class="field-msg" id="bonus-msg" aria-live="polite"></div>
+      <button class="give-up" id="bonus-skip">Skip the bonus</button>
+    </div>
+
     <div id="result-box" style="display:none">
       <div class="panel result" id="result"></div>
       <div class="panel facts" id="facts"></div>
@@ -316,11 +341,12 @@ button{font-family:inherit;}
   <div class="modal-card">
     <button class="x" data-close aria-label="Close">✕</button>
     <h2 id="info-title">How Flock Fanatic works</h2>
-    <div class="modal-sub">Three Ravens a week. One jersey number each. Name the player.</div>
+    <div class="modal-sub">Four Ravens a week. One jersey number each. Name the player.</div>
     <ul class="rules">
-      <li>Every Sunday there's an easy Raven (a Ring of Honor name), a medium one (a solid contributor) and a hard one (a deep cut).</li>
+      <li>Every Monday there are four Ravens: Easy (a household name), Medium (a solid contributor), Hard (an obscure name) and Expert (a guy who lasted a season or two).</li>
       <li>You start with their jersey number and the years they played in Baltimore. Name them right there for the full 100.</li>
       <li>Stuck? Reveal scouting hints in order. Each one costs 20 points.</li>
+      <li>Bonus: if you get the player without the college hint, name his college for 25 extra points.</li>
       <li>You get three guesses per player, and each miss costs 10. A correct guess is always worth at least 5.</li>
       <li>Sign in to post your score to the weekly leaderboard. Your first finished game counts.</li>
     </ul>
@@ -344,7 +370,7 @@ button{font-family:inherit;}
     <button class="x" data-close aria-label="Close">✕</button>
     <h2 id="name-title">Your leaderboard name</h2>
     <div class="modal-sub">Use a nickname or a first name plus last initial, like "Ian L." Full names aren't allowed, for everyone's privacy.</div>
-    <input class="text-input" id="name-input" maxlength="19" autocomplete="nickname" placeholder="e.g. Ian L. or PurpleBleeder" style="width:100%">
+    <input class="text-input" id="name-input" maxlength="19" autocomplete="nickname" placeholder="e.g. Ian L. or BallKnower" style="width:100%">
     <div class="field-msg" id="name-error"></div>
     <button class="btn" id="name-save" style="width:100%;margin-top:.4rem">Save name</button>
   </div>
@@ -366,8 +392,8 @@ button{font-family:inherit;}
 
 <footer class="site-footer">
   <div class="made"><b>Blue Marble Games</b><br>created by Ian Lever</div>
-  <div class="tip">Like the game? Help a fan out — crab cakes aren't cheap, hon.
-    <br><a class="btn btn-gold btn-sm" href="https://account.venmo.com/u/Ian-Lever" target="_blank" rel="noopener noreferrer">Buy me a crab cake</a>
+  <div class="tip">Like the game? Help keep the Old Bay flowing, hon.
+    <br><a class="btn btn-gold btn-sm" href="https://account.venmo.com/u/Ian-Lever" target="_blank" rel="noopener noreferrer">Treat me to some Old Bay</a>
   </div>
   <div class="fine">A fan-made game. Not affiliated with or endorsed by the Baltimore Ravens or the NFL. Player stats from <a href="https://www.pro-football-reference.com/" target="_blank" rel="noopener noreferrer" style="color:inherit">Pro-Football-Reference.com</a>.</div>
 </footer>
@@ -382,11 +408,12 @@ const WEEKS = [
  {
   "id": "w01",
   "label": "Week 1",
-  "opens": "2026-11-08T00:00:00-05:00",
-  "data": "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"
+  "opens": "2026-11-09T00:00:00-05:00",
+  "data": "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"
  }
 ];
 const PLAYERS = ["A.J. Arcuri", "A.J. Ofodile", "A.Q. Shipley", "Aaron Adeoye", "Aaron Crawford", "Aaron Elling", "Aaron Mellette", "Aaron Pierce", "Adalius Thomas", "Adam Hernandez", "Adam Randall", "Adam Redmond", "Adam Terry", "Adedayo Odeleye", "Adisa Isaac", "Adrian Hamilton", "Aeneas Peebles", "Al-Hajj Shabazz", "Alan Ricard", "Albert Horsey", "Albert McClellan", "Alejandro Villanueva", "Alex Bannister", "Alex Bernstein", "Alex Collins", "Alex Lewis", "Alex Thompson", "Allen Reisner", "Alohi Gilman", "Alvin Jones", "Alvin Porter", "Amani Oruwariye", "Amon Gordon", "Andre Gurode", "Andre James", "Andre Smith", "Andrew Adams", "Andrew Donnal", "Andrew Vorhees", "Andy Isabella", "Anquan Boldin", "Anthony Allen", "Anthony Averett", "Anthony Brown", "Anthony Davis", "Anthony Kendall", "Anthony Levine", "Anthony Miller", "Anthony Mitchell", "Anthony Pleasant", "Anthony Poindexter", "Anthony Weaver", "Anthony Wright", "Antoine Cason", "Antoine Wesley", "Antonio Langham", "Antwan Barnes", "Anwar Phillips", "Ar'Darius Washington", "Arthur Brown", "Arthur Jones", "Arthur Maulet", "Asa Jackson", "Atiyyah Ellison", "Aubrayo Franklin", "Austin Howard", "Austin Reed", "B.J. Sams", "B.J. Ward", "Bailey Gaither", "Bam Bradley", "Bam Morris", "Bart Scott", "Basil Okoye", "Baylor Cupp", "Beau Brade", "Ben Bredeson", "Ben Cavil", "Ben Cleveland", "Ben Coates", "Ben Grubbs", "Ben Mason", "Ben Powers", "Benard Thomas", "Benjamin Watson", "Bennett Jackson", "Bennie Anderson", "Bennie Thompson", "Bernard Dafney", "Bernard Pierce", "Bernard Pollard", "Bernard Scott", "Bernardo Harris", "Bilhal Kone", "Billy Bajema", "Billy Cundiff", "Billy Davis", "Binjimen Victor", "Bobbie Williams", "Bobby Rainey", "Brad Jackson", "Bradley Bozeman", "Brandon Boykin", "Brandon Carr", "Brandon Copeland", "Brandon Knight", "Brandon Kublanow", "Brandon McKinney", "Brandon Stephens", "Brandon Stokley", "Brandon Williams", "Bravvion Roy", "Braxton Hoyett", "Brendon Ayanbadejo", "Brennen Beyer", "Brent Urban", "Breshad Perriman", "Brett Hundley", "Brian Kinchen", "Brian Rimpf", "Brian St. Pierre", "Broderick Washington", "Bronson Kaufusi", "Bryan Hall", "Bryan Mattison", "Bryan McCann", "Bryant McKinnie", "Bryn Renner", "Brynden Trawick", "Byron Marshall", "C.J. Mosley", "C.J. Ravenell", "Calais Campbell", "Calvin Wilkinson", "Calvin Williams", "Cam Jurgens", "Cameron Lee", "Cameron Nizialek", "Carl Davis", "Carl Jones", "Carl Lawson", "Carl Powell", "Carnell Lake", "Carrington Byndom", "Carson Vinson", "Carwell Gardner", "Cary Williams", "Casey Rabach", "Casey Walker", "Cassius Vaughn", "Cavellis Luckett", "Chad Slaughter", "Chad Williams", "Chandler Martin", "Chandler Rivers", "Charles Ali", "Charles Scarff", "Charlie Kolar", "Chase Ford", "Chauncey Rivers", "Chavis Williams", "Chester Taylor", "Chidobe Awuzie", "Chris Board", "Chris Canty", "Chris Carr", "Chris Carter", "Chris Chester", "Chris Givens", "Chris Greenwood", "Chris Harrison", "Chris Johnson", "Chris Lewis-Harris", "Chris Matthews", "Chris McAlister", "Chris Moore", "Chris Redman", "Chris Streveler", "Chris Ward", "Chris Westry", "Chris Wormley", "Christian LaCouture", "Christian Matthew", "Christian Ringo", "Christian Thompson", "Christo Bilukidi", "Christopher Ezeala", "Chuck Clark", "Chuck Evans", "Chuck Jacobs", "Chuma Edoga", "Chykie Brown", "Clarence Love", "Clarence Moore", "Cooper Rush", "Corey Bullock", "Corey Dowden", "Corey Fuller", "Corey Graham", "Corey Harris", "Corey Ivy", "Corey Mayfield", "Corey Sears", "Cornelius Johnson", "Cornell Brown", "Cortez Braham", "Cory Redding", "Cory Ross", "Courtney Upshaw", "Craig Powell", "Crockett Gillmore", "Cullen Finnerty", "Curtis Brown", "Cyrus Jones", "D.J. Fluker", "D.J. Jones", "Daelin Hayes", "Dale Carter", "Dale Hellestrae", "Dallas Clark", "Dalvin Cook", "Damarion Williams", "Dameon Hunter", "Damion Cook", "Dan Chisena", "Dan Cody", "Dan Footman", "Daniel Brown", "Daniel Faalele", "Daniel Wilcox", "Dannell Ellerbe", "Danny Gorrer", "Danny Kight", "Danny Pinter", "Danny Woodhead", "Daren Stone", "Darian Stewart", "Darius White", "Darnell Dinkins", "Darnell Sankey", "Darrell Simpson", "Darrell Williams", "Darren Perry", "Darren Waller", "Darrian Dalcourt", "Daryl Smith", "Daryl Worley", "Dave Zastudil", "David Hale", "David Nugent", "David Ojabo", "David Olajiga", "David Pittman", "David Reed", "David Sharpe", "David Tyree", "Davon Drew", "Davontae Harris", "Dawan Landry", "Daylon Mack", "Dayton Wade", "De'Anthony Thomas", "De'Lance Turner", "De'Ondre Wesley", "Deadrin Senat", "DeAndre Hopkins", "DeAndrew White", "DeAngelo Tyson", "Dedric Ward", "Deion Jennings", "Deion Sanders", "Del'Shawn Phillips", "Delvin Hughley", "Demarcus Robinson", "Demetrius Williams", "Dennis Haley", "Dennis Pitta", "Denzel Rice", "Denzel Williams", "Deonte Harty", "Deonte Thompson", "Derek Anderson", "Derek Wolfe", "DeRon Jenkins", "Derrick Alexander", "Derrick Henry", "Derrick Martin", "Derrick Mason", "Derrick Nelson", "DeSean Jackson", "DeShon Elliott", "Desmond Igbinosun", "Desmond King", "Devard Darling", "DeVier Posey", "Devin Duvernay", "Devin Gray", "Devin Leary", "Devon Kennard", "Devon Williams", "Devonta Freeman", "Devontez Walker", "Dexter Daniels", "Dez Bryant", "Diego Fagot", "Dion Wilson", "Dobson Collins", "Domata Peko Sr.", "Dominic DeLuca", "Dominique Franks", "Domonique Foxworth", "Donny Brady", "Dontay Demus", "Donte' Stallworth", "Dorian Brew", "Dre'Mont Jones", "Duane Starks", "Durham Smythe", "Dustin Vaughan", "Dwan Edwards", "Dwayne Missouri", "E.J. Ejiya", "Earl Thomas", "Earnest Byner", "Earnest Hunter", "Ed Dickson", "Ed Reed", "Eddie Britton", "Eddie Sutter", "Edgar Jones", "Edgerton Hartwell", "Edwin Mulitalo", "Eli Wolf", "Elijah Sarratt", "Elijah Tau-Tolliver", "Elliott Fortune", "Elliott Fry", "Elvis Dumervil", "Elvis Grbac", "Emanuel Cook", "Emery Jones Jr.", "Eric Green", "Eric Tomlinson", "Eric Turner", "Eric Weddle", "Eric Zeier", "Erik Williams", "Ernie Wheelwright", "Errict Rhett", "Ethan Brooks", "Ethan Burke", "Ethan Pocic", "Eugene Daniel", "Eugene Monroe", "Evan Oglesby", "Everett Lindsay", "Fabian Washington", "Fernando Smith", "Fish Smithson", "Fitzgerald Toussaint", "Floyd Turner", "Frank Hartley", "Frank Sanders", "Frank Wainright", "Frank Walker", "Gage Larvadain", "Gary Baxter", "Gary Stills", "Gavin Escobar", "Geno Stone", "Gerad Lichtenhan", "Germany Thompson", "Gerome Sapp", "Gino Gradkowski", "Greg DeLong", "Greg Mancz", "Greg Montgomery", "Greg Senat", "Griff Whalen", "Gus Edwards", "Hakeem Adeniji", "Haloti Ngata", "Harold Bishop", "Harold Morrow", "Harper LeBel", "Harry Swayne", "Haruki Nakamura", "Hayden Hurst", "Herman Arvie", "Howard Green", "Hroniss Grasu", "Ikechuku Ndukwe", "Iman Marshall", "Isaiah Likely", "Isaiah Mack", "Isaiah Washington", "Isaiah Williams", "Issac Booth", "J'Vonne Parker", "J.K. Dobbins", "J.R. Jenkins", "J.R. Johnson", "Ja'Kobi Lane", "Ja'Wuan James", "Jackson Porter", "Jacob Breeland", "Jacob Hummel", "Jacoby Jones", "Jacques Patrick", "Jadeveon Clowney", "Jaelon Acklin", "Jah Reid", "Jahmal Banks", "Jahquez Robinson", "Jake Guidone", "Jake Moody", "Jake Nordin", "Jake Rodgers", "Jake Verity", "Jaleel Scott", "Jalen Parmele", "Jalyn Armour-Davis", "Jamaine Winborne", "Jamal Lewis", "Jameel McClain", "Jamel White", "James Atkins", "James Crawford", "James Hurst", "James Ihedigbo", "James Jones", "James Murray", "James Proche", "James Roe", "James Trapp", "Jamie Sharper", "Jamon Johnson", "Janarion Grant", "Jared Gaither", "Jared Penning", "Jarell Broxton", "Jarret Johnson", "Jarrod Pughsley", "Jaryd Jones-Smith", "Jason Babin", "Jason Brookins", "Jason Brown", "Jason McKie", "Jason Phillips", "Jason Pierre-Paul", "Jason Thomas", "Javin Hunter", "Javorius Allen", "Jay Graham", "Jay Higgins", "Jaylen Hill", "Jaylinn Hawkins", "Jaylon Ferguson", "Jaylon Moore", "Jayron Kearse", "Jed DeVries", "Jeff Blackshear", "Jeff Blake", "Jeff Kopp", "Jeff Mitchell", "Jeff Ogden", "Jeremiah Moon", "Jeremy Butler", "Jeremy Lucien", "Jeremy Maclin", "Jeremy Ross", "Jeremy Zuttah", "Jermaine Eluemunor", "Jermaine Lewis", "Jermaine Whitehead", "Jeromy Miles", "Jerraud Powers", "Jerrol Williams", "Jerry Olsavsky", "Jihad Ward", "Jim Harbaugh", "Jim Leonhard", "Jim Nelson", "Jimmy Clausen", "Jimmy Smith", "Joe Evans", "Joe Fagnano", "Joe Flacco", "Joe Horn", "Joe Maese", "Joe Morgan", "Joe Nedney", "Joe Noteboom", "Joe Salave'a", "Joe Thomas", "John Beck", "John Brown", "John Crockett", "John Daka", "John Elmore", "John Hudson", "John Jenkins", "John Jones", "John Simon", "John Simpson", "John Urschel", "John Williams", "Johnny Townsend", "Jon Stark", "Jonathan Burrough", "Jonathan Ogden", "Jonathan Ward", "Jordan Lasley", "Jordan Mills", "Jordan Richards", "Jordan Stout", "Jordan Toles", "Josh Bynes", "Josh Cuevas", "Josh Johnson", "Josh Jones", "Josh Oliver", "Josh Ross", "Josh Tupou", "Josh Wells", "Josh Wilson", "Josh Woodrum", "Jovan Swann", "Jovaughn Gwyn", "Jumal Rolle", "Justice Hill", "Justin Armour", "Justin Bannan", "Justin Boren", "Justin Ellis", "Justin Forsett", "Justin Green", "Justin Harper", "Justin Houston", "Justin Madubuike", "Justin Tucker", "K'Von Wallace", "K.J. Gerard", "Kaare Vedvik", "Kaelin Clay", "Kai Caesar", "Kaimon Rucker", "Kaleb Johnson", "Kamalei Correa", "Kamar Aiken", "Kapron Lewis-Moore", "Kareem Robinson", "Kavell Conner", "Keaton Mitchell", "Kedon Slovis", "Keenan Reynolds", "Keith Fitzhugh", "Keith Goganious", "Keith Kirkwood", "Keith Washington", "Kelechi Osemele", "Kelle Sanders", "Kelley Washington", "Kelly Gregg", "Kelly Talavou", "Ken Hamlin", "Kendall Lamm", "Kendrick Lewis", "Kenji Bahar", "Kenneth Dixon", "Kenny Allen", "Kenny Bell", "Kenny Young", "Kenyan Drake", "Kenyon Cotton", "Kenyon Green", "Kenyon Hambrick", "Keondre Jackson", "Kevin Houser", "Kevin Johnson", "Kevin McDermott", "Kevin Toliver", "Kevin Zeitler", "Kevon Seymour", "Keydrick Vincent", "Keyon Martin", "Khalil Dorsey", "Kim Herring", "Kipp Vickers", "Kofi Amichia", "Konrad Reuland", "Kordell Stewart", "Kris Wilson", "Kristian Welch", "Kyle Arrington", "Kyle Boller", "Kyle Fuller (C)", "Kyle Fuller (CB)", "Kyle Hamilton", "Kyle Hergel", "Kyle Juszczyk", "Kyle Richardson", "Kyle Van Noy", "Kyler Fackrell", "L.J. Fort", "L.J. Smith", "Ladarius Webb Jr.", "LaJohntay Wester", "Laken Tomlinson", "Lamar Divens", "Lamar Jackson", "Lamar Louis", "Lamar Lyons", "Lamont Brightful", "LaQuan Williams", "Laquon Treadwell", "Lardarius Webb", "Larry Donnell", "Larry Fitzpatrick", "Larry Webster", "Latavius Murray", "Lawrence Guy", "Lawrence Smith", "Le'Ron McClain", "Lee Evans", "Lee Vickers", "Leland Taylor", "Leo Goeas", "Leon Searcy", "Leroy Hoard", "Lional Dalton", "Lorenzo Neal", "Lorenzo Taliaferro", "Lovett Purnell", "Lucas Scott", "Luke Bowanko", "Ma'ake Kemoeatu", "Malaesala Aumavae-Laulu", "Malaki Starks", "Malik Cunningham", "Malik Hamm", "Malik Harrison", "Marc Bulger", "Marcus Applefield", "Marcus Gilchrist", "Marcus Maxwell", "Marcus Nash", "Marcus Paschal", "Marcus Peters", "Marcus Robinson", "Marcus Smith", "Marcus Spears", "Marcus Williams", "Mario Ojemudia", "Mark Andrews", "Mark Clayton", "Mark Ingram", "Mark LeVoir", "Mark Thompson", "Marlon Brown", "Marlon Humphrey", "Marques Douglas", "Marqueston Huff", "Marquise Brown", "Marquise Robinson", "Marshal Yanda", "Martin Chase", "Matt Birk", "Matt Elam", "Matt Judon", "Matt Katula", "Matt Lawrence", "Matt Schaub", "Matt Skura", "Matt Stover", "Matt Willis", "Matthew Hibner", "Maurice Canady", "Maurquice Shakir", "Maxx Williams", "Mazzi Wilkins", "Melvin Gordon", "Michael Barrett", "Michael Campanaro", "Michael Crabtree", "Michael Dereus", "Michael Floyd", "Michael Huff", "Michael Jackson", "Michael McCrary", "Michael Oher", "Michael Onuoha", "Michael Pierce", "Mike Anderson", "Mike Caldwell", "Mike Collins", "Mike Croel", "Mike Davis", "Mike Flynn", "Mike Frederick", "Mike Green", "Mike Jordan", "Mike Kracalik", "Mike McAdoo", "Mike Rigerman", "Mike Smith", "Mike Solwold", "Mike Thomas", "Mike Wallace", "Miles Boykin", "Milton Wynn", "Moe Williams", "Morgan Cox", "Morgan Moses", "Musa Smith", "Nate Brooks", "Nate McCrary", "Nate Singleton", "Nate Wiggins", "Nelson Agholor", "Nicholas Grigsby", "Nick Boyle", "Nick Greisen", "Nick Keizer", "Nick Moore", "Nick Murphy", "Nick Samac", "Nick Vannett", "Nico Siragusa", "Nicolas Luchey", "Nigel Warrior", "O.J. Brigance", "Obafemi Ayanbadejo", "Octavian Smith", "Odafe Oweh", "Odell Beckham Jr.", "Olaivavega Ioane", "Omar Brown", "Oniel Cousins", "Orlando Bobo", "Orlando Brown Jr.", "Orlando Brown Sr.", "Otaro Alaka", "Otha Foster", "Ovie Mughelli", "Owen Daniels", "Owen Wright", "P.J. Daniels", "Parker Ehinger", "Pat Johnson", "Patrick Mekari", "Patrick Onwuasor", "Patrick Queen", "Patrick Ricard", "Patrick Scales", "Patrick Vahe", "Paul Frase", "Paul Kruger", "Paul Perkins", "Pedro Edison", "Pernell McPhee", "Peter Boulware", "Phil Savoy", "Phillip Supernaw", "Pierre Desir", "Prescott Burgess", "Priest Holmes", "Prince Miller", "Qadir Ismail", "Qadry Ismail", "Quentin Neujahr", "Quincy Adeboyejo", "Quinn Sypniewski", "R.J. Prince", "Raheem Mostert", "Ralph Staten", "Ramon Harewood", "Randall Cunningham", "Randin Crecelius", "Randy Allen", "Randy Baldwin", "Randy Hymes", "Rashaan Melvin", "Rasheen Ali", "Rashod Bateman", "Ray Ethridge", "Ray Lewis", "Ray Lucas", "Ray Rice", "Raymond Perryman", "Raymond Walls", "Rayshad Nichols", "Rayshaun Benny", "Rayshawn Jenkins", "Reggie Waddell", "Reginald McKenzie", "Rhys Lloyd", "Richard Gordon", "Rick Lyle", "Ricky Ortiz", "Ricky Person", "Ricky Wagner", "Ricky Williams", "Riddick Parker", "Riley Sharp", "Rob Burnett", "Rob Robertson", "Robb Butler", "Robert Bailey", "Robert Griffin III", "Robert Jackson", "Robert James", "Robert Longerbeam", "Robert McCune", "Robert Nelson", "Robert Tate", "Robertson Daniel", "Rock Ya-Sin", "Rod Woodson", "Roderick Green", "Roger Rosengarten", "Ron Johnson", "Ronald Darby", "Rondell Jones", "Ronnie Prude", "Ronnie Stanley", "Roosevelt Potts", "Roquan Smith", "Roubbens Joseph", "Ryan Collins", "Ryan Eckley", "Ryan Jensen", "Ryan Mallett", "Ryan Taylor", "Ryan Yarborough", "Sale Isaia", "Sam Adams", "Sam Brown", "Sam Gash", "Sam Koch", "Sam Mustipher", "Samari Rolle", "Sammy Watkins", "Sammy Williams", "Sanoussi Kane", "Scott Kooistra", "Scott Mitchell", "Scott Otis", "Scotty Washington", "Sean Considine", "Sean Modster", "Sean Pollard", "Sean Ryan", "Sedric Clark", "Sergio Kindle", "Seth Roberts", "Shane Ray", "Shannon Sharpe", "Shannon Taylor", "Shareece Wright", "Shaun Draughn", "Shawn Byrdsong", "Shayne Graham", "Sheldon Price", "Shemar Bridges", "Siaosi Mariner", "Silas Stewart", "Skylar Thompson", "Slade Bolden", "Spencer Folau", "Stanley Jean-Baptiste", "Stephane Nembot", "Stephen Houston", "Steve Everitt", "Steve McNair", "Steve Smith", "Steven Hauschka", "Steven Johnson", "Steven Means", "Steven Moore", "Steven Sims", "Stevon Moore", "Stoney Case", "T.J. Houshmandzadeh", "T.J. Slaughter", "T.J. Tampa", "Tandon Doss", "Tarik Black", "Tashawn Manning", "Tavares Gooden", "Taven Bryan", "Tavius Robinson", "Tavon Young", "Teddye Buchanan", "Tellis Redmon", "Terrance Copper", "Terrance West", "Terrell Bonds", "Terrell Suggs", "Terrence Brooks", "Terrence Cody", "Terrence Magee", "Terry Allen", "Terry Jones", "Thad Lewis", "Thakarius Keyes", "Thatcher Szalay", "Thomas Graham Jr.", "Tim Goad", "Tim Johnson", "Tim White", "Tim Williams", "Timmy Jernigan", "Todd Bouman", "Todd Heap", "Tom Zbikowski", "Tommy Bohanon", "Tommy Knight", "Tommy Polley", "Tony Banks", "Tony Curtis", "Tony Jefferson", "Tony Jones", "Tony Moll", "Tony Pashos", "Tony Poljan", "Tony Siragusa", "Tony Vinson", "Torrey Smith", "Trace McSorley", "Tramain Jacobs", "Tramel Walthour", "Travis Jones", "Travis Taylor", "Tray Walker", "Trayvon Mullen", "Tre Swilling", "Tre'Davious White", "Trent Dilfer", "Trenton Simpson", "Trevin Wade", "Trevon Clark", "Trevon Coley", "Trevor Pryce", "Trey Botts", "Trey Hendrickson", "Troy Smith", "Trystan Colon-Castillo", "Ty Montgomery", "Ty Pezza", "Ty'Son Williams", "Tykeem Doss", "Tylan Wallace", "Tyler Ervin", "Tyler Huntley", "Tyler Linderbaum", "Tyler Loop", "Tyler Ott", "Tyre Phillips", "Tyrell Peters", "Tyrod Taylor", "Tyrus McCloud", "Tyus Bowser", "Ufomba Kamalu", "Vashone Adams", "Vince Biegel", "Vince Mayle", "Vinny Testaverde", "Vladimir Ducasse", "Vonta Leach", "Wade Richey", "Wally Richardson", "Wally Williams", "Will Davis", "Will Demps", "Will Hill", "Will Holden", "William Kwenkeu", "Willie Anderson", "Willie Gaston", "Willie Henry", "Willie Snead", "Willis McGahee", "Xavier Grimble", "Xavier Guillory", "Xavier Kelly", "Yamon Figurs", "Yannick Ngakoue", "Za'Darius Smith", "Zac Woodfin", "Zach Norton", "Zach Orr", "Zach Sieler", "Zaire Mitchell-Paden", "Zakoby McClain", "Zarnell Fitch", "Zay Flowers", "Zion Young"];
+const COLLEGES = [{"n": "Abilene Christian"}, {"n": "Air Force"}, {"n": "Akron"}, {"n": "Alabama"}, {"n": "Alabama A&M"}, {"n": "Alabama State"}, {"n": "Albany, N.Y."}, {"n": "Alcorn State"}, {"n": "Appalachian State"}, {"n": "Arizona"}, {"n": "Arizona State"}, {"n": "Arkansas"}, {"n": "Arkansas State"}, {"n": "Arkansas-Pine Bluff"}, {"n": "Army"}, {"n": "Assumption"}, {"n": "Auburn"}, {"n": "Ball State"}, {"n": "Baylor"}, {"n": "Bethune-Cookman"}, {"n": "Bloomsburg"}, {"n": "Boise State"}, {"n": "Boston College"}, {"n": "Bowling Green"}, {"n": "Brown"}, {"n": "Bucknell"}, {"n": "Buffalo"}, {"n": "BYU", "aka": ["Brigham Young"]}, {"n": "Cal", "aka": ["California", "Berkeley"]}, {"n": "California (PA)"}, {"n": "California-Davis"}, {"n": "Central Arkansas"}, {"n": "Central Michigan"}, {"n": "Central Missouri State"}, {"n": "Chattanooga"}, {"n": "Cincinnati"}, {"n": "Citadel"}, {"n": "Clemson"}, {"n": "Coastal Carolina"}, {"n": "Colorado"}, {"n": "Colorado State"}, {"n": "Colorado State-Pueblo"}, {"n": "Columbia"}, {"n": "Dartmouth"}, {"n": "Delaware"}, {"n": "Drake"}, {"n": "Duke"}, {"n": "East Carolina"}, {"n": "East Central"}, {"n": "Eastern Illinois"}, {"n": "Eastern Kentucky"}, {"n": "Eastern Michigan"}, {"n": "Eastern Washington"}, {"n": "FAU", "aka": ["Florida Atlantic"]}, {"n": "Ferris State"}, {"n": "FIU", "aka": ["Florida International"]}, {"n": "Florida"}, {"n": "Florida State"}, {"n": "Fordham"}, {"n": "Fort Valley State"}, {"n": "Fresno State"}, {"n": "Furman"}, {"n": "Georgia"}, {"n": "Georgia Southern"}, {"n": "Georgia State"}, {"n": "Georgia Tech", "aka": ["GT"]}, {"n": "Grambling"}, {"n": "Grambling State"}, {"n": "Grand Valley State"}, {"n": "Hampton"}, {"n": "Harvard"}, {"n": "Hawaii"}, {"n": "Hillsdale"}, {"n": "Hofstra"}, {"n": "Holy Cross"}, {"n": "Houston"}, {"n": "Howard"}, {"n": "Idaho"}, {"n": "Idaho State"}, {"n": "Illinois"}, {"n": "Illinois State"}, {"n": "Indiana"}, {"n": "Indiana State"}, {"n": "Iowa"}, {"n": "Iowa State"}, {"n": "Jacksonville State"}, {"n": "James Madison"}, {"n": "Kansas"}, {"n": "Kansas State"}, {"n": "Kent State"}, {"n": "Kentucky"}, {"n": "Lane"}, {"n": "Liberty"}, {"n": "Lindenwood"}, {"n": "Louisiana"}, {"n": "Louisiana Tech"}, {"n": "Louisville"}, {"n": "LSU", "aka": ["Louisiana State"]}, {"n": "M"}, {"n": "Maine"}, {"n": "Marist"}, {"n": "Marshall"}, {"n": "Mary"}, {"n": "Maryland"}, {"n": "Memphis"}, {"n": "Miami (FL)", "aka": ["Miami", "The U"]}, {"n": "Miami (OH)", "aka": ["Miami Ohio"]}, {"n": "Michigan"}, {"n": "Michigan State"}, {"n": "Middle Tennessee"}, {"n": "Minn. State-Mankato"}, {"n": "Minnesota"}, {"n": "Mississippi State"}, {"n": "Missouri"}, {"n": "Missouri State"}, {"n": "Missouri Western"}, {"n": "Monmouth, N.J."}, {"n": "Montana"}, {"n": "Montana State"}, {"n": "Morgan State"}, {"n": "Mount Union"}, {"n": "Murray State"}, {"n": "N.C. State"}, {"n": "Navy"}, {"n": "NC State", "aka": ["North Carolina State"]}, {"n": "Nebraska"}, {"n": "Nevada"}, {"n": "New Hampshire"}, {"n": "New Mexico"}, {"n": "New Mexico State"}, {"n": "Newberry"}, {"n": "No College"}, {"n": "Norfolk State"}, {"n": "North Alabama"}, {"n": "North Carolina"}, {"n": "North Carolina Central"}, {"n": "North Carolina-Charlotte"}, {"n": "North Dakota State"}, {"n": "North Texas"}, {"n": "Northern Arizona"}, {"n": "Northern Colorado"}, {"n": "Northern Illinois"}, {"n": "Northern Iowa"}, {"n": "Northwest Missouri State"}, {"n": "Northwestern"}, {"n": "Northwestern State-Louisiana"}, {"n": "Notre Dame"}, {"n": "Ohio"}, {"n": "Ohio State", "aka": ["OSU", "tOSU"]}, {"n": "Ohio U."}, {"n": "Oklahoma"}, {"n": "Oklahoma State"}, {"n": "Old Dominion"}, {"n": "Ole Miss", "aka": ["Mississippi"]}, {"n": "Oregon"}, {"n": "Oregon State"}, {"n": "Penn State", "aka": ["PSU"]}, {"n": "Pennsylvania"}, {"n": "Pitt", "aka": ["Pittsburgh"]}, {"n": "Pittsburg State"}, {"n": "Portland State"}, {"n": "Princeton"}, {"n": "Purdue"}, {"n": "Regina (Canada)"}, {"n": "Regina, Can."}, {"n": "Rhode Island"}, {"n": "Rice"}, {"n": "Richmond"}, {"n": "Rutgers"}, {"n": "Sacramento State"}, {"n": "Saginaw Valley State"}, {"n": "Sam Houston State"}, {"n": "Samford"}, {"n": "San Diego"}, {"n": "San Diego State"}, {"n": "San Jose State"}, {"n": "Shepherd"}, {"n": "Shippensburg"}, {"n": "Sioux Falls"}, {"n": "SMU", "aka": ["Southern Methodist"]}, {"n": "South Alabama"}, {"n": "South Carolina"}, {"n": "South Carolina State"}, {"n": "South Dakota"}, {"n": "South Dakota State"}, {"n": "South Florida"}, {"n": "Southeast Missouri"}, {"n": "Southeastern Louisiana"}, {"n": "Southern Arkansas"}, {"n": "Southern Illinois"}, {"n": "Southern Miss", "aka": ["Southern Mississippi"]}, {"n": "Southern Utah"}, {"n": "Stanford"}, {"n": "Stillman"}, {"n": "Stony Brook"}, {"n": "Syracuse"}, {"n": "T"}, {"n": "Tarleton State"}, {"n": "TCU", "aka": ["Texas Christian"]}, {"n": "Temple"}, {"n": "Tennessee"}, {"n": "Tennessee State"}, {"n": "Tennessee-Chattanooga"}, {"n": "Tennessee-Martin"}, {"n": "Texas"}, {"n": "Texas A&M"}, {"n": "Texas State"}, {"n": "Texas Tech"}, {"n": "Toledo"}, {"n": "Towson"}, {"n": "Troy"}, {"n": "Tulane"}, {"n": "Tulsa"}, {"n": "UAB", "aka": ["Alabama-Birmingham"]}, {"n": "UCF", "aka": ["Central Florida"]}, {"n": "UCLA", "aka": ["California-Los Angeles"]}, {"n": "UConn", "aka": ["Connecticut"]}, {"n": "UL Monroe"}, {"n": "UMass", "aka": ["Massachusetts"]}, {"n": "UNLV", "aka": ["Nevada-Las Vegas"]}, {"n": "USC", "aka": ["Southern California", "Southern Cal"]}, {"n": "Utah"}, {"n": "Utah State"}, {"n": "UTEP", "aka": ["Texas-El Paso"]}, {"n": "UTSA", "aka": ["Texas-San Antonio"]}, {"n": "Valdosta State"}, {"n": "Vanderbilt"}, {"n": "Villanova"}, {"n": "Virginia"}, {"n": "Virginia Tech", "aka": ["VT"]}, {"n": "Wagner"}, {"n": "Wake Forest"}, {"n": "Washburn"}, {"n": "Washington"}, {"n": "Washington State"}, {"n": "Weber State"}, {"n": "West Alabama"}, {"n": "West Georgia"}, {"n": "West Texas A&M"}, {"n": "West Virginia"}, {"n": "Western Carolina"}, {"n": "Western Illinois"}, {"n": "Western Kentucky"}, {"n": "Western Michigan"}, {"n": "William & Mary"}, {"n": "Wisconsin"}, {"n": "Wyoming"}, {"n": "Yale"}, {"n": "Youngstown State"}];
 const QUIPS = {
  "bleeder": [
   "You make me smile like an Ed Reed pick-six.",
@@ -458,7 +485,7 @@ const GAME_ID = 'ff-' + WEEK.id;
 
 // ── SCORING ────────────────────────────────────────────────────────────────
 const LADDER = [100, 80, 60, 40, 20];      // points by number of hints revealed
-const MISS_COST = 10, MAX_TRIES = 3, FLOOR = 5;
+const MISS_COST = 10, MAX_TRIES = 3, FLOOR = 5, BONUS = 25;
 const HINTS = [
   { key: 'college',   label: 'College' },
   { key: 'position',  label: 'Position' },
@@ -466,10 +493,14 @@ const HINTS = [
   { key: 'stats',     label: 'Ravens stat line' }
 ];
 const LEVELS = {
-  easy:   { name: 'Easy',   sub: 'Ring of Honor' },
+  easy:   { name: 'Easy',   sub: 'Household name' },
   medium: { name: 'Medium', sub: 'Solid contributor' },
-  hard:   { name: 'Hard',   sub: 'Deep cut' }
+  hard:   { name: 'Hard',   sub: 'Obscure' },
+  expert: { name: 'Expert', sub: 'Cup of coffee' }
 };
+const N = WEEK.rounds.length;                       // 4 Ravens a week
+const NWORD = ['zero', 'one', 'two', 'three', 'four', 'five', 'six'][N] || String(N);
+const ROUND_MAX = LADDER[0] + BONUS, WEEK_MAX = N * ROUND_MAX;
 
 // ── ICONS ──────────────────────────────────────────────────────────────────
 const I = (p, w = 1.7) => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="${w}" stroke-linecap="round" stroke-linejoin="round">${p}</svg>`;
@@ -481,18 +512,19 @@ const ICONS = {
   grill: I('<path d="M4 10h16a8 8 0 0 1-16 0Z"/><path d="M8 18l-2 3M16 18l2 3M9 6.5c0-1 1-1.2 1-2.2M13 6.5c0-1 1-1.2 1-2.2"/>'),
   wagon: I('<path d="M3 7h14l-1.5 7H4.5Z"/><circle cx="7" cy="18" r="2"/><circle cx="14" cy="18" r="2"/><path d="M17 9h3"/>'),
   disguise: I('<circle cx="7.5" cy="10" r="3"/><circle cx="16.5" cy="10" r="3"/><path d="M10.5 10h3M4.5 10H3M21 10h-1.5M8 16c2.5-1.5 5.5-1.5 8 0"/>'),
-  share: I('<path d="M12 15V4M8 8l4-4 4 4"/><path d="M5 13v6h14v-6"/>')
+  share: I('<path d="M12 15V4M8 8l4-4 4 4"/><path d="M5 13v6h14v-6"/>'),
+  cap: I('<path d="M2.5 9 12 4.5 21.5 9 12 13.5Z"/><path d="M6.5 11v4.5c1.5 1.4 3.5 2.1 5.5 2.1s4-.7 5.5-2.1V11"/><path d="M21.5 9v5"/>')
 };
 
-// ── TIERS (points per round; overall uses the 3-round average) ──────────────
+// ── TIERS (points per round; overall uses the per-round average) ──────────────
 const TIERS = [
-  { key: 'bleeder',   min: 90, name: 'Purple Bleeder',            icon: 'drop',     color: '#4B2CB8', tint: '#ECE7FA',
+  { key: 'bleeder',   min: 90, name: 'True Flock Fanatic',        icon: 'drop',     color: '#4B2CB8', tint: '#ECE7FA',
     text: "Old Bay in your veins and purple in your blood. Somewhere in Owings Mills, a scout just wrote your name down." },
-  { key: 'tailgate',  min: 60, name: 'Tailgate Lifer',            icon: 'grill',    color: '#9A7514', tint: '#F8EFD8',
-    text: "You've been grilling pit beef in the lot since the Memorial Stadium days. Pretty damn solid." },
+  { key: 'tailgate',  min: 60, name: 'Ball Knower',               icon: 'grill',    color: '#9A7514', tint: '#F8EFD8',
+    text: "You know the depth chart, not just the highlights. Nobody in the M&T Bank lot wants to argue with you." },
   { key: 'bandwagon', min: 30, name: 'Bandwagon Bird',            icon: 'wagon',    color: '#56607A', tint: '#EDEFF4',
     text: "You know the big names, but be honest: you bought your first jersey during a playoff run." },
-  { key: 'steelers',  min: -1, name: 'Steelers Fan in Disguise',  icon: 'disguise', color: '#1C1C1C', tint: '#E9E7E2',
+  { key: 'steelers',  min: -1, name: 'Steelers Fan In Disguise',  icon: 'disguise', color: '#1C1C1C', tint: '#E9E7E2',
     text: "Nice purple jersey. Shame about the black-and-gold socks. Head on back up I-70, pal." }
 ];
 const TIER_EMOJI = { bleeder: '🟪', tailgate: '🟨', bandwagon: '⬜', steelers: '⬛' };
@@ -509,16 +541,19 @@ function quipFor(roundIdx, tierKey){
 }
 
 // ── STATE (saved in this browser; synced to Firebase when signed in) ─────────
-const freshRound = () => ({ hints: 0, guesses: [], solved: false, done: false });
-let STATE = { rounds: [freshRound(), freshRound(), freshRound()] };
-let view = 0;   // 0-2 = rounds, 3 = final
+// bonus: null (not reached) | 'pending' (answering) | 'hit' | 'miss' | 'skip' | 'na' (used the college hint)
+const freshRound = () => ({ hints: 0, guesses: [], solved: false, bonus: null, bonusGuess: null, done: false });
+let STATE = { rounds: Array.from({ length: N }, freshRound) };
+let view = 0;   // 0..N-1 = rounds, N = final score
 const LS_KEY = 'flockfanatic-' + WEEK.id;
-try { const s = JSON.parse(localStorage.getItem(LS_KEY)); if (s && Array.isArray(s.rounds) && s.rounds.length === 3) STATE = s; } catch(e){}
+const validState = s => !!(s && Array.isArray(s.rounds) && s.rounds.length === N);
+try { const s = JSON.parse(localStorage.getItem(LS_KEY)); if (validState(s)) STATE = s; } catch(e){}
 function persist(){ try { localStorage.setItem(LS_KEY, JSON.stringify(STATE)); } catch(e){} hook('saveProgress'); }
 
 const misses = r => r.guesses.length - (r.solved ? 1 : 0);
 const potential = r => Math.max(FLOOR, LADDER[r.hints] - MISS_COST * misses(r));
-const points = r => r.solved ? potential(r) : 0;
+const bonusPts = r => r.bonus === 'hit' ? BONUS : 0;
+const points = r => r.solved ? potential(r) + bonusPts(r) : 0;
 const allDone = () => STATE.rounds.every(r => r.done);
 const total = () => STATE.rounds.reduce((s, r) => s + points(r), 0);
 
@@ -536,6 +571,7 @@ $('logomark').innerHTML = ICONS.feather;
 $('lb-btn').innerHTML = `<span class="ico">${ICONS.trophy}</span>`;
 $('info-btn').innerHTML = `<span class="ico">${ICONS.info}</span>`;
 $('week-line').textContent = `${WEEK.label} · ${new Date(WEEK.opens).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}`;
+$('total-max').textContent = WEEK_MAX;
 
 function renderTabs(){
   const nav = $('tabs');
@@ -544,7 +580,7 @@ function renderTabs(){
     const status = st.done ? `${points(st)} pts` : (st.hints || st.guesses.length ? 'In progress' : 'Play');
     return `<button class="tab${view === i ? ' active' : ''}${st.done ? ' done' : ''}" data-v="${i}" aria-current="${view === i}"><b>${L.name}</b><small>${L.sub}</small><span class="st">${status}</span></button>`;
   }).join('');
-  if (allDone()) h += `<button class="tab score-tab${view === 3 ? ' active' : ''}" data-v="3"><b>Score</b><small>Your week</small><span class="st">${total()} pts</span></button>`;
+  if (allDone()) h += `<button class="tab score-tab${view === N ? ' active' : ''}" data-v="${N}"><b>Score</b><small>Your week</small><span class="st">${total()} pts</span></button>`;
   nav.innerHTML = h;
   nav.querySelectorAll('.tab').forEach(b => b.onclick = () => show(+b.dataset.v));
   $('total-val').textContent = total();
@@ -557,49 +593,65 @@ function hintValue(r, key){
 }
 function renderRound(i){
   const R = WEEK.rounds[i], st = STATE.rounds[i], L = LEVELS[R.level];
+  const pending = st.bonus === 'pending', open = !st.done && !st.solved;
   $('round-label').textContent = `${L.name} · ${L.sub}`;
   const w = $('worth');
   if (st.done){ w.textContent = `${points(st)} pts`; w.classList.toggle('zero', !st.solved); }
+  else if (pending){ w.textContent = `${potential(st)} + bonus?`; w.classList.remove('zero'); }
   else { w.textContent = `Worth ${potential(st)}`; w.classList.remove('zero'); }
   $('num').textContent = R.number;
-  const plate = $('plate');
-  plate.textContent = st.done ? R.nameplate : '? ? ? ? ?';
-  plate.setAttribute('font-size', st.done && R.nameplate.length > 7 ? 16 : 21);
-  $('jersey-title').textContent = st.done ? `${R.answer}, number ${R.number}` : `Mystery Raven, number ${R.number}`;
+  const named = st.done || st.solved, plate = $('plate'), len = R.nameplate.length;
+  plate.textContent = named ? R.nameplate : '? ? ? ? ?';
+  plate.setAttribute('font-size', !named ? 21 : len > 9 ? 14 : len > 7 ? 16 : 21);
+  plate.setAttribute('letter-spacing', named && len > 9 ? 1 : 3);
+  $('jersey-title').textContent = named ? `${R.answer}, number ${R.number}` : `Mystery Raven, number ${R.number}`;
   $('years').innerHTML = `Ravens <span>${esc(R.years)}</span>`;
 
-  // Scouting report
+  // Scouting report (the college stays locked while the bonus is open)
   $('report').innerHTML = HINTS.map((h, k) => {
-    const shown = k < st.hints, isNext = k === st.hints && !st.done;
+    const shown = k < st.hints, isNext = k === st.hints && open;
     let right;
     if (shown) right = `<span class="tag used">−20</span>`;
-    else if (st.done) right = `<span class="tag">Not used</span>`;
+    else if (!open) right = `<span class="tag">Not used</span>`;
     else right = `<button class="reveal-btn" data-k="${k}" ${isNext ? '' : 'disabled'} aria-label="Reveal ${h.label}, costs 20 points">Reveal −20</button>`;
-    const val = (shown || st.done) ? esc(hintValue(R, h.key)) : 'Locked';
-    return `<div class="hint${st.done && !shown ? ' unused' : ''}"><div><div class="k">${h.label}</div><div class="v${shown || st.done ? '' : ' locked'}">${val}</div></div>${right}</div>`;
+    const reveal = shown || st.done;
+    const val = reveal ? esc(hintValue(R, h.key)) : 'Locked';
+    return `<div class="hint${st.done && !shown ? ' unused' : ''}"><div><div class="k">${h.label}</div><div class="v${reveal ? '' : ' locked'}">${val}</div></div>${right}</div>`;
   }).join('');
   $('report').querySelectorAll('.reveal-btn').forEach(b => b.onclick = () => revealHint(i));
 
-  // Guess box vs result
-  $('guess-box').style.display = st.done ? 'none' : 'block';
+  // Guess box → bonus box → result
+  $('guess-box').style.display = open ? 'block' : 'none';
+  $('bonus-box').style.display = pending ? 'block' : 'none';
   $('result-box').style.display = st.done ? 'block' : 'none';
-  if (!st.done){
+  if (open){
     $('tries').innerHTML = Array.from({ length: MAX_TRIES }, (_, k) => `<span class="try-dot${k < misses(st) ? ' used' : ''}"></span>`).join('') + `<span>${MAX_TRIES - misses(st)} left</span>`;
     $('misses').innerHTML = st.guesses.map(g => `<li>Not ${esc(g)}</li>`).join('');
     $('field-msg').textContent = '';
+  } else if (pending){
+    $('bonus-title').textContent = `It's ${R.answer}!`;
+    $('bonus-msg').textContent = '';
   } else renderResult(i);
 }
 
+function bonusLine(R, st){
+  if (!st.solved) return '';
+  if (st.bonus === 'hit')  return `<div class="bonus-line hit"><span class="ico">${ICONS.cap}</span>College bonus: ${esc(R.college)}, +${BONUS}</div>`;
+  if (st.bonus === 'miss') return `<div class="bonus-line"><span class="ico">${ICONS.cap}</span>College bonus missed. You said ${esc(st.bonusGuess)}; it was ${esc(R.college)}.</div>`;
+  if (st.bonus === 'skip') return `<div class="bonus-line"><span class="ico">${ICONS.cap}</span>Bonus skipped. He went to ${esc(R.college)}.</div>`;
+  if (st.bonus === 'na')   return `<div class="bonus-line"><span class="ico">${ICONS.cap}</span>No college bonus. You used the college hint.</div>`;
+  return '';
+}
 function renderResult(i){
   const R = WEEK.rounds[i], st = STATE.rounds[i];
   const pts = points(st), t = getTier(pts);
   const hintsTxt = st.hints === 0 ? 'no hints' : `${st.hints} hint${st.hints > 1 ? 's' : ''}`;
   const missTxt = misses(st) ? `, ${misses(st)} miss${misses(st) > 1 ? 'es' : ''}` : '';
-  const line = st.solved ? `${esc(R.answer)} — with ${hintsTxt}${missTxt}.` : `It was ${esc(R.answer)}.`;
+  const line = st.solved ? `${esc(R.answer)}, with ${hintsTxt}${missTxt}.` : `It was ${esc(R.answer)}.`;
   $('result').innerHTML =
     `<div class="stamp" style="--tier:${t.color};--tier-tint:${t.tint}"><span class="badge"><span class="ico">${ICONS[t.icon]}</span></span><b>${t.name}</b></div>` +
-    `<div class="result-pts">${pts}<small>/ 100</small></div>` +
-    `<div class="result-line">${line}</div>` +
+    `<div class="result-pts">${pts}<small>/ ${ROUND_MAX}</small></div>` +
+    `<div class="result-line">${line}</div>` + bonusLine(R, st) +
     `<p class="quip">${esc(quipFor(i, t.key))}</p>`;
   $('facts').innerHTML = `<h3>${esc(R.answer)}, No. ${esc(R.number)}</h3><ul>${R.facts.map(f => `<li>${esc(f)}</li>`).join('')}</ul>` +
     `<div class="cites">Learn more${R.cites.map(c => `<a href="${esc(c.url)}" target="_blank" rel="noopener noreferrer">${esc(c.label)}</a>`).join('')}</div>`;
@@ -607,54 +659,84 @@ function renderResult(i){
   $('next-row').innerHTML = nextUndone >= 0
     ? `<button class="btn" id="go-next">Next: ${LEVELS[WEEK.rounds[nextUndone].level].name} Raven</button>`
     : `<button class="btn btn-gold" id="go-next">See my score</button>`;
-  $('go-next').onclick = () => show(nextUndone >= 0 ? nextUndone : 3);
+  $('go-next').onclick = () => show(nextUndone >= 0 ? nextUndone : N);
   $('plate').classList.remove('stitch-in'); void $('plate').getBBox; $('plate').classList.add('stitch-in');
 }
 
 // ── ACTIONS ────────────────────────────────────────────────────────────────
 function revealHint(i){
   const st = STATE.rounds[i];
-  if (st.done || st.hints >= HINTS.length) return;
+  if (st.done || st.solved || st.hints >= HINTS.length) return;
   st.hints++; persist(); renderRound(i); renderTabs();
   track('reveal_hint', { round: WEEK.rounds[i].level, hint: HINTS[st.hints - 1].key });
 }
 function finishRound(i){
   const st = STATE.rounds[i];
   st.done = true; persist();
-  track('round_complete', { round: WEEK.rounds[i].level, points: points(st), hints: st.hints, solved: st.solved });
+  track('round_complete', { round: WEEK.rounds[i].level, points: points(st), hints: st.hints, solved: st.solved, bonus: st.bonus || 'none' });
   renderTabs(); renderRound(i);
   window.scrollTo({ top: 0, behavior: 'smooth' });
   if (allDone()){ track('game_complete', { total_points: total() }); hook('onFinal'); }
 }
 function submitGuess(name){
   const i = view, st = STATE.rounds[i], R = WEEK.rounds[i];
-  if (st.done) return;
+  if (st.done || st.solved) return;
   const msg = $('field-msg');
   const pick = PLAYERS.find(p => norm(p) === norm(name));
   if (!pick){ msg.textContent = name.trim() ? "Pick a player from the list — every Raven since 1996 is in there." : 'Type a name first.'; return; }
   if (st.guesses.includes(pick)){ msg.textContent = `You already tried ${pick}.`; return; }
   st.guesses.push(pick);
-  $('guess-input').value = ''; closeSuggest();
-  if (norm(pick) === norm(R.answer)){ st.solved = true; finishRound(i); return; }
+  $('guess-input').value = ''; guessCombo.close();
+  if (norm(pick) === norm(R.answer)){
+    st.solved = true;
+    if (st.hints === 0){
+      st.bonus = 'pending'; persist(); renderRound(i); renderTabs();
+      track('bonus_offered', { round: R.level });
+      setTimeout(() => $('bonus-input').focus(), 60);
+      return;
+    }
+    st.bonus = 'na'; finishRound(i); return;
+  }
   if (misses(st) >= MAX_TRIES){ finishRound(i); return; }
   persist(); renderRound(i); renderTabs();
   $('field-msg').textContent = '';
   $('sr-live').textContent = `Not ${pick}. ${MAX_TRIES - misses(st)} guess${MAX_TRIES - misses(st) > 1 ? 'es' : ''} left.`;
   $('guess-input').focus();
 }
+function findCollege(text){
+  const q = norm(text);
+  return q ? (COLLEGES.find(c => [c.n, ...(c.aka || [])].some(k => norm(k) === q)) || null) : null;
+}
+function submitBonus(text){
+  const i = view, st = STATE.rounds[i], R = WEEK.rounds[i];
+  if (st.bonus !== 'pending') return;
+  const pick = findCollege(text);
+  if (!pick){ $('bonus-msg').textContent = text.trim() ? 'Pick a school from the list.' : 'Type a school first.'; return; }
+  st.bonusGuess = pick.n;
+  st.bonus = norm(pick.n) === norm(R.college) ? 'hit' : 'miss';
+  $('bonus-input').value = ''; bonusCombo.close();
+  track('bonus_answer', { round: R.level, hit: st.bonus === 'hit' });
+  finishRound(i);
+}
+$('bonus-skip').onclick = () => {
+  const st = STATE.rounds[view];
+  if (st.bonus !== 'pending') return;
+  st.bonus = 'skip'; track('bonus_answer', { round: WEEK.rounds[view].level, hit: false, skipped: true });
+  finishRound(view);
+};
 $('give-up').onclick = () => {
   if (confirm("Give up on this Raven? You'll get 0 points for this round.")) finishRound(view);
 };
 
-// ── TYPE-AHEAD ─────────────────────────────────────────────────────────────
-const P_NORM = PLAYERS.map(p => ({ p, n: norm(p) }));
-let sugg = [], sIdx = -1;
-function matches(q){
+// ── TYPE-AHEAD (players for the guess, schools for the bonus) ──────────────
+const P_INDEX = PLAYERS.map(p => ({ v: p, keys: [norm(p)] }));
+const C_INDEX = COLLEGES.map(c => ({ v: c, keys: [c.n, ...(c.aka || [])].map(norm) }));
+function searchIn(index, q){
   q = norm(q); if (q.length < 2) return [];
   const starts = [], words = [];
-  for (const x of P_NORM){
-    if (x.n.startsWith(q)) starts.push(x.p);
-    else if (x.n.split(' ').some(w => w.startsWith(q)) || (q.includes(' ') && x.n.includes(q))) words.push(x.p);
+  for (const x of index){
+    if (x.keys.some(k => k.startsWith(q))) starts.push(x.v);
+    else if (x.keys.some(k => k.split(' ').some(w => w.startsWith(q)) || (q.includes(' ') && k.includes(q)))) words.push(x.v);
   }
   return starts.concat(words).slice(0, 8);
 }
@@ -663,39 +745,49 @@ function hl(p, q){
   if (k < 0 || !q.trim()) return esc(p);
   return esc(p.slice(0, k)) + '<mark>' + esc(p.slice(k, k + q.trim().length)) + '</mark>' + esc(p.slice(k + q.trim().length));
 }
-function openSuggest(){
-  const q = $('guess-input').value, list = $('suggest'), tried = STATE.rounds[view].guesses;
-  sugg = matches(q); sIdx = sugg.length ? 0 : -1;
-  if (!sugg.length){ closeSuggest(); return; }
-  list.innerHTML = sugg.map((p, k) => `<li role="option" id="opt-${k}" data-k="${k}" class="${k === sIdx ? 'on' : ''}${tried.includes(p) ? ' tried' : ''}">${hl(p, q)}</li>`).join('');
-  list.classList.add('open'); $('guess-input').setAttribute('aria-expanded', 'true');
-  $('guess-input').setAttribute('aria-activedescendant', 'opt-' + sIdx);
-  list.querySelectorAll('li').forEach(li => li.onmousedown = e => { e.preventDefault(); const p = sugg[+li.dataset.k]; if (!tried.includes(p)) submitGuess(p); });
+function makeCombo({ input, list, search, label, tried, onPick, onType }){
+  let sugg = [], sIdx = -1;
+  const t = () => (tried ? tried() : []);
+  function close(){ list.classList.remove('open'); input.setAttribute('aria-expanded', 'false'); sugg = []; sIdx = -1; }
+  function open(){
+    const q = input.value; sugg = search(q); sIdx = sugg.length ? 0 : -1;
+    if (!sugg.length){ close(); return; }
+    list.innerHTML = sugg.map((s, k) => `<li role="option" id="${list.id}-${k}" data-k="${k}" class="${k === sIdx ? 'on' : ''}${t().includes(label(s)) ? ' tried' : ''}">${hl(label(s), q)}</li>`).join('');
+    list.classList.add('open'); input.setAttribute('aria-expanded', 'true');
+    input.setAttribute('aria-activedescendant', `${list.id}-${sIdx}`);
+    list.querySelectorAll('li').forEach(li => li.onmousedown = e => { e.preventDefault(); const v = label(sugg[+li.dataset.k]); if (!t().includes(v)) onPick(v); });
+  }
+  function move(d){
+    if (!sugg.length) return;
+    sIdx = (sIdx + d + sugg.length) % sugg.length;
+    list.querySelectorAll('li').forEach((li, k) => li.classList.toggle('on', k === sIdx));
+    input.setAttribute('aria-activedescendant', `${list.id}-${sIdx}`);
+    const on = list.querySelector('li.on'); if (on) on.scrollIntoView({ block: 'nearest' });
+  }
+  const current = () => (sIdx >= 0 && sugg.length ? label(sugg[sIdx]) : input.value);
+  input.addEventListener('input', () => { if (onType) onType(); open(); });
+  input.addEventListener('keydown', e => {
+    if (e.key === 'ArrowDown'){ e.preventDefault(); move(1); }
+    else if (e.key === 'ArrowUp'){ e.preventDefault(); move(-1); }
+    else if (e.key === 'Escape') close();
+    else if (e.key === 'Enter'){ e.preventDefault(); onPick(current()); }
+  });
+  input.addEventListener('blur', () => setTimeout(close, 120));
+  return { close, current };
 }
-function closeSuggest(){ $('suggest').classList.remove('open'); $('guess-input').setAttribute('aria-expanded', 'false'); sugg = []; sIdx = -1; }
-function moveSel(d){
-  if (!sugg.length) return;
-  sIdx = (sIdx + d + sugg.length) % sugg.length;
-  $('suggest').querySelectorAll('li').forEach((li, k) => li.classList.toggle('on', k === sIdx));
-  $('guess-input').setAttribute('aria-activedescendant', 'opt-' + sIdx);
-  const on = $('suggest').querySelector('li.on'); if (on) on.scrollIntoView({ block: 'nearest' });
-}
-$('guess-input').addEventListener('input', () => { $('field-msg').textContent = ''; openSuggest(); });
-$('guess-input').addEventListener('keydown', e => {
-  if (e.key === 'ArrowDown'){ e.preventDefault(); moveSel(1); }
-  else if (e.key === 'ArrowUp'){ e.preventDefault(); moveSel(-1); }
-  else if (e.key === 'Escape') closeSuggest();
-  else if (e.key === 'Enter'){ e.preventDefault(); submitGuess(sIdx >= 0 ? sugg[sIdx] : $('guess-input').value); }
-});
-$('guess-input').addEventListener('blur', () => setTimeout(closeSuggest, 120));
-$('guess-btn').onclick = () => submitGuess(sIdx >= 0 && sugg.length ? sugg[sIdx] : $('guess-input').value);
+const guessCombo = makeCombo({ input: $('guess-input'), list: $('suggest'), search: q => searchIn(P_INDEX, q), label: p => p,
+  tried: () => STATE.rounds[view].guesses, onPick: submitGuess, onType: () => { $('field-msg').textContent = ''; } });
+const bonusCombo = makeCombo({ input: $('bonus-input'), list: $('bonus-suggest'), search: q => searchIn(C_INDEX, q), label: c => c.n,
+  onPick: submitBonus, onType: () => { $('bonus-msg').textContent = ''; } });
+$('guess-btn').onclick = () => submitGuess(guessCombo.current());
+$('bonus-btn').onclick = () => submitBonus(bonusCombo.current());
 
 // ── FINAL SCREEN ───────────────────────────────────────────────────────────
 function renderFinal(){
-  const tot = total(), t = getTier(tot / 3);
+  const tot = total(), t = getTier(tot / N);
   $('final').innerHTML =
     `<div class="final-week">${esc(WEEK.label)} results</div>` +
-    `<div class="final-total">${tot}</div><div class="final-of">out of 300</div>` +
+    `<div class="final-total">${tot}</div><div class="final-of">out of ${WEEK_MAX}</div>` +
     `<div class="final-tier" style="--tier:${t.color}">${t.name}</div><p class="final-text">${esc(t.text)}</p>` +
     `<div class="mini-row">${WEEK.rounds.map((r, i) => { const st = STATE.rounds[i], rt = getTier(points(st));
       return `<button class="mini" data-v="${i}" style="--tier:${rt.color};--tier-tint:${rt.tint}"><div class="lvl">${LEVELS[r.level].name}</div><div class="p">${points(st)}</div><div class="nm">${esc(r.answer)}</div></button>`; }).join('')}</div>`;
@@ -709,20 +801,20 @@ function nextDrop(){
 }
 function tickCountdown(){
   const el = $('countdown'), d = nextDrop();
-  if (!d){ el.innerHTML = 'Three new Ravens are coming soon.'; return; }
+  if (!d){ el.innerHTML = 'New Ravens are coming soon.'; return; }
   const ms = d - new Date();
   if (ms <= 0){ el.innerHTML = 'New Ravens are live. <a href="" style="color:var(--purple)">Reload to play</a>'; return; }
   const dd = Math.floor(ms / 864e5), hh = Math.floor(ms / 36e5) % 24, mm = Math.floor(ms / 6e4) % 60;
-  el.innerHTML = `Next three Ravens drop ${d.toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric' })} · <b>${dd ? dd + 'd ' : ''}${hh}h ${mm}m</b>`;
+  el.innerHTML = `Next ${NWORD} Ravens drop ${d.toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric' })} · <b>${dd ? dd + 'd ' : ''}${hh}h ${mm}m</b>`;
 }
-setInterval(() => { if (view === 3) tickCountdown(); }, 30000);
+setInterval(() => { if (view === N) tickCountdown(); }, 30000);
 
 function show(v){
   view = v;
-  $('screen-round').style.display = v < 3 ? 'block' : 'none';
-  $('screen-final').style.display = v === 3 ? 'block' : 'none';
+  $('screen-round').style.display = v < N ? 'block' : 'none';
+  $('screen-final').style.display = v === N ? 'block' : 'none';
   renderTabs();
-  if (v < 3) renderRound(v); else renderFinal();
+  if (v < N) renderRound(v); else renderFinal();
 }
 
 // ── MODALS ─────────────────────────────────────────────────────────────────
@@ -732,7 +824,7 @@ document.querySelectorAll('.modal').forEach(m => {
   m.addEventListener('click', e => { if (e.target === m || e.target.closest('[data-close]')) closeModal(m); });
 });
 document.addEventListener('keydown', e => { if (e.key === 'Escape') document.querySelectorAll('.modal.open').forEach(closeModal); });
-$('ladder').innerHTML = `<div><span>Number and years only</span><b>100</b></div><div><span>+ College</span><b>80</b></div><div><span>+ Position</span><b>60</b></div><div><span>+ Teammates</span><b>40</b></div><div><span>+ Stat line</span><b>20</b></div><div><span>Each wrong guess</span><b>−10</b></div>`;
+$('ladder').innerHTML = `<div><span>Number and years only</span><b>100</b></div><div><span>+ College</span><b>80</b></div><div><span>+ Position</span><b>60</b></div><div><span>+ Teammates</span><b>40</b></div><div><span>+ Stat line</span><b>20</b></div><div><span>Each wrong guess</span><b>−10</b></div><div><span>Bonus: name his college</span><b>+25</b></div>`;
 $('tier-rows').innerHTML = TIERS.map((t, k) => `<div class="tier-row" style="--tier:${t.color};--tier-tint:${t.tint}"><span class="badge"><span class="ico">${ICONS[t.icon]}</span></span><div><b>${t.name}</b><span>${k === TIERS.length - 1 ? 'Under 30 points' : (k === 0 ? '90 points or more' : `${t.min}–${TIERS[k - 1].min - 1} points`)}</span></div></div>`).join('');
 $('info-btn').onclick = () => openModal('info-modal');
 try { if (!localStorage.getItem('ff-seen-rules')){ localStorage.setItem('ff-seen-rules', '1'); openModal('info-modal'); } } catch(e){}
@@ -782,7 +874,7 @@ function boardHtml(){
   let list;
   if (BOARD.loading) list = `<div class="lb-empty">Loading scores…</div>`;
   else if (BOARD.error) list = `<div class="lb-empty">The leaderboard didn't load. Check your connection and try again.</div>`;
-  else if (!BOARD.rows.length) list = `<div class="lb-empty">No scores yet. Finish all three Ravens to claim the top spot.</div>`;
+  else if (!BOARD.rows.length) list = `<div class="lb-empty">No scores yet. Finish all ${NWORD} Ravens to claim the top spot.</div>`;
   else {
     list = `<ol class="lb-list">` + BOARD.rows.map((r, k) => `<li class="lb-row${r.me ? ' me' : ''}"><span class="lb-rank">${k + 1}</span><span class="lb-name">${esc(r.name)}${r.me ? ' (you)' : ''}</span><span class="lb-pts">${r.totalPoints}<small>pts</small></span></li>`).join('') + `</ol>`;
     if (BOARD.entry && BOARD.rank && BOARD.rank > 10)
@@ -791,18 +883,18 @@ function boardHtml(){
   let status;
   if (!ACCOUNT) status = `Sign in with Google to post your score and keep your progress on every device.<br><button class="btn btn-sm" data-act="signin">Sign in with Google</button>`;
   else if (BOARD.entry) status = `You're <b>#${BOARD.rank || '—'}</b> this week with ${BOARD.entry.totalPoints} points` + (BOARD.playerNo ? `, and you were player <b>#${BOARD.playerNo}</b> to finish` : '') + `. Your first finished game is the one that counts.`;
-  else if (!allDone()) status = `Finish all three Ravens to post your score.`;
+  else if (!allDone()) status = `Finish all ${NWORD} Ravens to post your score.`;
   else if (!ACCOUNT.name) status = `Pick a leaderboard name to post your score.<br><button class="btn btn-sm" data-act="name">Choose a name</button>`;
   else status = `Posting your score…`;
-  return `<div class="lb-head"><div><h3>${esc(WEEK.label)} leaderboard</h3></div><div class="sub">Top 10 · most points wins<br>Resets every Sunday</div></div>${list}<div class="lb-status">${status}</div>`;
+  return `<div class="lb-head"><div><h3>${esc(WEEK.label)} leaderboard</h3></div><div class="sub">Top 10 · most points wins<br>Resets every Monday</div></div>${list}<div class="lb-status">${status}</div>`;
 }
 function renderEarlyNote(){
   const el = $('early-note'), mine = BOARD.entry && BOARD.playerNo;
   const lead = mine ? `You're player #${BOARD.playerNo} to finish ${esc(WEEK.label)} of Flock Fanatic.` : `You're one of Flock Fanatic's very first players.`;
-  el.innerHTML = `<span class="badge"><span class="ico">${ICONS.feather}</span></span><div><b>Early bird!</b><span>${lead} Send it to the friend who still won't shut up about the 2000 defense, and come back Sunday for three new Ravens.</span></div>`;
+  el.innerHTML = `<span class="badge"><span class="ico">${ICONS.feather}</span></span><div><b>Early bird!</b><span>${lead} Send it to the friend who still won't shut up about the 2000 defense, and come back Monday for ${NWORD} new Ravens.</span></div>`;
 }
 function renderBoards(){
-  if (view === 3) renderEarlyNote();
+  if (view === N) renderEarlyNote();
   [['lb-final'], ['lb-modal-body']].forEach(([id]) => {
     const el = $(id); el.innerHTML = boardHtml();
     el.querySelectorAll('[data-act="signin"]').forEach(b => b.onclick = () => hook('signIn'));
@@ -812,14 +904,16 @@ function renderBoards(){
 
 // Share: a PNG score card plus a text message
 function shareInfo(){
-  return { weekId: WEEK.id, label: WEEK.label, totalPoints: total(), rounds: STATE.rounds.map(points), hints: STATE.rounds.map(r => r.hints),
+  return { weekId: WEEK.id, label: WEEK.label, totalPoints: total(), rounds: STATE.rounds.map(points), bonuses: STATE.rounds.map(r => r.bonus === 'hit'),
     playedAt: BOARD.entry && BOARD.playedAt ? BOARD.playedAt : new Date(), playerNo: BOARD.entry ? BOARD.playerNo : null, rank: BOARD.entry ? BOARD.rank : null, current: true };
 }
+const SHORT = { easy: 'Easy', medium: 'Med', hard: 'Hard', expert: 'Expert' };
 function shareText(info){
-  const t = getTier(info.totalPoints / 3);
-  const row = ['Easy', 'Med', 'Hard'].map((l, k) => `${TIER_EMOJI[getTier(info.rounds[k]).key]} ${l} ${info.rounds[k]}`).join('  ');
+  const n = info.rounds.length, t = getTier(info.totalPoints / n);
+  const levels = n === N ? WEEK.rounds.map(r => SHORT[r.level]) : ['Easy', 'Med', 'Hard', 'Expert'].slice(0, n);
+  const row = levels.map((l, k) => `${TIER_EMOJI[getTier(info.rounds[k]).key]} ${l} ${info.rounds[k]}${info.bonuses && info.bonuses[k] ? '🎓' : ''}`).join('  ');
   const brag = info.playerNo ? `Player #${info.playerNo} to finish${info.rank ? ` · ranked #${info.rank}` : ''}\n` : '';
-  return `Flock Fanatic · ${info.label}\n${info.totalPoints}/300 · ${t.name}\n${row}\n${brag}${info.current ? 'Can you beat me?' : 'Play this week’s Ravens:'} ${GAME_URL}`;
+  return `Flock Fanatic · ${info.label}\n${info.totalPoints}/${n * ROUND_MAX} · ${t.name}\n${row}\n${brag}${info.current ? 'Can you beat me?' : 'Play this week’s Ravens:'} ${GAME_URL}`;
 }
 function svgImg(svg, color, size){
   const src = svg.replace(/currentColor/g, color).replace('<svg ', `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" `);
@@ -827,7 +921,7 @@ function svgImg(svg, color, size){
 }
 function rr(x, X, Y, w, h, r){ x.beginPath(); x.moveTo(X + r, Y); x.arcTo(X + w, Y, X + w, Y + h, r); x.arcTo(X + w, Y + h, X, Y + h, r); x.arcTo(X, Y + h, X, Y, r); x.arcTo(X, Y, X + w, Y, r); x.closePath(); }
 async function makeCard(info){
-  const W = 1080, H = 1080, t = getTier(info.totalPoints / 3);
+  const W = 1080, H = 1080, n = info.rounds.length, t = getTier(info.totalPoints / n);
   try { await Promise.all(['100px Graduate', '700 40px "Barlow Condensed"', '600 30px Barlow'].map(f => document.fonts.load(f))); } catch(e){}
   const c = document.createElement('canvas'); c.width = W; c.height = H; const x = c.getContext('2d');
   const g = x.createRadialGradient(W / 2, 0, 50, W / 2, 300, 1000); g.addColorStop(0, '#33208F'); g.addColorStop(.55, '#1F1260'); g.addColorStop(1, '#160B47');
@@ -837,10 +931,10 @@ async function makeCard(info){
   x.textAlign = 'left'; x.fillStyle = '#FFFFFF'; x.fillText('Flock ', W / 2 - (w1 + w2) / 2, 170); x.fillStyle = '#C49A2C'; x.fillText('Fanatic', W / 2 - (w1 + w2) / 2 + w1, 170);
   x.textAlign = 'center'; x.font = '600 34px Barlow, Arial, sans-serif'; x.fillStyle = '#CFC8F0'; x.fillText(info.label, W / 2, 228);
   x.font = '230px Graduate, Georgia, serif'; x.lineWidth = 8; x.strokeStyle = '#C49A2C'; x.strokeText(String(info.totalPoints), W / 2, 485); x.fillStyle = '#FFFFFF'; x.fillText(String(info.totalPoints), W / 2, 485);
-  x.font = '600 34px Barlow, Arial, sans-serif'; x.fillStyle = '#CFC8F0'; x.fillText('out of 300 points', W / 2, 545);
+  x.font = '600 34px Barlow, Arial, sans-serif'; x.fillStyle = '#CFC8F0'; x.fillText(`out of ${n * ROUND_MAX} points`, W / 2, 545);
   x.font = '700 70px "Barlow Condensed", Arial, sans-serif'; x.fillStyle = '#C49A2C'; x.fillText(t.name, W / 2, 640);
-  const labels = ['Easy', 'Medium', 'Hard'], bw = 250, gap = 30, sx = W / 2 - (3 * bw + 2 * gap) / 2;
-  for (let k = 0; k < 3; k++){
+  const labels = ['Easy', 'Medium', 'Hard', 'Expert'].slice(0, n), bw = n > 3 ? 222 : 250, gap = n > 3 ? 20 : 30, sx = W / 2 - (n * bw + (n - 1) * gap) / 2;
+  for (let k = 0; k < n; k++){
     const rt = getTier(info.rounds[k]), bx = sx + k * (bw + gap), by = 690;
     rr(x, bx, by, bw, 150, 26); x.fillStyle = rt.tint; x.fill();
     const im = await svgImg(ICONS[rt.icon], rt.color, 44).catch(() => null); if (im) x.drawImage(im, bx + 22, by + 22, 44, 44);
@@ -878,9 +972,9 @@ function renderProfile(){
   const cb = $('change-name'); if (cb) cb.onclick = () => openNameModal(null);
   const box = $('profile-games');
   if (PROFILE.loading){ box.innerHTML = `<div class="lb-empty">Loading your weeks…</div>`; return; }
-  if (!PROFILE.games.length){ box.innerHTML = `<div class="lb-empty">No finished weeks yet. Finish all three Ravens while signed in and your score shows up here.</div>`; return; }
+  if (!PROFILE.games.length){ box.innerHTML = `<div class="lb-empty">No finished weeks yet. Finish all ${NWORD} Ravens while signed in and your score shows up here.</div>`; return; }
   box.innerHTML = PROFILE.games.map((g, k) => {
-    const t = getTier(g.totalPoints / 3);
+    const t = getTier(g.totalPoints / (g.rounds ? g.rounds.length : N));
     const meta = [`Finished ${fmtDate(g.playedAt)}`, g.playerNo ? `Player #${g.playerNo} to finish` : '', g.rank ? `Ranked #${g.rank} of ${g.players}` : ''].filter(Boolean).join(' · ');
     return `<div class="pg-row"><div class="pg-main"><div class="pg-title">${esc(g.label)}${g.current ? ' <span style="color:var(--gold-deep);font-size:.85rem">· this week</span>' : ''}</div><div class="pg-meta">${meta}<br><span style="color:${t.color}">${t.name}</span></div></div>` +
       `<div class="pg-score"><div class="lb-pts">${g.totalPoints}<small>pts</small></div><button class="btn btn-sm" data-k="${k}" style="margin-top:.3rem">Share</button></div></div>`;
@@ -893,10 +987,10 @@ window.FF_GAME = {
   GAME_ID, WEEK_ID: WEEK.id,
   OPEN_WEEKS: OPEN.map(w => ({ id: w.id, label: w.label })),
   getState: () => JSON.parse(JSON.stringify(STATE)),
-  applyState(s){ if (s && Array.isArray(s.rounds) && s.rounds.length === 3){ STATE = s; try { localStorage.setItem(LS_KEY, JSON.stringify(STATE)); } catch(e){} show(allDone() && view === 3 ? 3 : view); } },
-  activity: s => (s && s.rounds ? s.rounds.reduce((a, r) => a + (r.done ? 100 : 0) + r.hints + r.guesses.length, 0) : 0),
+  applyState(s){ if (validState(s)){ STATE = s; try { localStorage.setItem(LS_KEY, JSON.stringify(STATE)); } catch(e){} show(allDone() && view === N ? N : view); } },
+  activity: s => (validState(s) ? s.rounds.reduce((a, r) => a + (r.done ? 100 : 0) + (r.solved ? 10 : 0) + r.hints + r.guesses.length, 0) : 0),
   isDone: allDone,
-  result: () => ({ totalPoints: total(), rounds: STATE.rounds.map(points) }),
+  result: () => ({ totalPoints: total(), rounds: STATE.rounds.map(points), bonuses: STATE.rounds.map(r => r.bonus === 'hit') }),
   setAccount(a){ ACCOUNT = a; renderAccountBtn(); renderBoards(); },
   setBoard(b){ BOARD = b; renderBoards(); },
   setProfile(p){ PROFILE = p; renderProfile(); },
@@ -907,7 +1001,7 @@ window.FF_GAME = {
 // ── START ──────────────────────────────────────────────────────────────────
 renderAccountBtn();
 const firstOpen = STATE.rounds.findIndex(r => !r.done);
-show(firstOpen >= 0 ? firstOpen : 3);
+show(firstOpen >= 0 ? firstOpen : N);
 renderBoards();
 setTimeout(() => { if (!window.FFB && BOARD.loading){ BOARD = { loading: false, error: true, rows: [], entry: null }; renderBoards(); } }, 9000);
 </script>
@@ -1009,7 +1103,7 @@ async function maybeSubmit(){
   submitting = true;
   const r = G.result();
   try {
-    await setDoc(doc(scoresCol(), user.uid), { name: profile.name, totalPoints: r.totalPoints, rounds: r.rounds, createdAt: serverTimestamp() });
+    await setDoc(doc(scoresCol(), user.uid), { name: profile.name, totalPoints: r.totalPoints, rounds: r.rounds, bonuses: r.bonuses, createdAt: serverTimestamp() });
     await loadMyEntry();
     G.toast("You're on the leaderboard!");
     if (typeof gtag === 'function') gtag('event', 'post_score', { game_id: G.GAME_ID, total_points: r.totalPoints });
@@ -1035,7 +1129,7 @@ async function loadProfile(){
       const snap = await getDoc(doc(scoresCol(w.id), user.uid));
       if (!snap.exists()) return null;
       const e = snap.data(), st = await standing(w.id, e);
-      return { weekId: w.id, label: w.label, totalPoints: e.totalPoints, rounds: e.rounds, playedAt: toDate(e.createdAt), current: k === G.OPEN_WEEKS.length - 1, ...st };
+      return { weekId: w.id, label: w.label, totalPoints: e.totalPoints, rounds: e.rounds, bonuses: e.bonuses || [], playedAt: toDate(e.createdAt), current: k === G.OPEN_WEEKS.length - 1, ...st };
     }));
     G.setProfile({ loading: false, games: games.filter(Boolean).reverse() });
   } catch(e){ console.warn('profile', e); G.setProfile({ loading: false, games: [] }); }
