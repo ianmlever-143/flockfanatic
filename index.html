@@ -523,7 +523,6 @@ const QUIPS = {
   "You make me smile like an Ed Reed pick-six.",
   "Nice job! That must have felt as sweet as Kyle Hamilton falling to us at No. 14.",
   "Clutch. That was Jacoby Jones behind the Denver secondary in the Mile High Miracle.",
-  "Ice cold. That's Justin Tucker's 66-yarder clanking off the crossbar and in at Detroit.",
   "Elite. Joe Flacco 2012-playoffs elite: 11 touchdowns, zero picks.",
   "That was Ray Lewis squirrel-dancing out of the tunnel. Goosebumps.",
   "Unstoppable, like Lamar's spin move to the house against the Bengals.",
@@ -658,7 +657,8 @@ let view = 0;   // 0..N-1 = rounds, N = final score
 const LS_KEY = (PREVIEW ? 'ffpreview-' : 'flockfanatic-') + WEEK.id;
 const validState = s => !!(s && Array.isArray(s.rounds) && s.rounds.length === N && s.rounds.every(r => r && r.hints >= 0 && r.hints < LADDER.length));
 try { const s = JSON.parse(localStorage.getItem(LS_KEY)); if (validState(s)) STATE = s; } catch(e){}
-function persist(){ try { localStorage.setItem(LS_KEY, JSON.stringify(STATE)); } catch(e){} hook('saveProgress'); }
+// Saves locally on every action; syncs to the server only when a round finishes (keeps database writes low).
+function persist(sync){ try { localStorage.setItem(LS_KEY, JSON.stringify(STATE)); } catch(e){} if (sync) hook('saveProgress'); }
 
 const misses = r => r.guesses.length - (r.solved ? 1 : 0);
 const potential = r => Math.max(FLOOR, LADDER[r.hints] - MISS_COST * misses(r));
@@ -811,7 +811,7 @@ function revealHint(i){
 }
 function finishRound(i){
   const st = STATE.rounds[i];
-  st.done = true; persist();
+  st.done = true; persist(true);
   track('round_complete', { round: WEEK.rounds[i].level, points: points(st), hints: st.hints, solved: st.solved, bonus: st.bonus || 'none' });
   renderTabs(); renderRound(i);
   window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -1008,7 +1008,7 @@ $('acct-btn').onclick = () => {
   else openProfile();
 };
 $('lb-btn').onclick = openBoard;
-function openBoard(){ renderBoards(); hook('refreshBoard'); openModal('lb-modal'); }
+function openBoard(){ renderBoards(); hook('refreshBoard', { all: LB_TAB === 'all' }); openModal('lb-modal'); }
 
 // ── Join the leaderboard: Google, email + password, or just a name ─────────
 function joinMsg(t, ok){ const m = $('join-msg'); m.textContent = t || ''; m.classList.toggle('ok', !!ok); }
@@ -1078,10 +1078,10 @@ $('signout-btn').onclick = e => {
 
 let LB_TAB = 'week';
 function allTimeHtml(){
-  const A = BOARD.all || { rows: [] };
+  const A = BOARD.all || { rows: [], pending: true };   // the all-time board loads only when this tab is opened
   let list;
-  if (BOARD.loading) list = `<div class="lb-empty">Loading scores…</div>`;
-  else if (BOARD.error) list = `<div class="lb-empty">The leaderboard didn't load. Check your connection and try again.</div>`;
+  if (BOARD.loading || A.pending) list = `<div class="lb-empty">Loading scores…</div>`;
+  else if (BOARD.error || A.error) list = `<div class="lb-empty">The leaderboard didn't load. Check your connection and try again.</div>`;
   else if (!A.rows.length) list = `<div class="lb-empty">No all-time scores yet. Finish a week to get on the board.</div>`;
   else {
     const row = (r, rank) => `<li class="lb-row${r.me ? ' me' : ''}"><span class="lb-rank">${rank}</span><span class="lb-name">${esc(r.name)}${r.me ? ' (you)' : ''}<small>${r.weeks} wk${r.weeks === 1 ? '' : 's'}</small></span><span class="lb-pts">${r.total}<small>pts</small></span></li>`;
@@ -1090,6 +1090,7 @@ function allTimeHtml(){
   }
   let status;
   if (!ACCOUNT) status = `Join with Google, email, or just a name and every week you finish adds to your all-time total.<br><button class="btn btn-gold btn-sm" data-act="signin">Join the leaderboard</button>`;
+  else if (A.pending) status = '';
   else if (A.entry) status = `You're <b>#${A.rank || '—'}</b> all-time with ${A.entry.total} points over ${A.entry.weeks} week${A.entry.weeks === 1 ? '' : 's'}.`;
   else status = `Finish this week's ${NWORD} Ravens to start your all-time total.`;
   return `<div class="lb-head"><div><h3>All-time leaderboard</h3></div><div class="sub">Top 10 · every week added up</div></div>${list}<div class="lb-status">${status}</div>`;
@@ -1166,7 +1167,7 @@ function renderBoards(){
   [['lb-final'], ['lb-modal-body']].forEach(([id]) => {
     const el = $(id); el.innerHTML = boardHtml();
     el.querySelectorAll('[data-act="signin"]').forEach(b => b.onclick = () => { closeModal($('lb-modal')); openJoin(); });
-    el.querySelectorAll('[data-tab]').forEach(b => b.onclick = () => { LB_TAB = b.dataset.tab; track('leaderboard_tab', { tab: LB_TAB }); renderBoards(); });
+    el.querySelectorAll('[data-tab]').forEach(b => b.onclick = () => { LB_TAB = b.dataset.tab; track('leaderboard_tab', { tab: LB_TAB }); if (LB_TAB === 'all' && !BOARD.all) hook('refreshBoard', { all: true }); renderBoards(); });
     el.querySelectorAll('[data-act="name"]').forEach(b => b.onclick = () => openNameModal(() => hook('onFinal')));
   });
 }
@@ -1381,19 +1382,36 @@ async function loadMyEntry(){
   try { const snap = await getDoc(doc(scoresCol(), user.uid)); myEntry = snap.exists() ? snap.data() : null; }
   catch(e){ myEntry = undefined; console.warn('load entry', e); }
 }
-async function refreshBoard(){
+// The public top-10 boards are cached in this browser for a few minutes, so reloads and reopening the
+// leaderboard don't re-read the database. Your own rank is always fresh; posting a score forces a refresh.
+const CACHE_MS = 3 * 60 * 1000;
+function cacheGet(k){ try { const c = JSON.parse(localStorage.getItem(k)); if (c && Date.now() - c.t < CACHE_MS) return c.v; } catch(e){} return null; }
+function cachePut(k, v){ try { localStorage.setItem(k, JSON.stringify({ t: Date.now(), v })); } catch(e){} }
+async function weekTop(force){
+  const key = 'ff-cache-week-' + G.WEEK_ID;
+  if (!force){ const c = cacheGet(key); if (c) return c; }
+  const [snap, countSnap] = await Promise.all([getDocs(query(scoresCol(), orderBy('totalPoints', 'desc'), limit(10))), getCountFromServer(scoresCol())]);
+  const v = { rows: snap.docs.map(d => { const at = toDate(d.data().createdAt); return { uid: d.id, name: d.data().name, totalPoints: d.data().totalPoints, at: at ? at.getTime() : 0 }; }), players: countSnap.data().count };
+  cachePut(key, v); return v;
+}
+let wantAll = false;   // becomes true once the All-time tab has been opened
+async function refreshBoard(opts){
+  opts = opts || {};
+  if (opts.all) wantAll = true;
   try {
-    const [snap, countSnap] = await Promise.all([getDocs(query(scoresCol(), orderBy('totalPoints', 'desc'), limit(10))), getCountFromServer(scoresCol())]);
-    const rows = snap.docs.map(d => ({ name: d.data().name, totalPoints: d.data().totalPoints, at: toDate(d.data().createdAt), me: !!user && d.id === user.uid }))
+    const top = await weekTop(!!opts.force);
+    const rows = top.rows.map(r => ({ name: r.name, totalPoints: r.totalPoints, at: r.at ? new Date(r.at) : null, me: !!user && r.uid === user.uid }))
       .sort((a, b) => b.totalPoints - a.totalPoints || ((a.at || 0) - (b.at || 0)));
     let rank = null, playerNo = null, playedAt = null;
     if (myEntry){
       const st = await standing(G.WEEK_ID, myEntry);
       rank = st.rank; playerNo = st.playerNo; playedAt = toDate(myEntry.createdAt);
     }
-    let all = { rows: [], entry: null, rank: null };
-    try { all = await allTimeBoard(); } catch(e){ console.warn('all-time board', e); }
-    G.setBoard({ loading: false, rows, entry: myEntry || null, rank, playerNo, playedAt, players: countSnap.data().count, all });
+    let all = null;
+    if (wantAll){
+      try { all = await allTimeBoard(!!opts.force); } catch(e){ console.warn('all-time board', e); all = { rows: [], entry: null, rank: null, error: true }; }
+    }
+    G.setBoard({ loading: false, rows, entry: myEntry || null, rank, playerNo, playedAt, players: top.players, all });
   } catch(e){
     console.warn('leaderboard', e);
     G.setBoard({ loading: false, error: true, rows: [], entry: myEntry || null, rank: null });
@@ -1404,7 +1422,7 @@ async function saveName(name){
   try { await setDoc(doc(db, 'users', user.uid), { name }, { merge: true }); }
   catch(e){ console.warn('save name', e); return false; }
   profile.name = name; G.setAccount({ name, suggested: G.suggestName(user.displayName), kind: kindOf(user), email: user.email || null });
-  syncAllTime().then(refreshBoard);
+  syncAllTime().then(() => refreshBoard({ force: true }));
   return true;
 }
 // All-time board: alltime/{uid} = { name, total, weeks: [weekIds], updatedAt }.
@@ -1428,16 +1446,21 @@ async function syncAllTime(){
     myAll = cur;
   } catch(e){ console.warn('all-time', e); }
 }
-async function allTimeBoard(){
-  const col = collection(db, 'alltime');
-  const [snap, countSnap] = await Promise.all([getDocs(query(col, orderBy('total', 'desc'), limit(10))), getCountFromServer(col)]);
-  const rows = snap.docs.map(d => ({ name: d.data().name, total: d.data().total, weeks: (d.data().weeks || []).length, me: !!user && d.id === user.uid }));
+async function allTimeBoard(force){
+  const col = collection(db, 'alltime'), key = 'ff-cache-alltime';
+  let top = force ? null : cacheGet(key);
+  if (!top){
+    const [snap, countSnap] = await Promise.all([getDocs(query(col, orderBy('total', 'desc'), limit(10))), getCountFromServer(col)]);
+    top = { rows: snap.docs.map(d => ({ uid: d.id, name: d.data().name, total: d.data().total, weeks: (d.data().weeks || []).length })), players: countSnap.data().count };
+    cachePut(key, top);
+  }
+  const rows = top.rows.map(r => ({ name: r.name, total: r.total, weeks: r.weeks, me: !!user && r.uid === user.uid }));
   let entry = null, rank = null;
   if (user && myAll){
     entry = { name: myAll.name, total: myAll.total, weeks: myAll.weeks.length };
     rank = (await getCountFromServer(query(col, where('total', '>', myAll.total)))).data().count + 1;
   }
-  return { rows, entry, rank, players: countSnap.data().count };
+  return { rows, entry, rank, players: top.players };
 }
 async function maybeSubmit(){
   if (G.ARCHIVE) return;
@@ -1452,7 +1475,7 @@ async function maybeSubmit(){
     if (typeof gtag === 'function') gtag('event', 'post_score', { game_id: G.GAME_ID, total_points: r.totalPoints });
   } catch(e){ console.warn('submit score', e); await loadMyEntry(); }
   finally { submitting = false; }
-  refreshBoard();
+  refreshBoard({ force: true });
 }
 onAuthStateChanged(auth, async u => {
   user = u; profile = {}; myEntry = undefined;
