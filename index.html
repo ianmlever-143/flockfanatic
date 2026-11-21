@@ -7,18 +7,18 @@
 <meta name="description" content="A free weekly Ravens trivia game. See a jersey number and the years, name the player, then name his college for a bonus. Four new Ravens every Monday.">
 <meta name="theme-color" content="#1F1260">
 <meta property="og:type" content="website">
-<meta property="og:site_name" content="Blue Marble Games">
+<meta property="og:site_name" content="Flock Fanatic">
 <meta property="og:title" content="Flock Fanatic — How well do you know your Ravens?">
 <meta property="og:description" content="A jersey number and the years. Name the Raven. Are you a True Flock Fanatic, or a Steelers fan in disguise?">
-<meta property="og:url" content="https://ianmlever-143.github.io/flockfanatic/">
-<meta property="og:image" content="https://ianmlever-143.github.io/flockfanatic/og-image.png">
+<meta property="og:url" content="https://flockfanatic.com/">
+<meta property="og:image" content="https://flockfanatic.com/og-image.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="Flock Fanatic — a weekly Ravens trivia game.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Flock Fanatic — How well do you know your Ravens?">
 <meta name="twitter:description" content="A jersey number and the years. Name the Raven.">
-<meta name="twitter:image" content="https://ianmlever-143.github.io/flockfanatic/og-image.png">
+<meta name="twitter:image" content="https://flockfanatic.com/og-image.png">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏈</text></svg>">
 
 <!-- Google Analytics 4 (Flock Fanatic's own Firebase project) -->
@@ -489,7 +489,7 @@ button.week-line.pick:hover{color:#fff;}
 <div class="sr" id="sr-live" aria-live="assertive"></div>
 
 <footer class="site-footer">
-  <div class="made"><b>Blue Marble Games</b><br>created by Ian Lever</div>
+  <div class="made">Made by <b>Ian Lever</b></div>
   <div class="tip">Like the game? Help keep the Old Bay flowing, hon.
     <br><a class="btn btn-gold btn-sm" href="https://account.venmo.com/u/Ian-Lever" target="_blank" rel="noopener noreferrer">Treat me to some Old Bay</a>
   </div>
@@ -571,7 +571,7 @@ const QUIPS = {
  ]
 };
 const PREVIEW = /*__PREVIEW__*/false;   // preview builds show the newest week early, with sign-in simulated
-const GAME_URL = 'https://ianmlever-143.github.io/flockfanatic/';
+const GAME_URL = 'https://flockfanatic.com/';
 const KEY = 'flockfanatic';
 
 function unscramble(b64){
@@ -1213,7 +1213,7 @@ async function makeCard(info){
   const brag = [info.playerNo ? `Player #${info.playerNo} to finish` : '', info.rank ? `Ranked #${info.rank}` : '', fmtDate(info.playedAt)].filter(Boolean).join('   ·   ');
   x.font = '600 30px Barlow, Arial, sans-serif'; x.fillStyle = '#E8DFB8'; x.fillText(brag, W / 2, 905);
   x.font = '700 40px "Barlow Condensed", Arial, sans-serif'; x.fillStyle = '#FFFFFF'; x.fillText(info.current ? 'Can you beat me?' : 'Play this week’s Ravens', W / 2, 975);
-  x.font = '500 26px Barlow, Arial, sans-serif'; x.fillStyle = '#A99FD6'; x.fillText('Blue Marble Games · ianmlever-143.github.io/flockfanatic', W / 2, 1022);
+  x.font = '500 26px Barlow, Arial, sans-serif'; x.fillStyle = '#A99FD6'; x.fillText('flockfanatic.com', W / 2, 1022);
   return new Promise(r => c.toBlob(r, 'image/png'));
 }
 async function shareScore(info, btn){
